@@ -2,9 +2,102 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nima Dini">
+    <title>Dashboard</title>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="../assets/css/buttons.css" rel="stylesheet">
 </head>
 <body>
+<div class="wrapper">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Teammate</a>
+            </div>
 
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/user"><i class="glyphicon glyphicon-user"></i> Nima </a></li>
+                    <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control" style="width: 450px;"/>
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+
+                        </form>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        <div class="col-md-9 col-sm-12 col-xs-12 shine">
+            <div class="panel panel-default">
+                <div class="panel-body nopadding">
+                    <div class="row no-gutter">
+                        <div class="col-md-3">
+                            <a href="#">
+                                <img src="../assets/images/no_cover.png" class="img-responsive img-rounded nopadding displayed" alt="Cover Photo">
+                            </a>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="user_box">
+                                <div class="box_title">
+                                    <a href="#">Nima Dini</a>
+                                </div>
+                                <div class="box_sub_title">
+                                    Works at University of Tehran
+                                </div>
+                                <div class="box_sub_content">
+                                    Studied Computer Hardware Engineering at University of Tehran '09
+                                    Read Animal Farm, 1984 - George Orwell and Thus Spoke Zarathustra
+                                    Listens to Camel, Gary Moore and HAGGARD
+                                    98 mutual friends including Peyman Mahdian and Atiyeh Bayat
+                                </div>
+                                <div class="box_sub_title">
+                                    Projects:
+                                    <a href="http://connexus-beta.appspot.com/" target="_blank">Connexus</a>
+                                </div>
+                                <div class="user_box_btn">
+                                    <a href="#" class="button button-rounded button-flat-primary"><i class="fa fa-refresh"></i> Follow </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form id="view_stream" action="stream" method="get">
+            <input type="hidden" id="name" name="name">
+        </form>
+        <div id="about"></div>
+    </div>
+    <div class="push"></div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p>
+            Designed by <a href="http://nimadini.net">Nima Dini</a> -- Last Updated: October 2014
+        </p>
+        <div>
+            <a href="#" data-toggle="modal" data-target="#info">About This Website</a>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
