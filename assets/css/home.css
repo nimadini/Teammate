@@ -1,0 +1,14 @@
+.home-element {
+    padding: 15px 10px 10px 10px;
+}
+
+.home-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.home-sub-title {
+    margin-top: 4px;
+    color: #484848;
+    padding-left: 5px;
+}

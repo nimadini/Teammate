@@ -8,6 +8,7 @@ html, body {
 
 body {
     font-family: Tahoma, Geneva, sans-serif;
+    padding-top: 70px;
 }
 
 .wrapper {
@@ -364,15 +365,20 @@ pre.prettyprint { background:#f4f4f4; padding: 1.5em; border:none; margin: 0 0 1
 
 .user_box {
     padding: 10px 10px 10px 15px;
-    margin-bottom:2px;
-    height:198px;
+    margin-bottom: 2px;
+    height: 198px;
     overflow: auto;
-    min-height:100%;
+    min-height: 100%;
 }
 
 .user_box_btn {
-    position:absolute;
-    bottom:10px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.user_box_navigation {
+    position: absolute;
+    right: 10px;
 }
 
 .box_title {
@@ -398,6 +404,48 @@ pre.prettyprint { background:#f4f4f4; padding: 1.5em; border:none; margin: 0 0 1
     color: #686868;
 }
 
+.cover {
+    position: relative;
+    min-height: 350px;
+}
+
+.FlexEmbed {
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+
+.FlexEmbed:before {
+    content: "";
+    display: block;
+    width: 100%;
+}
+
+.FlexEmbed--3by1:before {
+    padding-bottom: 33.33333%;
+}
+
+.FlexEmbed--2by1:before {
+    padding-bottom: 50%;
+}
+
+.FlexEmbed--16by9:before {
+    padding-bottom: 56.25%;
+}
+
+.FlexEmbed--4by3:before {
+    padding-bottom: 75%;
+}
+
+.CoverImage {
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+    max-height: 1080px;
+    max-width: 1920px;
+}
+
 .box_sub_title a {
     font-size: 13px;
 }
@@ -408,11 +456,71 @@ pre.prettyprint { background:#f4f4f4; padding: 1.5em; border:none; margin: 0 0 1
 
 .input-group-unstyled input.form-control {
     -webkit-border-radius: 4px !important;
-       -moz-border-radius: 4px !important;
-            border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
 }
+
 .input-group-unstyled .input-group-addon {
     border-radius: 4px;
     border: 0px;
     background-color: transparent;
 }
+
+img {
+    vertical-align: middle;
+}
+
+.profile_name a {
+    color: white;
+    text-decoration: none;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.profile_name {
+    margin-top: 4px;
+    text-align: center;
+    font-size: 20px;
+    color: white;
+}
+
+.profile_sub_info {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+}
+
+.col-middle {
+    vertical-align:middle;
+}
+
+.profile_background {
+    background-image: url("../images/black_bck.png");
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}
+
+.profile-label img {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 1em auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-border-radius: 99em;
+    -moz-border-radius: 99em;
+    border-radius: 99em;
+    border: 5px solid #eee;
+    box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+}
+

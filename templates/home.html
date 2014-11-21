@@ -7,7 +7,33 @@
     <title>Dashboard</title>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="../assets/css/home.css" rel="stylesheet">
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../assets/css/lightbox.css" rel="stylesheet">
     <link href="../assets/css/buttons.css" rel="stylesheet">
+    <script src="../assets/js/jquery-2.1.1.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
+    <script src="../assets/js/lightbox.min.js"></script>
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function() {
+            var winW = $(window).width() - 180;
+            var winH = $(window).height() - 180;
+            $("#dialog").append($("<iframe />").attr("src", "http://www.nimadini.net/NimaDini.pdf").css({
+                'width' : '100%',
+                'height' : winH - 80
+            })).dialog({
+                autoOpen: false,
+                minWidth: winW,
+                minHeight: winH,
+                modal: true,
+                resizable: true,
+                title: 'Resume'
+            });
+            $( "#show_resume" ).click(function() {
+                $( "#dialog" ).dialog( "open" );
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="wrapper">
@@ -34,61 +60,52 @@
                     <li class="dropdown">
                         <form class="navbar-form navbar-left" role="search">
                             <div class="form-group has-feedback">
-                                <input type="text" class="form-control" style="width: 450px;" placeholder="Search for people, projects and skills"/>
+                                <input type="text" class="form-control" style="width: 380px;" placeholder="Search for people, projects and skills"/>
                                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
                             </div>
-
                         </form>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+
     <div class="container">
-        <div class="col-md-9 col-sm-12 col-xs-12 shine">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body nopadding">
-                    <div class="row no-gutter">
-                        <div class="col-lg-3 col-md-4">
-                            <a href="#">
-                                <img src="../assets/images/no_cover.png" class="img-responsive img-rounded nopadding displayed" alt="Cover Photo">
-                            </a>
+                    <div class="row no-gutter row-eq-height profile_background">
+                        <div class="col-lg-9 col-md-9 col-sm-8">
+                            <div class="CoverImage FlexEmbed FlexEmbed--16by9"
+                                 style="background-image:url(../assets/images/cover.jpg)"
+                                    >
+                            </div>
                         </div>
-                        <div class="col-lg-9 col-md-8">
-                            <div class="user_box">
-                                <div class="box_title">
-                                    <a href="#">Nima Dini</a>
-                                </div>
-                                <div class="box_sub_title">
-                                    Works at University of Tehran
-                                </div>
-                                <div class="box_sub_content">
-                                    Studied Computer Hardware Engineering at University of Tehran '09
-                                    Read Animal Farm, 1984 - George Orwell and Thus Spoke Zarathustra
-                                    Listens to Camel, Gary Moore and HAGGARD
-                                    98 mutual friends including Peyman Mahdian and Atiyeh Bayat
-                                </div>
-                                <div class="box_sub_title">
-                                    Projects:
-                                    <a href="http://connexus-beta.appspot.com/" target="_blank">Connexus</a>
-                                </div>
-                                <div class="user_box_btn">
-                                    <a href="#" class="button button-rounded button-flat-primary"><i class="fa fa-refresh"></i> Follow </a>
-                                     <img src="../assets/images/navigation.png" alt="nav">
-                                </div>
-                                <div class="user_box_navigation">
+                        <div class="col-lg-3 col-md-3 col-sm-4 profile-label" style="margin: auto; height: 100%; vertical-align: middle;">
+                            <a href="../assets/images/profile.jpg" data-lightbox="image-1" data-title="My caption">
+                                <img src="../assets/images/profile.jpg" style="display: block;" class="img-circle col-centered" width="150" height="150" alt="Pic" />
+                            </a>
+                            <div class="profile_name"><a href="#">Nima Dini</a></div>
+                            <div class="profile_sub_info">100 views</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                </div>
+            <div class="panel panel-default">
+                <div class="panel-body nopadding">
+                    <div class="row">
+                        <div class="home-element">
+                            <div class="home-title">Education</div>
+                            <div class="home-sub-title">
+                                Here is my resume: <a href="#" id="show_resume">resume</a>
+                                <div id="dialog"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <form id="view_stream" action="stream" method="get">
-            <input type="hidden" id="name" name="name">
-        </form>
         <div id="about"></div>
     </div>
     <div class="push"></div>
