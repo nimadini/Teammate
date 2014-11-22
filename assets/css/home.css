@@ -72,6 +72,20 @@
     width: 32px;
 }
 
+.github {
+    background: url('../images/github.png') no-repeat;
+    margin: auto;
+    height: 32px;
+    width: 32px;
+}
+
+.linked_in {
+    background: url('../images/linkedin.png') no-repeat;
+    margin: auto;
+    height: 32px;
+    width: 32px;
+}
+
 .home-content table tr {
     height: 45px;
 }

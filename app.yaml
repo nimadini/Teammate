@@ -11,6 +11,9 @@ handlers:
 - url: /
   script: main.app
 
+- url: /about
+  script: main.app
+  
 - url: .*
   script: main.app
   login: required

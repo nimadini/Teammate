@@ -13,12 +13,13 @@
     <link href="../assets/css/buttons.css" rel="stylesheet">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
     <script src="../assets/js/jquery-2.1.1.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/jquery-ui.min.js"></script>
     <script src="../assets/js/lightbox.min.js"></script>
     <script language="javascript" type="text/javascript">
         $(document).ready(function() {
             var winW = $(window).width() - 180;
-            var winH = $(window).height() - 180;
+            var winH = $(window).height() - 100;
             $("#dialog").append($("<iframe />").attr("src", "http://www.nimadini.net/NimaDini.pdf").css({
                 'width' : '100%',
                 'height' : winH - 80
@@ -30,10 +31,42 @@
                 resizable: true,
                 title: 'NimaDini.pdf'
             });
-            $( "#show_resume" ).click(function(e) {
-                e.preventDefault();
-                $( "#dialog" ).dialog( "open" );
+            function addUser() {}
+            var form, name = $( "#name" ),
+                    email = $( "#email" ),
+                    password = $( "#password" ),
+                    allFields = $( [] ).add( name ).add( email ).add( password );
+            var msg_dialog = $("#msg-dialog").dialog({
+                autoOpen: false,
+                height: 405,
+                width: 720,
+                modal: true,
+                buttons: {
+                    "Send": addUser,
+                    "Cancel": function() {
+                        msg_dialog.dialog( "close" );
+                    }
+                },
+                close: function() {
+                }
             });
+
+            $("#show_resume").click(function(e) {
+                e.preventDefault();
+                $("#dialog").dialog("open");
+            });
+
+            $("#message_btn").click(function(e) {
+                e.preventDefault();
+                $("#msg-dialog").dialog("open");
+            });
+            $('.my_tooltip').tooltip({
+                track: true,
+                content: function () {
+                    return $(this).prop('title');
+                }
+            });
+            $('#about').load('about');
         });
     </script>
 </head>
@@ -49,14 +82,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Teammate</a>
+            <a class="navbar-brand" href="/dashboard">Teammate</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="#"><i class="fa fa-bell"></i></a></li>
-                <li><a href="#"><i class="fa fa-weixin"></i></a></li>
+                <li><a href="#"><i class="fa fa-comment"></i></a></li>
                 <li><a href="/home"><i class="glyphicon glyphicon-user"></i> Nima </a></li>
                 <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
             </ul>
@@ -75,194 +108,215 @@
 </nav>
 
 <div class="container">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body nopadding">
-                <div class="row no-gutter row-eq-height profile_background">
-                    <div class="col-lg-9 col-md-9 col-sm-8">
-                        <div class="CoverImage FlexEmbed FlexEmbed--16by9"
-                             style="background-image:url(../assets/images/cover.jpg)"
-                                >
-                            <div style="margin: 15px;">
-                                <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
-                                <a href="#" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
-                            </div>
+<div class="col-md-12">
+<div class="panel panel-default">
+    <div class="panel-body nopadding">
+        <div class="row no-gutter row-eq-height profile_background">
+            <div class="col-lg-9 col-md-9 col-sm-8">
+                <div class="CoverImage FlexEmbed FlexEmbed--16by9"
+                     style="background-image:url(../assets/images/cover.jpg)"
+                        >
+                    <div style="margin: 15px;">
+                        <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
+                        <a href="#" id="message_btn" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
+                        <div id="cover_upload_btn" style="float: right;">
+                            <a class="my_tooltip" style="cursor: pointer;"
+                               title="Change Cover Picture">
+                                <i class="fa fa-camera fa-2x"></i>
+                            </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-4 profile-label" style="margin: auto; height: 100%; vertical-align: middle;">
-                        <a href="../assets/images/profile.jpg" data-lightbox="image-1" data-title="My caption">
-                            <img src="../assets/images/profile.jpg" style="display: block;" class="img-circle col-centered" width="150" height="150" alt="Pic" />
-                        </a>
-                        <div class="profile_name"><a href="#">Nima Dini</a></div>
-                        <div class="profile_sub_info">101 Followers | 3,261 Views</div>
-                        <div class="profile_sub_info_small">AUSTIN, TX, USA</div>
-                    </div>
+
                 </div>
             </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 profile-label" style="margin: auto; height: 100%; vertical-align: middle;">
+                <a href="../assets/images/profile.jpg" data-lightbox="image-1" data-title="My caption">
+                    <img src="../assets/images/profile.jpg" style="display: block;" class="img-circle col-centered" width="150" height="150" alt="Pic" />
+                </a>
+                <div class="profile_name"><a href="#">Nima Dini</a></div>
+                <div class="profile_sub_info">101 Followers | 3,261 Views</div>
+                <div class="profile_sub_info_small">AUSTIN, TX, USA</div>
+            </div>
         </div>
-        <div id="dialog"></div>
-        <div class="row row-eq-height">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="panel panel-default">
-                    <div class="panel-body nopadding">
-                        <div class="row">
-                            <div class="col-lg-7 col-md-7 col-sm-12">
-                                <div class="home-element">
-                                    <div class="home-sub-title">
-                                        <i class="fa fa-university"></i> Education
-                                    </div>
-                                    <div class="home-content">
-                                        The University of Texas at Austin
-
-                                    </div>
-                                    <div class="home-content-small">
-                                        MS, Software Engineering
-                                    </div>
-                                    <div class="home-content-tiny">
-                                        2014 – 2016 (expected)
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="home-element">
-                                    <div class="home-sub-title">
-                                        <i class="fa fa-suitcase"></i> Work Experience
-                                    </div>
-                                    <div class="home-content">
-                                        The University of Texas at Austin
-
-                                    </div>
-                                    <div class="home-content-small">
-                                        MS, Software Engineering
-                                    </div>
-                                    <div class="home-content-tiny">
-                                        2014 – 2016 (expected)
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="home-element">
-                                    <div class="home-sub-title">
-                                        <i class="fa fa-trophy"></i> Honors and Awards
-                                    </div>
-                                    <div class="home-content">
-                                        The University of Texas at Austin
-
-                                    </div>
-                                    <div class="home-content-small">
-                                        MS, Software Engineering
-                                    </div>
-                                    <div class="home-content-tiny">
-                                        2014 – 2016 (expected)
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="home-element">
-                                    <div class="home-sub-title">
-                                        <i class="fa fa-file-text"></i> Sample Projects
-                                    </div>
-                                    <div class="home-content">
-                                        The University of Texas at Austin
-
-                                    </div>
-                                    <div class="home-content-small">
-                                        MS, Software Engineering
-                                    </div>
-                                    <div class="home-content-tiny">
-                                        2014 – 2016 (expected)
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="home-element">
-                                    <div class="home-sub-title">
-                                        <i class="fa fa-magic"></i> Skills
-                                    </div>
-                                    <div class="home-content">
-                                        The University of Texas at Austin
-
-                                    </div>
-                                    <div class="home-content-small">
-                                        MS, Software Engineering
-                                    </div>
-                                    <div class="home-content-tiny">
-                                        2014 – 2016 (expected)
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="home-element">
-                                    <div class="home-sub-title">
-                                        <i class="fa fa-language"></i> Languages
-                                    </div>
-                                    <div class="home-content">
-                                        The University of Texas at Austin
-
-                                    </div>
-                                    <div class="home-content-small">
-                                        MS, Software Engineering
-                                    </div>
-                                    <div class="home-content-tiny">
-                                        2014 – 2016 (expected)
-                                    </div>
-                                </div>
+    </div>
+</div>
+<div id="dialog"></div>
+<div id="msg-dialog" title="Message"></div>
+<div class="row row-eq-height">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body nopadding">
+                <div class="row">
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <div class="home-element">
+                            <div class="home-sub-title">
+                                <i class="fa fa-university"></i> Education
+                            </div>
+                            <div class="home-content">
+                                The University of Texas at Austin
 
                             </div>
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <div class="home-element">
-                                    <div class="home-content">
-                                        <table>
-                                            <col width="70">
-                                            <tr>
-                                                <td>
-                                                    <div class="phone">
-                                                    </div>
-                                                </td>
-                                                <td>512-965-8090</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="email">
-                                                    </div>
-                                                </td>
-                                                <td><a href="mailto:nima.dini@utexas.edu">nima.dini@utexas.edu</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="skype">
-                                                    </div>
-                                                </td>
-                                                <td><a href="callto:nimadini92">nimadini92</a></td>
-                                            </tr>
+                            <div class="home-content-small">
+                                MS, Software Engineering
+                            </div>
+                            <div class="home-content-tiny">
+                                2014 – 2016 (expected)
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="home-element">
+                            <div class="home-sub-title">
+                                <i class="fa fa-suitcase"></i> Work Experience
+                            </div>
+                            <div class="home-content">
+                                The University of Texas at Austin
 
-                                            <tr>
-                                                <td>
-                                                    <div class="resume">
-                                                    </div>
-                                                </td>
-                                                <td><a href="#" id="show_resume">NimaDini.pdf</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="website">
-                                                    </div>
-                                                </td>
-                                                <td><a href="http://www.nimadini.net" target="_blank">http://www.nimadini.net</a></td>
-                                            </tr>
-                                        </table>
-                                        <hr>
+                            </div>
+                            <div class="home-content-small">
+                                MS, Software Engineering
+                            </div>
+                            <div class="home-content-tiny">
+                                2014 – 2016 (expected)
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="home-element">
+                            <div class="home-sub-title">
+                                <i class="fa fa-trophy"></i> Honors and Awards
+                            </div>
+                            <div class="home-content">
+                                The University of Texas at Austin
+
+                            </div>
+                            <div class="home-content-small">
+                                MS, Software Engineering
+                            </div>
+                            <div class="home-content-tiny">
+                                2014 – 2016 (expected)
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="home-element">
+                            <div class="home-sub-title">
+                                <i class="fa fa-file-text"></i> Sample Projects
+                            </div>
+                            <div class="home-content">
+                                The University of Texas at Austin
+
+                            </div>
+                            <div class="home-content-small">
+                                MS, Software Engineering
+                            </div>
+                            <div class="home-content-tiny">
+                                2014 – 2016 (expected)
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="home-element">
+                            <div class="home-sub-title">
+                                <i class="fa fa-magic"></i> Skills
+                            </div>
+                            <div class="home-content">
+                                The University of Texas at Austin
+
+                            </div>
+                            <div class="home-content-small">
+                                MS, Software Engineering
+                            </div>
+                            <div class="home-content-tiny">
+                                2014 – 2016 (expected)
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="home-element">
+                            <div class="home-sub-title">
+                                <i class="fa fa-language"></i> Languages
+                            </div>
+                            <div class="home-content">
+                                The University of Texas at Austin
+
+                            </div>
+                            <div class="home-content-small">
+                                MS, Software Engineering
+                            </div>
+                            <div class="home-content-tiny">
+                                2014 – 2016 (expected)
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <div class="home-element">
+                            <div class="home-content">
+                                <table>
+                                    <col width="70">
+                                    <tr>
+                                        <td>
+                                            <div class="phone">
+                                            </div>
+                                        </td>
+                                        <td>512-965-8090</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="email">
+                                            </div>
+                                        </td>
+                                        <td><a href="mailto:nima.dini@utexas.edu">nima.dini@utexas.edu</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="skype">
+                                            </div>
+                                        </td>
+                                        <td><a href="callto:nimadini92">nimadini92</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="github">
+                                            </div>
+                                        </td>
+                                        <td><a href="https://github.com/nimadini" target="_blank">https://github.com/nimadini</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="linked_in">
+                                            </div>
+                                        </td>
+                                        <td><a href="https://www.linkedin.com/in/nimadini" target="_blank">https://www.linkedin.com/in/nimadini</a></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="resume">
+                                            </div>
+                                        </td>
+                                        <td><a href="#" id="show_resume">NimaDini.pdf</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="website">
+                                            </div>
+                                        </td>
+                                        <td><a href="http://www.nimadini.net" target="_blank">http://www.nimadini.net</a></td>
+                                    </tr>
+                                </table>
+                                <hr>
+                                <p>
+                                <div class="home-content">
+                                    <div style="padding-right: 10px;">
                                         <p>
-                                        <div class="home-content">
-                                            <p>
-                                                <strong>About me:</strong> I am a software developer and I am looking for ...
-                                            </p>
-                                            <p>
-                                                <strong>You should know:</strong> I am a self motivated developer. I do not
-                                                like others to push me into work...
-                                            </p>
-                                            <p>
-                                                <strong>Availability:</strong> 20 hrs / w
-                                            </p>
-                                            <p>
-                                                <strong>Price:</strong> negotiable
-                                            </p>
-                                        </div>
+                                            <i class="fa fa-user"></i> <strong>About me:</strong> I am a software developer and I am looking for a testing job...
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-users"></i> <strong>You should know:</strong> I am a self motivated developer. I do not
+                                            like others to push me into work...
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-clock-o"></i> <strong>Availability:</strong> 20 hrs / w
+                                        </p>
+                                        <p>
+                                            <i class="fa fa-usd"></i> <strong>Price:</strong> negotiable
                                         </p>
                                     </div>
                                 </div>
@@ -273,14 +327,12 @@
             </div>
         </div>
     </div>
-
-
-
+</div>
+</div>
 </div>
 <div id="about"></div>
 </div>
 <div class="push"></div>
-</div>
 <footer class="footer">
     <div class="container">
         <p>

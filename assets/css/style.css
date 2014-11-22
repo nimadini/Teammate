@@ -324,7 +324,7 @@ pre.prettyprint { background:#f4f4f4; padding: 1.5em; border:none; margin: 0 0 1
     font: 14px Sans-Serif, Tahoma, Geneva;
     box-shadow: 0 0 1px white;
     background: black;
-    opacity: 0.80;
+    opacity: 0.85;
     max-width: 335px;
     filter: alpha(opacity=40); /* For IE8 and earlier */
 }
@@ -531,4 +531,35 @@ img {
 
 .filter table td {
     width: 100%;
+}
+
+#modal {
+	position:absolute;
+	background:rgba(0,0,0,0.2);
+	border-radius:14px;
+	padding:8px;
+}
+
+#content {
+	border-radius:8px;
+	background:#fff;
+	padding:20px;
+	width: 500px;
+	height: 400px;
+	overflow-y: hidden;
+}
+
+#close {
+	position:absolute;
+	background-image: url('../images/cancel.png');
+	width:32px;
+	height:32px;
+	display: block;
+	top:12px;
+	right:30px;
+}
+
+#close:hover {
+	top:14px;
+	right:31px;
 }
