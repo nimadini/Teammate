@@ -11,6 +11,7 @@
     <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
     <link href="../assets/css/lightbox.css" rel="stylesheet">
     <link href="../assets/css/buttons.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
     <script src="../assets/js/jquery-2.1.1.min.js"></script>
     <script src="../assets/js/jquery-ui.min.js"></script>
     <script src="../assets/js/lightbox.min.js"></script>
@@ -27,9 +28,10 @@
                 minHeight: winH,
                 modal: true,
                 resizable: true,
-                title: 'Resume'
+                title: 'NimaDini.pdf'
             });
-            $( "#show_resume" ).click(function() {
+            $( "#show_resume" ).click(function(e) {
+                e.preventDefault();
                 $( "#dialog" ).dialog( "open" );
             });
         });
@@ -37,91 +39,174 @@
 </head>
 <body>
 <div class="wrapper">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Teammate</a>
-            </div>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Teammate</a>
+        </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="/home"><i class="glyphicon glyphicon-user"></i> Nima </a></li>
-                    <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group has-feedback">
-                                <input type="text" class="form-control" style="width: 380px;" placeholder="Search for people, projects and skills"/>
-                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                            </div>
-                        </form>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#"><i class="fa fa-bell"></i></a></li>
+                <li><a href="#"><i class="fa fa-weixin"></i></a></li>
+                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> Nima </a></li>
+                <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group has-feedback">
+                            <input type="text" class="form-control" style="width: 450px;" placeholder="Search for people, projects and skills"/>
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
-    <div class="container">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body nopadding">
-                    <div class="row no-gutter row-eq-height profile_background">
-                        <div class="col-lg-9 col-md-9 col-sm-8">
-                            <div class="CoverImage FlexEmbed FlexEmbed--16by9"
-                                 style="background-image:url(../assets/images/cover.jpg)"
-                                    >
+<div class="container">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body nopadding">
+                <div class="row no-gutter row-eq-height profile_background">
+                    <div class="col-lg-9 col-md-9 col-sm-8">
+                        <div class="CoverImage FlexEmbed FlexEmbed--16by9"
+                             style="background-image:url(../assets/images/cover.jpg)"
+                                >
+                            <div style="margin: 15px;">
+                                <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
+                                <a href="#" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 profile-label" style="margin: auto; height: 100%; vertical-align: middle;">
-                            <a href="../assets/images/profile.jpg" data-lightbox="image-1" data-title="My caption">
-                                <img src="../assets/images/profile.jpg" style="display: block;" class="img-circle col-centered" width="150" height="150" alt="Pic" />
-                            </a>
-                            <div class="profile_name"><a href="#">Nima Dini</a></div>
-                            <div class="profile_sub_info">100 views</div>
-                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 profile-label" style="margin: auto; height: 100%; vertical-align: middle;">
+                        <a href="../assets/images/profile.jpg" data-lightbox="image-1" data-title="My caption">
+                            <img src="../assets/images/profile.jpg" style="display: block;" class="img-circle col-centered" width="150" height="150" alt="Pic" />
+                        </a>
+                        <div class="profile_name"><a href="#">Nima Dini</a></div>
+                        <div class="profile_sub_info">101 Followers | 3,261 Views</div>
+                        <div class="profile_sub_info_small">AUSTIN, TX, USA</div>
                     </div>
                 </div>
             </div>
-
-            <div class="row row-eq-height">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="home-title">Education</div>
-                            <div class="website">
-
-                            </div>
-                        </div>
-                        <div class="panel-body nopadding">
-                            <div class="row">
+        </div>
+        <div id="dialog"></div>
+        <div class="row row-eq-height">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body nopadding">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-7 col-sm-12">
                                 <div class="home-element">
                                     <div class="home-sub-title">
-                                        Here is my resume: <a href="#" id="show_resume">resume</a>
-                                        <div id="dialog"></div>
+                                        <i class="fa fa-university"></i> Education
+                                    </div>
+                                    <div class="home-content">
+                                        The University of Texas at Austin
+
+                                    </div>
+                                    <div class="home-content-small">
+                                        MS, Software Engineering
+                                    </div>
+                                    <div class="home-content-tiny">
+                                        2014 – 2016 (expected)
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="home-element">
+                                    <div class="home-sub-title">
+                                        <i class="fa fa-suitcase"></i> Work Experience
+                                    </div>
+                                    <div class="home-content">
+                                        The University of Texas at Austin
+
+                                    </div>
+                                    <div class="home-content-small">
+                                        MS, Software Engineering
+                                    </div>
+                                    <div class="home-content-tiny">
+                                        2014 – 2016 (expected)
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="home-element">
+                                    <div class="home-sub-title">
+                                        <i class="fa fa-trophy"></i> Honors and Awards
+                                    </div>
+                                    <div class="home-content">
+                                        The University of Texas at Austin
+
+                                    </div>
+                                    <div class="home-content-small">
+                                        MS, Software Engineering
+                                    </div>
+                                    <div class="home-content-tiny">
+                                        2014 – 2016 (expected)
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="home-element">
+                                    <div class="home-sub-title">
+                                        <i class="fa fa-file-text"></i> Sample Projects
+                                    </div>
+                                    <div class="home-content">
+                                        The University of Texas at Austin
+
+                                    </div>
+                                    <div class="home-content-small">
+                                        MS, Software Engineering
+                                    </div>
+                                    <div class="home-content-tiny">
+                                        2014 – 2016 (expected)
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="home-element">
+                                    <div class="home-sub-title">
+                                        <i class="fa fa-magic"></i> Skills
+                                    </div>
+                                    <div class="home-content">
+                                        The University of Texas at Austin
+
+                                    </div>
+                                    <div class="home-content-small">
+                                        MS, Software Engineering
+                                    </div>
+                                    <div class="home-content-tiny">
+                                        2014 – 2016 (expected)
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="home-element">
+                                    <div class="home-sub-title">
+                                        <i class="fa fa-language"></i> Languages
+                                    </div>
+                                    <div class="home-content">
+                                        The University of Texas at Austin
+
+                                    </div>
+                                    <div class="home-content-small">
+                                        MS, Software Engineering
+                                    </div>
+                                    <div class="home-content-tiny">
+                                        2014 – 2016 (expected)
                                     </div>
                                 </div>
+
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12" style="margin: auto; height: 100%; vertical-align: middle;">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="home-title">Contact information</div>
-                        </div>
-                        <div class="panel-body nopadding">
-                            <div class="row">
+                            <div class="col-lg-5 col-md-5 col-sm-12">
                                 <div class="home-element">
-                                    <div class="home-sub-title">
+                                    <div class="home-content">
                                         <table>
                                             <col width="70">
                                             <tr>
@@ -143,7 +228,15 @@
                                                     <div class="skype">
                                                     </div>
                                                 </td>
-                                                <td>nimadini92</td>
+                                                <td><a href="callto:nimadini92">nimadini92</a></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="resume">
+                                                    </div>
+                                                </td>
+                                                <td><a href="#" id="show_resume">NimaDini.pdf</a></td>
                                             </tr>
                                             <tr>
                                                 <td>
@@ -152,8 +245,25 @@
                                                 </td>
                                                 <td><a href="http://www.nimadini.net" target="_blank">http://www.nimadini.net</a></td>
                                             </tr>
-
                                         </table>
+                                        <hr>
+                                        <p>
+                                        <div class="home-content">
+                                            <p>
+                                                <strong>About me:</strong> I am a software developer and I am looking for ...
+                                            </p>
+                                            <p>
+                                                <strong>You should know:</strong> I am a self motivated developer. I do not
+                                                like others to push me into work...
+                                            </p>
+                                            <p>
+                                                <strong>Availability:</strong> 20 hrs / w
+                                            </p>
+                                            <p>
+                                                <strong>Price:</strong> negotiable
+                                            </p>
+                                        </div>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -161,18 +271,20 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
-        <div id="about"></div>
     </div>
-    <div class="push"></div>
+
+
+
+</div>
+<div id="about"></div>
+</div>
+<div class="push"></div>
 </div>
 <footer class="footer">
     <div class="container">
         <p>
-            Designed by <a href="http://nimadini.net">Nima Dini</a> -- Last Updated: October 2014
+            Designed by <a href="http://nimadini.net">Nima Dini</a> -- Last Updated: December 2014
         </p>
         <div>
             <a href="#" data-toggle="modal" data-target="#info">About This Website</a>
