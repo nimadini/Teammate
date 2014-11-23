@@ -5,6 +5,7 @@ import json
 from init import *
 from google.appengine.api import users
 from domain.user import *
+from google.appengine.ext import blobstore
 
 
 class Home(webapp2.RequestHandler):
@@ -16,8 +17,10 @@ class Home(webapp2.RequestHandler):
             usr.total_num_of_elems = 0
             usr.put()
 
+        cover_upload_url = blobstore.create_upload_url('/upload')
         user_prop = {
-            'user': usr
+            'user': usr,
+            'cover_upload_url': cover_upload_url
         }
         template = JINJA_ENVIRONMENT.get_template('templates/home.html')
         self.response.write(template.render(user_prop))

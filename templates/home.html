@@ -87,7 +87,77 @@
                 });
 
                 $('#about').load('about');
+
+                $('#upload_link').on('click', function(e) {
+                    e.preventDefault();
+                    $('#selected_file').click();
+                });
+
+                $("#selected_file").change(function(){
+                    readURL(this);
+                    $('#upload_link').css('display', 'none');
+                    $('#cover_rej').css('display', 'inline');
+                    $('#cover_acc').css('display', 'inline');
+                });
+
+                $('#cover_rej').on('click', function(e) {
+                    e.preventDefault();
+                    $('#upload_link').css('display', 'inline');
+                    $('#cover_rej').css('display', 'none');
+                    $('#cover_acc').css('display', 'none');
+                    $('#cover_image').css('background-image', original_cover);
+                });
+
+                $('#cover_acc').on('click', function(e) {
+                    e.preventDefault();
+
+                    var data = new FormData();
+                    var url = $('#upload_cover_form').attr('action');
+                    var file = $('#selected_file')[0].files[0];
+                    console.log(file);
+                    data.append('img', file);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', url, true);
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'upload_url',
+                                success: function(msg) {
+                                    if (msg.successful) {
+                                        $('#upload_cover_form').attr('action', msg.cover_upload_url);
+                                        original_cover = $('#cover_image').css('background-image');
+                                        $('#upload_link').css('display', 'inline');
+                                        $('#cover_rej').css('display', 'none');
+                                        $('#cover_acc').css('display', 'none');
+                                    }
+                                    else {
+                                        alert("There is problem in communication with the server!"); // TODO
+                                    }
+                                },
+                                error: function(msg) {
+                                    alert("We apologize, but it seems there is problem in communication with the server! Please reload the page and continue.");
+                                }
+                            });
+                        } else {
+                            alert('An error occurred!');
+                        }
+                    };
+                    xhr.send(data);
+                });
+
+                var original_cover = $('#cover_image').css('background-image');
             });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#cover_image').css('background-image', 'url('+e.target.result+')');
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
         </script>
     {% endraw %}
 </head>
@@ -132,20 +202,27 @@
     <div class="panel-body nopadding">
         <div class="row no-gutter row-eq-height profile_background">
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                <div class="CoverImage FlexEmbed FlexEmbed--16by9"
-                     style="background-image:url(../assets/images/cover.jpg)"
+                <div id="cover_image" class="CoverImage FlexEmbed FlexEmbed--16by9"
+                     style="background-image:url({{user.get_cover_url()}})"
                         >
                     <div style="margin: 15px;">
                         <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
                         <a href="#" id="message_btn" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
                         <div id="cover_upload_btn" style="float: right;">
-                            <a class="my_tooltip" style="cursor: pointer;"
+                            <a id="upload_link" class="my_tooltip" style="cursor: pointer;"
                                title="Change Cover Picture">
                                 <i class="fa fa-camera fa-2x"></i>
                             </a>
+                            <a id="cover_rej" class="my_tooltip" style="cursor: pointer; text-decoration: none; display: none;"
+                               title="Cancel">
+                                <i class="fa fa-times-circle fa-3x text-danger"></i>
+                            </a>
+                            <a id="cover_acc" class="my_tooltip" style="cursor: pointer; display: none;"
+                               title="Confirm">
+                                <i class="fa fa-check-circle fa-3x text-success"></i>
+                            </a>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 profile-label" style="margin: auto; height: 100%; vertical-align: middle;">
@@ -161,6 +238,11 @@
 </div>
 <div id="dialog"></div>
 <div id="msg-dialog" title="Message"></div>
+<form id="upload_cover_form" role="form" action="{{cover_upload_url}}" enctype="multipart/form-data" method="POST">
+    <div style="display: none;" class="form-group col-md-2 col-sm-3">
+        <div><input id="selected_file" type="file" data-filename-placement="inside" title="Choose a file..." name="img"></div>
+    </div>
+</form>
 <div class="row row-eq-height">
 <div class="col-lg-12 col-md-12 col-sm-12">
     <div class="panel panel-default">
