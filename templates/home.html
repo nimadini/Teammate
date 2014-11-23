@@ -1,277 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Nima Dini">
-<title>Home</title>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
-<link href="../assets/css/lightbox.css" rel="stylesheet">
-<link href="../assets/css/buttons.css" rel="stylesheet">
-<link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-<link href="../assets/css/style.css" rel="stylesheet">
-<link href="../assets/css/home.css" rel="stylesheet">
-<script src="../assets/js/jquery-2.1.1.min.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
-<script src="../assets/js/jquery-ui.min.js"></script>
-<script src="../assets/js/lightbox.min.js"></script>
-<script src="../assets/js/mustache.js"></script>
-{% raw %}
-    <script language="javascript" type="text/javascript">
-    var in_progress = 0;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nima Dini">
+    <title>Home</title>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../assets/css/lightbox.css" rel="stylesheet">
+    <link href="../assets/css/buttons.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="../assets/css/home.css" rel="stylesheet">
+    <script src="../assets/js/jquery-2.1.1.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
+    <script src="../assets/js/lightbox.min.js"></script>
+    <script src="../assets/js/mustache.js"></script>
+    {% raw %}
+        <script language="javascript" type="text/javascript">
+            var in_progress = 0;
 
-    $(document).ready(function() {
-        var winW = $(window).width() - 180;
-        var winH = $(window).height() - 100;
-        $("#dialog").append($("<iframe />").attr("src", "http://www.nimadini.net/NimaDini.pdf").css({
-            'width' : '100%',
-            'height' : winH - 80
-        })).dialog({
-            autoOpen: false,
-            minWidth: winW,
-            minHeight: winH,
-            modal: true,
-            resizable: true,
-            title: 'NimaDini.pdf'
-        });
-        function addUser() {}
-        var form, name = $( "#name" ),
-                email = $( "#email" ),
-                password = $( "#password" ),
-                allFields = $( [] ).add( name ).add( email ).add( password );
-        var msg_dialog = $("#msg-dialog").dialog({
-            autoOpen: false,
-            height: 405,
-            width: 720,
-            modal: true,
-            buttons: {
-                "Send": addUser,
-                "Cancel": function() {
-                    msg_dialog.dialog( "close" );
-                }
-            },
-            close: function() {
-            }
-        });
-
-        $("#show_resume").click(function(e) {
-            e.preventDefault();
-            $("#dialog").dialog("open");
-        });
-
-        $("#message_btn").click(function(e) {
-            e.preventDefault();
-            $("#msg-dialog").dialog("open");
-        });
-        $('.my_tooltip').tooltip({
-            track: true,
-            content: function () {
-                return $(this).prop('title');
-            }
-        });
-
-        $('.home-content-wrapper').hover(function() {
-            if (in_progress == 0)
-                $(this).find('.edit').css('visibility', 'visible');
-
-        }, function() {
-            $(this).find('.edit').css('visibility', 'hidden');
-
-        });
-
-        $('.home-element').hover(function() {
-            if (in_progress == 0)
-                $(this).find('.add').css('visibility', 'visible');
-        }, function() {
-            $(this).find('.add').css('visibility', 'hidden');
-        });
-
-        $('#about').load('about');
-
-
-        $(document.body).on('click', '#edu_add_link', function(e) {
-            e.preventDefault();
-            if (in_progress == 1)
-                return false;
-            in_progress = 1;
-            $('#edu').load('education', function(data) {
-                var deg = 'BS';
-                $('.dropdown ul li').on('click', function(e) {
-                    e.preventDefault();
-                    deg = $(this).text();
-                    $('#degree').html(deg + ' <span class="caret"></span>');
+            $(document).ready(function() {
+                var winW = $(window).width() - 180;
+                var winH = $(window).height() - 100;
+                $("#dialog").append($("<iframe />").attr("src", "http://www.nimadini.net/NimaDini.pdf").css({
+                    'width' : '100%',
+                    'height' : winH - 80
+                })).dialog({
+                    autoOpen: false,
+                    minWidth: winW,
+                    minHeight: winH,
+                    modal: true,
+                    resizable: true,
+                    title: 'NimaDini.pdf'
                 });
-
-                var edu_template = '<div name="{{ id }}" class="home-content-wrapper"><div class="home-content"> {{ school }} &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ degree }} - {{ major }} | {{ gpa }}</div><div class="home-content-tiny">2014 – 2016 (expected)</div></div><div></div>';
-
-                $('#update_edu_btn').on('click', function(e) {
-                    var $info_msg = $('.info-msg');
-                    var $school = $('#school');
-                    var $gpa = $('#gpa');
-                    var $major = $('#major');
-
-                    e.preventDefault();
-                    if ($school.val().trim().length === 0) {
-                        $info_msg.css('color', 'darkred');
-                        $info_msg.html('<i class="fa fa-close"></i> No school name').fadeIn().delay(1500).fadeOut();
-                        return false;
+                function addUser() {}
+                var form, name = $( "#name" ),
+                        email = $( "#email" ),
+                        password = $( "#password" ),
+                        allFields = $( [] ).add( name ).add( email ).add( password );
+                var msg_dialog = $("#msg-dialog").dialog({
+                    autoOpen: false,
+                    height: 405,
+                    width: 720,
+                    modal: true,
+                    buttons: {
+                        "Send": addUser,
+                        "Cancel": function() {
+                            msg_dialog.dialog( "close" );
+                        }
+                    },
+                    close: function() {
                     }
-                    var edu = {
-                        type: '0_0',
-                        school: $school.val(),
-                        gpa: $gpa.val(),
-                        major: $major.val(),
-                        degree: deg
-                    };
-                    $.ajax({
-                        type: 'POST',
-                        url: 'home',
-                        data: edu,
-                        success: function(msg) {
-                            if (msg.successful) {
-                                $info_msg.css('color', 'green');
-                                $info_msg.html('<i class="fa fa-check"></i> Update Successful').fadeIn().delay(1500).fadeOut();
-                                edu.id = msg.id;
-                                $('#edu').after(Mustache.render(edu_template, edu));
-                                $('.home-content-wrapper').hover(function() {
-                                    if (in_progress == 0)
-                                        $(this).find('.edit').css('visibility', 'visible');
-
-                                }, function() {
-                                    $(this).find('.edit').css('visibility', 'hidden');
-
-                                });
-                            }
-                            else {
-                                alert("Unsuccess");
-                            }
-                        },
-                        error: function(msg) {
-                            alert("We apologize, but it seems there is problem in communication with the server!");
-                        }
-                    });
-                    $('#edu_add_panel').remove();
-                    in_progress = 0;
-                });
-            });
-            $('.home-element').find('.add').css('visibility', 'hidden');
-        });
-
-        $(document.body).on('click', '.edu_edit_link', function(e) {
-            e.preventDefault();
-            if (in_progress == 1)
-                return false;
-            in_progress = 1;
-            var $edu_elem = $(this).parent().parent();
-
-            $(this).parent().parent().next().load('education', function(data) {
-                var $delete_btn = $('#remove_edu_btn');
-                $delete_btn.css('display', 'inline');
-                var degree_major_gpa = $edu_elem.find('.home-content-small').text().split('-');
-                var degree = degree_major_gpa[0].trim();
-                var major_gpa = degree_major_gpa[1].split('|');
-                var major = major_gpa[0].trim();
-                var gpa = major_gpa[1].trim();
-
-                var $info_msg = $('.info-msg');
-                var name = '-1';
-
-                var school = $edu_elem.find('.home-content').html().split('&nbsp;')[0].trim();
-                name = $edu_elem.attr('name');
-                $('#school').val(school);
-                $('#gpa').val(gpa);
-                $('#major').val(major);
-                $('#degree').html(degree + ' <span class="caret"></span>');
-                $edu_elem.css('background-color', '#FFFFDC');
-                
-                $('.dropdown ul li').on('click', function(e) {
-                    e.preventDefault();
-                    deg = $(this).text();
-                    $('#degree').html(deg + ' <span class="caret"></span>');
                 });
 
-                $('#update_edu_btn').on('click', function(e) {
+                $("#show_resume").click(function(e) {
                     e.preventDefault();
-                    var $school = $('#school');
-                    if ($school.val().trim().length === 0) {
-                        $info_msg.css('color', 'darkred');
-                        $info_msg.html('<i class="fa fa-close"></i> No school name').fadeIn().delay(1500).fadeOut();
-                        return false;
+                    $("#dialog").dialog("open");
+                });
+
+                $("#message_btn").click(function(e) {
+                    e.preventDefault();
+                    $("#msg-dialog").dialog("open");
+                });
+
+                $('.my_tooltip').tooltip({
+                    track: true,
+                    content: function () {
+                        return $(this).prop('title');
                     }
-                    var edu = {
-                        type: '0_1',
-                        school: $school.val(),
-                        gpa: $('#gpa').val(),
-                        major: $('#major').val(),
-                        degree: $('#degree').html().split('<')[0],
-                        edu_id: name
-                    };
-                    $.ajax({
-                        type: 'POST',
-                        url: 'home',
-                        data: edu,
-                        success: function(msg) {
-                            if (msg.successful) {
-                                $info_msg.css('color', 'green');
-                                $info_msg.html('<i class="fa fa-check"></i> Update Successful').fadeIn().delay(1500).fadeOut();
-                                $edu_elem.find('.home-content').html(edu.school + ' &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a>');
-                                $edu_elem.find('.home-content-small').text(edu.degree + ' - ' + edu.major + ' | ' + edu.gpa);
-                            }
-                            else {
-                                alert("Unsuccess");
-                            }
-                        },
-                        error: function(msg) {
-                            alert("We apologize, but it seems there is problem in communication with the server!");
-                        }
-                    });
-                    $edu_elem.css('background-color', 'white');
-                    $('#edu_add_panel').remove();
-                    in_progress = 0;
                 });
 
-                $delete_btn.on('click', function(e) {
-                    e.preventDefault();
-                    var edu = {
-                        type: '0_2',
-                        edu_id: name
-                    };
-
-                    $.ajax({
-                        type: 'POST',
-                        url: 'home',
-                        data: edu,
-                        success: function(msg) {
-                            if (msg.successful) {
-                                $info_msg.css('color', 'green');
-                                $info_msg.html('<i class="fa fa-check"></i> Update Successful').fadeIn().delay(1500).fadeOut();
-                                $edu_elem.remove();
-                            }
-                            else {
-                                $info_msg.css('color', 'darkred');
-                                $info_msg.html('<i class="fa fa-close"></i> Not found').fadeIn().delay(1500).fadeOut();
-                                $edu_elem.css('background-color', 'white');
-                            }
-                        },
-                        error: function(msg) {
-                            alert("We apologize, but it seems there is problem in communication with the server!");
-                        }
-                    });
-
-                    $('#edu_add_panel').remove();
-                    in_progress = 0;
+                $('.home-content-wrapper').hover(function() {
+                    if (in_progress == 0)
+                        $(this).find('.edit').css('visibility', 'visible');
+                }, function() {
+                    $(this).find('.edit').css('visibility', 'hidden');
                 });
+
+                $('.home-element').hover(function() {
+                    if (in_progress == 0)
+                        $(this).find('.add').css('visibility', 'visible');
+                }, function() {
+                    $(this).find('.add').css('visibility', 'hidden');
+                });
+
+                $('#about').load('about');
             });
-        });
-    });
-    function remove_edu_add_panel() {
-        in_progress = 0;
-        $('#edu_add_panel').remove();
-        $('.home-content-wrapper').css('background-color', 'white');
-    }
-    </script>
-{% endraw %}
+        </script>
+    {% endraw %}
 </head>
 <body>
 <div class="wrapper">
@@ -561,4 +379,5 @@
     </div>
 </footer>
 </body>
+<script src="../assets/js/education.js"></script>
 </html>
