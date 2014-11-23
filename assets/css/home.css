@@ -210,3 +210,19 @@ hr {
         font-size: 10px;
     }
 }
+
+.edit {
+    float: right;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.add {
+    float: right;
+    font-size: 12px;
+    margin-right: 5px;
+    visibility: hidden;
+}
+
+.home-content-wrapper {
+}

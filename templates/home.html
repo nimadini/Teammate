@@ -6,17 +6,21 @@
     <meta name="author" content="Nima Dini">
     <title>Home</title>
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/css/style.css" rel="stylesheet">
-    <link href="../assets/css/home.css" rel="stylesheet">
     <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
     <link href="../assets/css/lightbox.css" rel="stylesheet">
     <link href="../assets/css/buttons.css" rel="stylesheet">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="../assets/css/home.css" rel="stylesheet">
     <script src="../assets/js/jquery-2.1.1.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/jquery-ui.min.js"></script>
     <script src="../assets/js/lightbox.min.js"></script>
+    <script src="../assets/js/mustache.js"></script>
+    {% raw %}
     <script language="javascript" type="text/javascript">
+        var edu_panel = 0;
+
         $(document).ready(function() {
             var winW = $(window).width() - 180;
             var winH = $(window).height() - 100;
@@ -66,15 +70,77 @@
                     return $(this).prop('title');
                 }
             });
+            $('.home-element').hover(function() {
+                if (edu_panel == 0)
+                    $(this).find('.add').css('visibility', 'visible');
+            },function() {
+                $(this).find('.add').css('visibility', 'hidden');
+            });
+
             $('#about').load('about');
+
+            $('#edu_add_link').click(function(e) {
+                e.preventDefault();
+                if (edu_panel == 1)
+                    return false;
+                edu_panel = 1;
+                $('#edu').load('education', function(data) {
+                    var $deg = 'BS';
+                    $('.dropdown ul li').on('click', function(e) {
+                        e.preventDefault();
+                        $deg = $(this).text();
+                        $('#degree').html($deg + ' <span class="caret"></span>');
+                    });
+
+                    var $success_msg = $('.success-msg');
+                    var $school = $('#school');
+                    var $gpa = $('#gpa');
+                    var $major = $('#major');
+                    var edu_template = '<div class="home-content-wrapper"><div class="home-content"> {{ school }}</div><div class="home-content-small"> {{ degree }}, {{ major }} </div><div class="home-content-tiny">2014 – 2016 (expected)</div></div>';
+                    $('#update_edu_btn').on('click', function(e) {
+                        e.preventDefault();
+                        var edu = {
+                            type: '0',
+                            school: $school.val(),
+                            gps: $gpa.val(),
+                            major: $major.val(),
+                            degree: $deg
+                        };
+                        $.ajax({
+                            type: 'POST',
+                            url: 'home',
+                            data: edu,
+                            success: function(msg) {
+                                if (msg.successful) {
+                                    $success_msg.html('<i class="fa fa-check"></i> Update Successful').fadeIn().delay(1500).fadeOut();
+                                    $('#edu').after(Mustache.render(edu_template, edu));
+                                }
+                                else {
+                                    alert("Unsuccess");
+                                }
+                            },
+                            error: function(msg) {
+                                alert("We apologize, but it seems there is problem in communication with the server!");
+                            }
+                        });
+                        $('#edu_add_panel').remove();
+                        edu_panel = 0;
+                    });
+                });
+                $('.home-element').find('.add').css('visibility', 'hidden');
+            });
         });
+        function remove_edu_add_panel() {
+            edu_panel = 0;
+            $('#edu_add_panel').remove();
+        }
     </script>
+    {% endraw %}
 </head>
 <body>
 <div class="wrapper">
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
@@ -85,7 +151,6 @@
             <a class="navbar-brand" href="/dashboard">Teammate</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="#"><i class="fa fa-bell"></i></a></li>
@@ -97,7 +162,7 @@
                 <li class="dropdown">
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group has-feedback">
-                            <input type="text" class="form-control" style="width: 450px;" placeholder="Search for people, projects and skills"/>
+                            <input type="text" id="search-bar" class="form-control" placeholder="Search for people, projects and skills"/>
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
                     </form>
@@ -151,38 +216,49 @@
                         <div class="home-element">
                             <div class="home-sub-title">
                                 <i class="fa fa-university"></i> Education
+                                <div class="success-msg" style="font-size: 14px; float: right; color: green;"></div>
+                                <div id="edu_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
                             </div>
-                            <div class="home-content">
-                                The University of Texas at Austin
+                            <div id="edu"></div>
+                            {% for edu in user.eds %}
+                                <div class="home-content-wrapper">
+                                    <div class="home-content">
+                                        {{edu.school}}
+                                    </div>
+                                    <div class="home-content-small">
+                                        {{edu.degree}}, {{edu.major}}
+                                    </div>
+                                    <div class="home-content-tiny">
+                                        2014 – 2016 (expected)
+                                    </div>
+                                </div>
+                            {% endfor %}
 
-                            </div>
-                            <div class="home-content-small">
-                                MS, Software Engineering
-                            </div>
-                            <div class="home-content-tiny">
-                                2014 – 2016 (expected)
-                            </div>
                             <hr>
                         </div>
                         <div class="home-element">
                             <div class="home-sub-title">
                                 <i class="fa fa-suitcase"></i> Work Experience
+                                <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
                             </div>
-                            <div class="home-content">
-                                The University of Texas at Austin
+                            <div>
+                                <div class="home-content">
+                                    The University of Texas at Austin {{ user.e }}
 
-                            </div>
-                            <div class="home-content-small">
-                                MS, Software Engineering
-                            </div>
-                            <div class="home-content-tiny">
-                                2014 – 2016 (expected)
+                                </div>
+                                <div class="home-content-small">
+                                    MS, Software Engineering
+                                </div>
+                                <div class="home-content-tiny">
+                                    2014 – 2016 (expected)
+                                </div>
                             </div>
                             <hr>
                         </div>
                         <div class="home-element">
                             <div class="home-sub-title">
                                 <i class="fa fa-trophy"></i> Honors and Awards
+                                <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
                             </div>
                             <div class="home-content">
                                 The University of Texas at Austin
@@ -199,6 +275,7 @@
                         <div class="home-element">
                             <div class="home-sub-title">
                                 <i class="fa fa-file-text"></i> Sample Projects
+                                <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
                             </div>
                             <div class="home-content">
                                 The University of Texas at Austin
@@ -215,6 +292,7 @@
                         <div class="home-element">
                             <div class="home-sub-title">
                                 <i class="fa fa-magic"></i> Skills
+                                <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
                             </div>
                             <div class="home-content">
                                 The University of Texas at Austin
@@ -231,6 +309,7 @@
                         <div class="home-element">
                             <div class="home-sub-title">
                                 <i class="fa fa-language"></i> Languages
+                                <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
                             </div>
                             <div class="home-content">
                                 The University of Texas at Austin

@@ -207,6 +207,10 @@ h1 {
     .my_nav .icon {
         font-size: 2em;
     }
+
+    #search-bar {
+        width: 270px !important;
+    }
 }
 
 #intelligent_gap {
@@ -490,32 +494,36 @@ img {
 }
 
 #modal {
-	position:absolute;
-	background:rgba(0,0,0,0.2);
-	border-radius:14px;
-	padding:8px;
+    position:absolute;
+    background:rgba(0,0,0,0.2);
+    border-radius:14px;
+    padding:8px;
 }
 
 #content {
-	border-radius:8px;
-	background:#fff;
-	padding:20px;
-	width: 500px;
-	height: 400px;
-	overflow-y: hidden;
+    border-radius:8px;
+    background:#fff;
+    padding:20px;
+    width: 500px;
+    height: 400px;
+    overflow-y: hidden;
 }
 
 #close {
-	position:absolute;
-	background-image: url('../images/cancel.png');
-	width:32px;
-	height:32px;
-	display: block;
-	top:12px;
-	right:30px;
+    position:absolute;
+    background-image: url('../images/cancel.png');
+    width:32px;
+    height:32px;
+    display: block;
+    top:12px;
+    right:30px;
 }
 
 #close:hover {
-	top:14px;
-	right:31px;
+    top:14px;
+    right:31px;
+}
+
+#search-bar {
+    width: 450px;
 }
