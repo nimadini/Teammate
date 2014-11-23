@@ -212,9 +212,9 @@ hr {
 }
 
 .edit {
-    float: right;
     font-size: 12px;
     margin-right: 5px;
+    visibility: hidden;
 }
 
 .add {
@@ -225,4 +225,10 @@ hr {
 }
 
 .home-content-wrapper {
+    margin-bottom: 20px;
+}
+
+.info-msg {
+    font-size: 14px;
+    float: right;
 }

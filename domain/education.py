@@ -3,6 +3,7 @@ from google.appengine.ext import ndb
 
 
 class Education(ndb.Model):
+    id = ndb.IntegerProperty()
     school = ndb.StringProperty()
     gpa = ndb.StringProperty()
     major = ndb.StringProperty()

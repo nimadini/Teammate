@@ -10,6 +10,7 @@ class User(ndb.Model):
     test = ndb.StringProperty()
     cover_pic = ndb.BlobKeyProperty()
     profile_pic = ndb.BlobKeyProperty()
+    total_num_of_elems = ndb.IntegerProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
 
     # notif + msg

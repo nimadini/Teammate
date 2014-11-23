@@ -3,7 +3,7 @@
         <div class="row">
             <div class="form-group col-lg-8 col-md-8 col-sm-8">
                 <label>School<sup style="color: darkred;">*</sup></label>
-                <input type="text" id="school" name="name" class="form-control" placeholder="MIT" required>
+                <input type="text" id="school" name="name" class="form-control warning" placeholder="MIT">
             </div>
             <div class="form-group col-lg-4 col-md-4 col-sm-4">
                 <label>GPA</label>
@@ -36,6 +36,7 @@
         <div class="row" style="margin-bottom: 12px;">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <button type="button" id="update_edu_btn" class="btn btn-primary"><i class="fa fa-check"></i> Save </button>
+                <button style="display: none;" type="button" id="remove_edu_btn" class="btn btn-danger"><i class="fa fa-trash"></i> Delete </button>
                 <button onclick="remove_edu_add_panel();" type="button" id="cancel_edu_btn" class="btn btn-default"><i class="fa fa-times"></i> Cancel</button>
             </div>
         </div>
