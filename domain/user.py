@@ -1,6 +1,7 @@
 __author__ = 'stanley'
 from google.appengine.ext import ndb
 from education import Education
+from reference import Reference
 from image import Image
 from google.appengine.api import images
 
@@ -13,6 +14,7 @@ class User(ndb.Model):
     cover_pic = ndb.StructuredProperty(Image)
     profile_pic = ndb.StructuredProperty(Image)
     total_num_of_elems = ndb.IntegerProperty()
+    reference = ndb.StructuredProperty(Reference)
     date = ndb.DateTimeProperty(auto_now_add=True)
 
     # notif + msg
@@ -21,7 +23,7 @@ class User(ndb.Model):
 
     def get_cover_url(self):
         if self.cover_pic is None:
-            return "assets/images/no_cover.png"
+            return "assets/images/default_cover.jpg"
         return images.get_serving_url(self.cover_pic.img) + '=s0'
 
 

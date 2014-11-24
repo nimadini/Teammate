@@ -44,11 +44,25 @@
     width: 15px;
 }
 
+.phone_tiny {
+    background: url('../images/phone_tiny.png') no-repeat;
+    margin: auto;
+    height: 23px;
+    width: 11px;
+}
+
 .email {
     background: url('../images/email.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
+}
+
+.email_tiny {
+    background: url('../images/email_tiny.png') no-repeat;
+    margin: auto;
+    height: 24px;
+    width: 24px;
 }
 
 .skype {
@@ -58,11 +72,25 @@
     width: 32px;
 }
 
+.skype_tiny {
+    background: url('../images/skype_tiny.png') no-repeat;
+    margin: auto;
+    height: 24px;
+    width: 24px;
+}
+
 .website {
     background: url('../images/website.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
+}
+
+.website_tiny {
+    background: url('../images/website_tiny.png') no-repeat;
+    margin: auto;
+    height: 24px;
+    width: 24px;
 }
 
 .resume {
@@ -72,6 +100,13 @@
     width: 32px;
 }
 
+.resume_tiny {
+    background: url('../images/resume_tiny.png') no-repeat;
+    margin: auto;
+    height: 24px;
+    width: 24px;
+}
+
 .github {
     background: url('../images/github.png') no-repeat;
     margin: auto;
@@ -79,11 +114,25 @@
     width: 32px;
 }
 
+.github_tiny {
+    background: url('../images/github_tiny.png') no-repeat;
+    margin: auto;
+    height: 24px;
+    width: 24px;
+}
+
 .linked_in {
     background: url('../images/linkedin.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
+}
+
+.linked_in_tiny {
+    background: url('../images/linkedin_tiny.png') no-repeat;
+    margin: auto;
+    height: 24px;
+    width: 24px;
 }
 
 .home-content table tr {
@@ -215,6 +264,7 @@ hr {
     font-size: 12px;
     margin-right: 5px;
     visibility: hidden;
+    text-decoration: none !important;
 }
 
 .add {
@@ -224,11 +274,20 @@ hr {
     visibility: hidden;
 }
 
+.add a {
+    text-decoration: none !important;
+}
+
 .home-content-wrapper {
     margin-bottom: 20px;
 }
 
 .info-msg {
+    font-size: 14px;
+    float: right;
+}
+
+.info-msg-ref {
     font-size: 14px;
     float: right;
 }

@@ -6,7 +6,7 @@ import webapp2
 import json
 
 
-class UploadURL(webapp2.RequestHandler):
+class UploadURLHandler(webapp2.RequestHandler):
     def post(self):
         usr = user_key(users.get_current_user().email()).get()
         if usr is None:

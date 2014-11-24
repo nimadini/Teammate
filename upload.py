@@ -6,7 +6,7 @@ from domain.image import Image
 import json
 
 
-class Upload(blobstore_handlers.BlobstoreUploadHandler):
+class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
         upload_files = self.get_uploads('img')
         if len(upload_files) == 0:

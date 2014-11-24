@@ -8,13 +8,14 @@ from domain.user import *
 from google.appengine.ext import blobstore
 
 
-class Home(webapp2.RequestHandler):
+class HomeHandler(webapp2.RequestHandler):
     def get(self):
         usr = user_key(users.get_current_user().email()).get()
         if usr is None:
             usr = User(key=user_key(users.get_current_user().email()))  # TODO: Is parent required? :O
             usr.id = users.get_current_user()
             usr.total_num_of_elems = 0
+            usr.reference = Reference()
             usr.put()
 
         cover_upload_url = blobstore.create_upload_url('/upload')

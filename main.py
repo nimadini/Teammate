@@ -1,15 +1,19 @@
 __author__ = 'stanley'
 import webapp2
-from dashboard import Dashboard
-from home import Home
-from about import About
-from upload import Upload
-from upload_url import UploadURL
-from education import Education
+from dashboard import DashboardHandler
+from home import HomeHandler
+from about import AboutHandler
+from upload import UploadHandler
+from upload_url import UploadURLHandler
+from education import EducationHandler
+from reference import ReferenceHandler
+from references import ReferencesHandler
 
-app = webapp2.WSGIApplication([('/home', Home),
-                               ('/dashboard', Dashboard),
-                               ('/education', Education),
-                               ('/upload', Upload),
-                               ('/upload_url', UploadURL),
-                               ('/about', About)], debug=True)
+app = webapp2.WSGIApplication([('/home', HomeHandler),
+                               ('/dashboard', DashboardHandler),
+                               ('/education', EducationHandler),
+                               ('/references', ReferencesHandler),
+                               ('/upload', UploadHandler),
+                               ('/upload_url', UploadURLHandler),
+                               ('/reference', ReferenceHandler),
+                               ('/about', AboutHandler)], debug=True)
