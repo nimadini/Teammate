@@ -19,9 +19,12 @@ class HomeHandler(webapp2.RequestHandler):
             usr.put()
 
         cover_upload_url = blobstore.create_upload_url('/upload')
+        resume_upload_url = blobstore.create_upload_url('/upload')
+
         user_prop = {
             'user': usr,
-            'cover_upload_url': cover_upload_url
+            'cover_upload_url': cover_upload_url,
+            'resume_upload_url': resume_upload_url
         }
         template = JINJA_ENVIRONMENT.get_template('templates/home.html')
         self.response.write(template.render(user_prop))

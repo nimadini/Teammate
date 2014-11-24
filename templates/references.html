@@ -3,7 +3,7 @@
         <div class="row">
             <div class="form-group col-lg-3 col-md-3 col-sm-3">
                 <div class="dropdown">
-                    <button class="btn btn-info button-small dropdown-toggle"  style="width:80px; height: 36px; vertical-align: middle;" type="button" id="gender" data-toggle="dropdown">
+                    <button class="btn btn-info button-small dropdown-toggle" style="width:79px; height: 36px; vertical-align: middle;" type="button" id="gender" data-toggle="dropdown">
                         <div id="degree">
                             <div id="icon_holder"><div class="phone_tiny"></div></div>
                             <span class="caret" style="float: right;"></span>
@@ -20,8 +20,24 @@
                     </ul>
                 </div>
             </div>
-            <div style="margin-left: -23px;" class="form-group col-lg-9 col-md-9 col-sm-9">
+            <div style="margin-left: -25px;" class="form-group col-lg-9 col-md-9 col-sm-9">
                 <input id="ref_in" type="text" id="gpa" name="name" class="form-control" placeholder="512-965-8090">
+                <a id="upload_resume_link" class="my_tooltip" style="cursor: pointer; display: none; text-decoration: none;"
+                   title="Upload Resume">
+                    <i class="fa fa-file-pdf-o fa-2x"></i>
+                    &nbsp;
+                </a>
+
+                <a id="upload_resume_confirm_link" class="my_tooltip text-success" style="cursor: pointer; text-decoration: none; display: none;"
+                   title="Upload">
+                    <i class="fa fa-cloud-upload fa-2x"></i>
+                    &nbsp;
+                </a>
+
+                <a id="upload_resume_cancel_link" class="my_tooltip text-danger" style="cursor: pointer; text-decoration: none; display: none;"
+                   title="Cancel">
+                    <i class="fa fa-close fa-2x"></i>
+                </a>
             </div>
         </div>
         <div class="row" style="margin-bottom: 12px;">

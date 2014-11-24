@@ -8,6 +8,7 @@ from upload_url import UploadURLHandler
 from education import EducationHandler
 from reference import ReferenceHandler
 from references import ReferencesHandler
+from resume_current_url import ResumeCurrentURLHandler
 
 app = webapp2.WSGIApplication([('/home', HomeHandler),
                                ('/dashboard', DashboardHandler),
@@ -16,4 +17,5 @@ app = webapp2.WSGIApplication([('/home', HomeHandler),
                                ('/upload', UploadHandler),
                                ('/upload_url', UploadURLHandler),
                                ('/reference', ReferenceHandler),
+                               ('/resume_current_url', ResumeCurrentURLHandler),
                                ('/about', AboutHandler)], debug=True)

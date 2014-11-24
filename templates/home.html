@@ -24,7 +24,8 @@
     $(document).ready(function() {
         var winW = $(window).width() - 180;
         var winH = $(window).height() - 100;
-        $("#dialog").append($("<iframe />").attr("src", "http://www.nimadini.net/NimaDini.pdf").css({
+        var $show_resume = $('#show_resume');
+        $("#dialog").append($('<iframe id="dialog_iframe" />').attr("src", $show_resume.attr('name')).css({
             'width': '100%',
             'height': winH - 80
         })).dialog({
@@ -33,7 +34,7 @@
             minHeight: winH,
             modal: true,
             resizable: true,
-            title: 'NimaDini.pdf'
+            title: $show_resume.text()
         });
         function addUser() {
         }
@@ -102,6 +103,12 @@
             $('#cover_acc').css('display', 'inline');
         });
 
+        $("#selected_resume").change(function () {
+            $('#upload_resume_link').css('display', 'none');
+            $('#upload_resume_cancel_link').css('display', 'inline');
+            $('#upload_resume_confirm_link').css('display', 'inline');
+        });
+
         $('#cover_rej').on('click', function (e) {
             e.preventDefault();
             $('#upload_link').css('display', 'inline');
@@ -120,8 +127,8 @@
             var data = new FormData();
             var url = $('#upload_cover_form').attr('action');
             var file = $('#selected_file')[0].files[0];
-            console.log(file);
             data.append('img', file);
+            data.append('type', '0');
             var xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             xhr.onload = function () {
@@ -159,6 +166,7 @@
         var github_template = '<tr><td><div class="github"></div></td><td id="github_elem"><a href="{{ ref }}" target="_blank">{{ ref }}</a></td></tr>';
         var linkedin_template = '<tr><td><div class="linked_in"></div></td><td id="linkedin_elem"><a href="{{ ref }}" target="_blank">{{ ref }}</a></td></tr>';
         var website_template = '<tr><td><div class="website"></div></td><td id="website_elem"><a href="{{ ref }}" target="_blank">{{ ref }}</a></td></tr>';
+        var resume_template = '<tr><td><div class="resume"></div></td><td id="resume_elem"><a id="show_resume" name="{{ url }}" href="#" target="_blank">{{ name }}</a></td></tr>';
 
         $(document.body).on('click', '.references_panel', function (e) {
             e.preventDefault();
@@ -174,43 +182,64 @@
                     e.preventDefault();
                     var ref = $(this).text();
 
-                    if (ref == 'Phone') {
-                        $icon_holder.html('<div class="phone_tiny"></div>');
-                        $ref_in.attr('placeholder', '512-965-8090');
-                        $ref_in.val($('#phone_elem').text());
-                        feature = 0;
-                    }
-                    else if (ref == 'Email') {
-                        $icon_holder.html('<div class="email_tiny"></div>');
-                        $ref_in.attr('placeholder', 'nima.dini@utexas.edu');
-                        $ref_in.val($('#email_elem').text());
-                        feature = 1;
-                    }
-                    else if (ref == 'Skype ID') {
-                        $icon_holder.html('<div class="skype_tiny"></div>');
-                        $ref_in.attr('placeholder', 'nimadini92');
-                        $ref_in.val($('#skype_elem').text());
-                        feature = 2;
-                    }
-                    else if (ref == 'GitHub') {
-                        $icon_holder.html('<div class="github_tiny"></div>');
-                        $ref_in.attr('placeholder', 'https://github.com/nimadini');
-                        $ref_in.val($('#github_elem').text());
-                        feature = 3;
-                    }
-                    else if (ref == 'LinkedIn') {
-                        $icon_holder.html('<div class="linked_in_tiny"></div>');
-                        $ref_in.attr('placeholder', 'https://www.linkedin.com/in/nimadini');
-                        $ref_in.val($('#linkedin_elem').text());
-                        feature = 4;
-                    }
-                    else if (ref == 'Resume')
+                    if (ref == "Resume") {
+                        $ref_in.css('display', 'none');
+                        $('#upload_resume_link').css('display', 'inline');
+                        $ref_in.parent().css('margin-left', '-5px');
                         $icon_holder.html('<div class="resume_tiny"></div>');
-                    else if (ref == 'Homepage') {
-                        $icon_holder.html('<div class="website_tiny"></div>');
-                        $ref_in.attr('placeholder', 'http://www.nimadini.net/');
-                        $ref_in.val($('#website_elem').text());
-                        feature = 5;
+                        $('.my_tooltip').tooltip({
+                            track: true,
+                            content: function () {
+                                return $(this).prop('title');
+                            }
+                        });
+                        $('#update_ref_btn').prop("disabled", true);
+                    }
+                    else {
+                        $('#update_ref_btn').prop("disabled", false);
+
+                        $ref_in.css('display', 'inline');
+                        $('#upload_resume_link').css('display', 'none');
+                        $('#upload_resume_cancel_link').css('display', 'none');
+                        $('#upload_resume_confirm_link').css('display', 'none');
+                        $ref_in.parent().css('margin-left', '-25px');
+
+                        if (ref == 'Phone') {
+                            $icon_holder.html('<div class="phone_tiny"></div>');
+                            $ref_in.attr('placeholder', '512-965-8090');
+                            $ref_in.val($('#phone_elem').text());
+                            feature = 0;
+                        }
+                        else if (ref == 'Email') {
+                            $icon_holder.html('<div class="email_tiny"></div>');
+                            $ref_in.attr('placeholder', 'nima.dini@utexas.edu');
+                            $ref_in.val($('#email_elem').text());
+                            feature = 1;
+                        }
+                        else if (ref == 'Skype ID') {
+                            $icon_holder.html('<div class="skype_tiny"></div>');
+                            $ref_in.attr('placeholder', 'nimadini92');
+                            $ref_in.val($('#skype_elem').text());
+                            feature = 2;
+                        }
+                        else if (ref == 'GitHub') {
+                            $icon_holder.html('<div class="github_tiny"></div>');
+                            $ref_in.attr('placeholder', 'https://github.com/nimadini');
+                            $ref_in.val($('#github_elem').text());
+                            feature = 3;
+                        }
+                        else if (ref == 'LinkedIn') {
+                            $icon_holder.html('<div class="linked_in_tiny"></div>');
+                            $ref_in.attr('placeholder', 'https://www.linkedin.com/in/nimadini');
+                            $ref_in.val($('#linkedin_elem').text());
+                            feature = 4;
+                        }
+                        else if (ref == 'Homepage') {
+                            $icon_holder.html('<div class="website_tiny"></div>');
+                            $ref_in.attr('placeholder', 'http://www.nimadini.net/');
+                            $ref_in.val($('#website_elem').text());
+                            feature = 5;
+                        }
                     }
                 });
 
@@ -241,7 +270,6 @@
                             if (msg.successful) {
                                 $info_msg_ref.css('color', 'green');
                                 $info_msg_ref.html('<i class="fa fa-check"></i> Update Successful').fadeIn().delay(1500).fadeOut();
-                                /////////////////////////
 
                                 if (feature == 0) {
                                     var $phone_elem= $("#phone_elem");
@@ -308,6 +336,86 @@
                             alert("We apologize, but it seems there is problem in communication with the server!");
                         }
                     });
+                });
+                $('#upload_resume_link').on('click', function (e) {
+                    e.preventDefault();
+                    $('#selected_resume').click();
+                });
+
+                $('#upload_resume_cancel_link').on('click', function(e) {
+                    e.preventDefault();
+                    $('#upload_resume_link').css('display', 'inline');
+                    $('#upload_resume_cancel_link').css('display', 'none');
+                    $('#upload_resume_confirm_link').css('display', 'none');
+                });
+
+                $('#upload_resume_confirm_link').on('click', function(e) {
+                    e.preventDefault();
+
+                    $('#upload_resume_cancel_link').css('display', 'none');
+                    $('#upload_resume_confirm_link').css('display', 'none');
+
+                    var data = new FormData();
+                    var url = $('#upload_resume_form').attr('action');
+                    var file = $('#selected_resume')[0].files[0];
+                    data.append('file', file);
+                    data.append('type', '1');
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', url, true);
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'resume_current_url',
+                                success: function (msg) {
+                                    if (msg.resume_current_url == 'NONE') {
+                                        return;
+                                    }
+                                    var $resume_elem= $("#resume_elem");
+                                    if ($resume_elem.length) {
+                                        $resume_elem.html('<a id="show_resume" name="' + msg.resume_current_url +'" href="#" target="_blank">' + msg.pdf_name + '</a>');
+                                    }
+                                    else {
+                                        var resume_info = {};
+                                        resume_info.url = msg.resume_current_url;
+                                        resume_info.name = msg.pdf_name;
+                                        $('#_anchor_').after(Mustache.render(resume_template, resume_info));
+                                    }
+
+                                    // Duplicate code! Needs Refactoring...
+                                    $("#show_resume").click(function (e) {
+                                        e.preventDefault();
+                                        $("#dialog").dialog("open");
+                                    });
+
+                                    $('#dialog_iframe').attr("src", msg.resume_current_url);
+                                },
+                                error: function (msg) {
+                                    alert("We apologize, but it seems there is problem in communication with the server! Please reload the page and continue.");
+                                }
+                            });
+                            $.ajax({
+                                type: 'POST',
+                                url: 'upload_url',
+                                success: function (msg) {
+                                    if (msg.successful) {
+                                        $('#upload_resume_form').attr('action', msg.cover_upload_url); // TODO: change esme cover_upload_url
+
+                                    }
+                                    else {
+                                        alert("There is problem in communication with the server!"); // TODO
+                                    }
+                                },
+                                error: function (msg) {
+                                    alert("We apologize, but it seems there is problem in communication with the server! Please reload the page and continue.");
+                                }
+                            });
+                        } else {
+                            alert('An error occurred!');
+                        }
+                        $('#upload_resume_link').css('display', 'inline');
+                    };
+                    xhr.send(data);
                 });
             });
         });
@@ -410,9 +518,14 @@
 </div>
 <div id="dialog"></div>
 <div id="msg-dialog" title="Message"></div>
-<form id="upload_cover_form" role="form" action="{{cover_upload_url}}" enctype="multipart/form-data" method="POST">
-    <div style="display: none;" class="form-group col-md-2 col-sm-3">
+<form id="upload_cover_form" role="form" action="{{cover_upload_url}}">
+    <div style="display: none;">
         <div><input id="selected_file" type="file" data-filename-placement="inside" title="Choose a file..." name="img"></div>
+    </div>
+</form>
+<form id="upload_resume_form" role="form" action="{{resume_upload_url}}">
+    <div style="display: none;">
+        <div><input id="selected_resume" type="file" data-filename-placement="inside" title="Choose a file..." name="img"></div>
     </div>
 </form>
 <div class="row row-eq-height">
@@ -598,13 +711,16 @@
                             <td id="linkedin_elem"><a href="{{ user.reference.linkedin }}" target="_blank">{{ user.reference.linkedin }}</a></td>
                         </tr>
                     {% endif %}
-                    <tr>
-                        <td>
-                            <div class="resume">
-                            </div>
-                        </td>
-                        <td><a href="#" id="show_resume">NimaDini.pdf</a></td>
-                    </tr>
+                    <tr id="_anchor_" style="display: none;"></tr>
+                    {% if user.reference.has_resume() %}
+                        <tr>
+                            <td>
+                                <div class="resume">
+                                </div>
+                            </td>
+                            <td id="resume_elem"><a id="show_resume" name="{{ user.reference.get_resume_url() }}" href="#" >{{ user.reference.resume.name }}</a></td>
+                        </tr>
+                    {% endif %}
                     <tr id="anchor6" style="display: none;"></tr>
                     {% if user.reference.website %}
                         <tr>
