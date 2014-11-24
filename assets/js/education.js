@@ -71,6 +71,8 @@ $(document.body).on('click', '#edu_add_link', function(e) {
 
 $(document.body).on('click', '.edu_edit_link', function(e) {
     e.preventDefault();
+    $('.add').css('visibility', 'hidden');
+    $('.edit').css('visibility', 'hidden');
     if (in_progress == 1)
         return false;
     in_progress = 1;
