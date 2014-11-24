@@ -17,17 +17,25 @@ $(document.body).on('click', '#edu_add_link', function(e) {
         var edu_template = '<div name="{{ id }}" class="home-content-wrapper"><div class="home-content"> {{ school }} &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ degree }} - {{ major }} | {{ gpa }}</div><div class="home-content-tiny">2014 – 2016 (expected)</div></div><div></div>';
 
         $('#update_edu_btn').on('click', function(e) {
+            e.preventDefault();
+
             var $info_msg = $('.info-msg');
             var $school = $('#school');
             var $gpa = $('#gpa');
             var $major = $('#major');
 
-            e.preventDefault();
             if ($school.val().trim().length === 0) {
                 $info_msg.css('color', 'darkred');
                 $info_msg.html('<i class="fa fa-close"></i> No school name').fadeIn().delay(1500).fadeOut();
                 return false;
             }
+
+            if (!is_gpa($gpa.val())) {
+                $info_msg.css('color', 'darkred');
+                $info_msg.html('<i class="fa fa-close"></i> Invalid GPA').fadeIn().delay(1500).fadeOut();
+                return false;
+            }
+
             var edu = {
                 type: '0_0',
                 school: $school.val(),
@@ -35,6 +43,7 @@ $(document.body).on('click', '#edu_add_link', function(e) {
                 major: $major.val(),
                 degree: deg
             };
+
             $.ajax({
                 type: 'POST',
                 url: 'home',
@@ -112,10 +121,16 @@ $(document.body).on('click', '.edu_edit_link', function(e) {
                 $info_msg.html('<i class="fa fa-close"></i> No school name').fadeIn().delay(1500).fadeOut();
                 return false;
             }
+            var $gpa = $('#gpa');
+            if (!is_gpa($gpa.val())) {
+                $info_msg.css('color', 'darkred');
+                $info_msg.html('<i class="fa fa-close"></i> Invalid GPA').fadeIn().delay(1500).fadeOut();
+                return false;
+            }
             var edu = {
                 type: '0_1',
                 school: $school.val(),
-                gpa: $('#gpa').val(),
+                gpa: $gpa.val(),
                 major: $('#major').val(),
                 degree: $('#degree').html().split('<')[0],
                 edu_id: name
@@ -182,4 +197,28 @@ function remove_edu_add_panel() {
     in_progress = 0;
     $('#edu_add_panel').remove();
     $('.home-content-wrapper').css('background-color', 'white');
+}
+
+function is_gpa(gpa) {
+    if (gpa.trim() == '')
+        return true;
+    var subs = gpa.split('/');
+    if (subs.length != 2)
+        return false;
+    var value = gpa.split('/')[0].trim();
+    var bound = gpa.split('/')[1].trim();
+
+    if (value == undefined || bound == undefined)
+        return false;
+
+    console.log("value is: " + value);
+    console.log("bound is: " + bound);
+    console.log("Here");
+    if (value.match(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/) == null ||
+        bound.match(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/) == null)
+        return false;
+    console.log("There");
+    value = parseFloat(value);
+    bound = parseFloat(bound);
+    return value <= bound;
 }

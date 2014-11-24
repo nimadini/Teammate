@@ -1,103 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Nima Dini">
-<title>Home</title>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
-<link href="../assets/css/lightbox.css" rel="stylesheet">
-<link href="../assets/css/buttons.css" rel="stylesheet">
-<link href="../assets/css/font-awesome.min.css" rel="stylesheet">
-<link href="../assets/css/style.css" rel="stylesheet">
-<link href="../assets/css/home.css" rel="stylesheet">
-<script src="../assets/js/jquery-2.1.1.min.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
-<script src="../assets/js/jquery-ui.min.js"></script>
-<script src="../assets/js/lightbox.min.js"></script>
-<script src="../assets/js/mustache.js"></script>
-{% raw %}
-    <script language="javascript" type="text/javascript">
-    var in_progress = 0;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nima Dini">
+    <title>Home</title>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="../assets/css/lightbox.css" rel="stylesheet">
+    <link href="../assets/css/buttons.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link href="../assets/css/home.css" rel="stylesheet">
+    <script src="../assets/js/jquery-2.1.1.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
+    <script src="../assets/js/lightbox.min.js"></script>
+    <script src="../assets/js/mustache.js"></script>
+    {% raw %}
+        <script language="javascript" type="text/javascript">
+            var in_progress = 0;
 
-    $(document).ready(function() {
-        var winW = $(window).width() - 180;
-        var winH = $(window).height() - 100;
-        var $show_resume = $('#show_resume');
-        $("#dialog").append($('<iframe id="dialog_iframe" />').attr("src", $show_resume.attr('name')).css({
-            'width': '100%',
-            'height': winH - 80
-        })).dialog({
-            autoOpen: false,
-            minWidth: winW,
-            minHeight: winH,
-            modal: true,
-            resizable: true,
-            title: $show_resume.text()
-        });
-        function addUser() {
-        }
-
-        var form, name = $("#name"),
-                email = $("#email"),
-                password = $("#password"),
-                allFields = $([]).add(name).add(email).add(password);
-        var msg_dialog = $("#msg-dialog").dialog({
-            autoOpen: false,
-            height: 405,
-            width: 720,
-            modal: true,
-            buttons: {
-                "Send": addUser,
-                "Cancel": function () {
-                    msg_dialog.dialog("close");
+            $(document).ready(function() {
+                var winW = $(window).width() - 180;
+                var winH = $(window).height() - 100;
+                var $show_resume = $('#show_resume');
+                $("#dialog").append($('<iframe id="dialog_iframe" />').attr("src", $show_resume.attr('name')).css({
+                    'width': '100%',
+                    'height': winH - 80
+                })).dialog({
+                    autoOpen: false,
+                    minWidth: winW,
+                    minHeight: winH,
+                    modal: true,
+                    resizable: true,
+                    title: $show_resume.text()
+                });
+                function addUser() {
                 }
-            },
-            close: function () {
-            }
-        });
 
-        $("#show_resume").click(function (e) {
-            e.preventDefault();
-            $("#dialog").dialog("open");
-        });
+                var form, name = $("#name"),
+                        email = $("#email"),
+                        password = $("#password"),
+                        allFields = $([]).add(name).add(email).add(password);
+                var msg_dialog = $("#msg-dialog").dialog({
+                    autoOpen: false,
+                    height: 405,
+                    width: 720,
+                    modal: true,
+                    buttons: {
+                        "Send": addUser,
+                        "Cancel": function () {
+                            msg_dialog.dialog("close");
+                        }
+                    },
+                    close: function () {
+                    }
+                });
 
-        $("#message_btn").click(function (e) {
-            e.preventDefault();
-            $("#msg-dialog").dialog("open");
-        });
+                $("#show_resume").click(function (e) {
+                    e.preventDefault();
+                    $("#dialog").dialog("open");
+                });
 
-        $('.my_tooltip').tooltip({
-            track: true,
-            content: function () {
-                return $(this).prop('title');
-            }
-        });
+                $("#message_btn").click(function (e) {
+                    e.preventDefault();
+                    $("#msg-dialog").dialog("open");
+                });
 
-        $('.home-content-wrapper').hover(function () {
-            if (in_progress == 0)
-                $(this).find('.edit').css('visibility', 'visible');
-        }, function () {
-            $(this).find('.edit').css('visibility', 'hidden');
-        });
+                $('.my_tooltip').tooltip({
+                    track: true,
+                    content: function () {
+                        return $(this).prop('title');
+                    }
+                });
 
-        $('.home-element').hover(function () {
-            if (in_progress == 0)
-                $(this).find('.add').css('visibility', 'visible');
-        }, function () {
-            $(this).find('.add').css('visibility', 'hidden');
-        });
+                $('.home-content-wrapper').hover(function () {
+                    if (in_progress == 0)
+                        $(this).find('.edit').css('visibility', 'visible');
+                }, function () {
+                    $(this).find('.edit').css('visibility', 'hidden');
+                });
 
-        $('#about').load('about');
+                $('.home-element').hover(function () {
+                    if (in_progress == 0)
+                        $(this).find('.add').css('visibility', 'visible');
+                }, function () {
+                    $(this).find('.add').css('visibility', 'hidden');
+                });
 
-        $('#upload_link').on('click', function (e) {
-            e.preventDefault();
-            $('#selected_file').click();
-        });
-    });
-    </script>
-{% endraw %}
+                $('#about').load('about');
+
+                $('#upload_link').on('click', function (e) {
+                    e.preventDefault();
+                    $('#selected_file').click();
+                });
+            });
+        </script>
+    {% endraw %}
 </head>
 <body>
 <div class="wrapper">
@@ -168,7 +168,7 @@
                     <img src="../assets/images/profile.jpg" class="img-circle col-centered profile-img" alt="Pic" />
                 </a>
                 <div class="profile_name"><a href="#">Nima Dini</a></div>
-                <div class="profile_sub_info">101 Followers | 3,261 Views</div>
+                <div class="profile_sub_info">101 Followers | {{ user.get_views_num_for_print() }} Views</div>
                 <div class="profile_sub_info_small">AUSTIN, TX, USA</div>
             </div>
         </div>

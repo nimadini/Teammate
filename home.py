@@ -6,6 +6,7 @@ from init import *
 from google.appengine.api import users
 from domain.user import *
 from google.appengine.ext import blobstore
+from util.sanity_check import*
 
 
 class HomeHandler(webapp2.RequestHandler):
@@ -16,6 +17,7 @@ class HomeHandler(webapp2.RequestHandler):
             usr.id = users.get_current_user()
             usr.total_num_of_elems = 0
             usr.reference = Reference()
+            usr.views = 0
             usr.put()
 
         cover_upload_url = blobstore.create_upload_url('/upload')
@@ -34,27 +36,28 @@ class HomeHandler(webapp2.RequestHandler):
         if req_type == '':
             return  # TODO
 
+        usr = user_key(users.get_current_user().email()).get()
+        if not user_is_logged_in(usr):
+            return
+
         status = False
         elem_id = -1
 
         if req_type == unicode('0_0'):
-            status, elem_id = self.add_edu(self.request)
+            status, elem_id = self.add_edu(self.request, usr)
 
         elif req_type == unicode('0_1'):
-            status, elem_id = self.modify_edu(self.request)
+            status, elem_id = self.modify_edu(self.request, usr)
 
         elif req_type == unicode('0_2'):
-            status, elem_id = self.remove_edu(self.request)
+            status, elem_id = self.remove_edu(self.request, usr)
 
         self.response.headers['Content-Type'] = 'application/json'
         result = json.dumps({'successful': status, 'id': elem_id})
 
         self.response.write(result)
 
-    def add_edu(self, req):
-        usr = user_key(users.get_current_user().email()).get()
-        if usr is None:
-            return False, -1  # TODO: report error ba -1 che konim?
+    def add_edu(self, req, usr):
         edu = Education()
         edu.id = usr.total_num_of_elems
         edu.school = str(req.get('school')).strip()
@@ -68,13 +71,12 @@ class HomeHandler(webapp2.RequestHandler):
         usr.put()
         return True, edu.id
 
-    def modify_edu(self, req):
-        usr = user_key(users.get_current_user().email()).get()
-        if usr is None:
-            return False, -1  # TODO: report error
-        edu_id = str(req.get('edu_id')).strip()
-        if edu_id is '':
+    def modify_edu(self, req, usr):
+        if attr_is_not_in_request(req, 'edu_id'):
             return False, -1
+
+        edu_id = str(req.get('edu_id')).strip()
+
         try:
             edu_id = int(edu_id)
         except ValueError:
@@ -96,13 +98,11 @@ class HomeHandler(webapp2.RequestHandler):
         usr.put()
         return True, desired.id
 
-    def remove_edu(self, req):
-        usr = user_key(users.get_current_user().email()).get()
-        if usr is None:
-            return False, -1  # TODO: report error
-        edu_id = str(req.get('edu_id')).strip()
-        if edu_id is '':
+    def remove_edu(self, req, usr):
+        if attr_is_not_in_request(req, 'edu_id'):
             return False, -1
+        edu_id = str(req.get('edu_id')).strip()
+
         try:
             edu_id = int(edu_id)
         except ValueError:
