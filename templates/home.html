@@ -22,6 +22,15 @@
             var in_progress = 0;
 
             $(document).ready(function() {
+                $('#edu_sortable').sortable({
+                    handle: ".handle",
+                    update: function( event, ui ) {
+                        console.log('set');
+                    }
+                });
+
+                $('.handle').css('cursor', 'move');
+
                 var winW = $(window).width() - 180;
                 var winH = $(window).height() - 100;
                 var $show_resume = $('#show_resume');
@@ -76,10 +85,13 @@
                 });
 
                 $('.home-content-wrapper').hover(function () {
-                    if (in_progress == 0)
+                    if (in_progress == 0) {
                         $(this).find('.edit').css('visibility', 'visible');
+                        $(this).find('.handle').css('visibility', 'visible');
+                    }
                 }, function () {
                     $(this).find('.edit').css('visibility', 'hidden');
+                    $(this).find('.handle').css('visibility', 'hidden');
                 });
 
                 $('.home-element').hover(function () {
@@ -199,14 +211,43 @@
             <div id ="edu_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
         </div>
         <div id="edu"></div>
-        {% for edu in user.eds %}
-            <div name="{{ edu.id }}" class="home-content-wrapper">
+        <div id="edu_sortable">
+            {% for edu in user.eds %}
+                <div>
+                    <div name="{{ edu.id }}" class="home-content-wrapper">
+                        <div class="home-content">
+                            {{edu.school}} &nbsp;
+                            <i class="fa fa-anchor handle" style="visibility: hidden;"></i> &nbsp;
+                            <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                        </div>
+                        <div class="home-content-small">
+                            {{edu.degree}} - {{edu.major}} | {{edu.gpa}}
+                        </div>
+                        <div class="home-content-tiny">
+                            2014 – 2016 (expected)
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+    </div>
+    <div class="home-element">
+        <div class="home-sub-title">
+            <i class="fa fa-suitcase"></i> Work Experience
+            <div id="info-msg-work"></div>
+            <div id ="work_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+        </div>
+        <div id="work"></div>
+        {% for work in user.works %}
+            <div name="{{ work.id }}" class="home-content-wrapper">
                 <div class="home-content">
-                    {{edu.school}} &nbsp;
-                    <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                    {{ work.title }} at {{ work.company }} &nbsp;
+                    <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>
                 </div>
                 <div class="home-content-small">
-                    {{edu.degree}} - {{edu.major}} | {{edu.gpa}}
+                    {{ work.desc }}
                 </div>
                 <div class="home-content-tiny">
                     2014 – 2016 (expected)
@@ -214,26 +255,6 @@
             </div>
             <div></div>
         {% endfor %}
-
-        <hr>
-    </div>
-    <div class="home-element">
-        <div class="home-sub-title">
-            <i class="fa fa-suitcase"></i> Work Experience
-            <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
-        </div>
-        <div>
-            <div class="home-content">
-                The University of Texas at Austin {{ user.e }}
-
-            </div>
-            <div class="home-content-small">
-                MS, Software Engineering
-            </div>
-            <div class="home-content-tiny">
-                2014 – 2016 (expected)
-            </div>
-        </div>
         <hr>
     </div>
     <div class="home-element">
@@ -436,4 +457,5 @@
 </body>
 <script src="../assets/js/education.js"></script>
 <script src="../assets/js/references_upload.js"></script>
+<script src="../assets/js/workexperience.js"></script>
 </html>

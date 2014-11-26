@@ -1,6 +1,7 @@
 __author__ = 'stanley'
 from google.appengine.ext import ndb
 from education import Education
+from work import Work
 from reference import Reference
 from image import Image
 from google.appengine.api import images
@@ -9,6 +10,7 @@ from google.appengine.api import images
 class User(ndb.Model):
     id = ndb.UserProperty()
     eds = ndb.StructuredProperty(Education, repeated=True)
+    works = ndb.StructuredProperty(Work, repeated=True)
     followers = ndb.StringProperty(repeated=True)  # emails
     test = ndb.StringProperty()
     cover_pic = ndb.StructuredProperty(Image)
@@ -21,6 +23,9 @@ class User(ndb.Model):
     # notif + msg
     def append_edu(self, edu):
         self.eds.insert(0, edu)
+
+    def append_work(self, work):
+        self.works.insert(0, work)
 
     def get_cover_url(self):
         if self.cover_pic is None:
