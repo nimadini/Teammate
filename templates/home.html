@@ -23,7 +23,8 @@
             var in_progress = 0;
 
             $(document).ready(function() {
-                anchor();
+                anchor('#edu_sortable', 'education', '');
+                anchor('#work_sortable', 'workexperience', 'extra');
 
                 var winW = $(window).width() - 180;
                 var winH = $(window).height() - 100;
@@ -203,7 +204,7 @@
             <div id ="edu_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
         </div>
         <div id="edu_sortable">
-        <div id="edu"></div>
+            <div id="edu"></div>
             {% for edu in user.eds %}
                 <div>
                     <div name="{{ edu.id }}" class="home-content-wrapper">
@@ -231,22 +232,27 @@
             <div id="info-msg-work"></div>
             <div id ="work_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
         </div>
-        <div id="work"></div>
-        {% for work in user.works %}
-            <div name="{{ work.id }}" class="home-content-wrapper">
-                <div class="home-content">
-                    {{ work.title }} at {{ work.company }} &nbsp;
-                    <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+        <div id="work_sortable">
+            <div id="work"></div>
+            {% for work in user.works %}
+                <div>
+                    <div name="{{ work.id }}" class="home-content-wrapper">
+                        <div class="home-content">
+                            {{ work.title }} at {{ work.company }} &nbsp;
+                            <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                            <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                        </div>
+                        <div class="home-content-small">
+                            {{ work.desc }}
+                        </div>
+                        <div class="home-content-tiny">
+                            2014 – 2016 (expected)
+                        </div>
+                    </div>
+                    <div></div>
                 </div>
-                <div class="home-content-small">
-                    {{ work.desc }}
-                </div>
-                <div class="home-content-tiny">
-                    2014 – 2016 (expected)
-                </div>
-            </div>
-            <div></div>
-        {% endfor %}
+            {% endfor %}
+        </div>
         <hr>
     </div>
     <div class="home-element">

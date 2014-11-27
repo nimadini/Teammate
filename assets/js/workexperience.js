@@ -2,8 +2,8 @@
  * Created by stanley on 11/24/14.
  */
 
-var work_template = '<div name="{{ w_id }}" class="home-content-wrapper"><div class="home-content">{{title}} at {{company}} &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{desc}} </div><div class="home-content-tiny"> 2014 – 2016 (expected)</div></div><div></div>';
-var home_content_template = '{{title}} at {{company}} &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
+var work_template = '<div><div name="{{ w_id }}" class="home-content-wrapper"><div class="home-content">{{title}} at {{company}} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{desc}} </div><div class="home-content-tiny"> 2014 – 2016 (expected)</div></div><div></div></div>';
+var home_content_template = '{{title}} at {{company}} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
 
 $(document.body).on('click', '#work_link', function(e) {
     e.preventDefault();
@@ -29,7 +29,6 @@ $(document.body).on('click', '#work_link', function(e) {
                 return false;
             }
 
-            console.log($company.val());
             var data = {
                 company: $company.val(),
                 title: $title.val(),
@@ -52,6 +51,7 @@ $(document.body).on('click', '#work_link', function(e) {
                         }, function () {
                             $(this).find('.edit').css('visibility', 'hidden');
                         });
+                        refresh_anchor('#work_sortable');
                     }
                     else {
                         $info_msg.css('color', 'darkred');
@@ -136,6 +136,40 @@ $(document.body).on('click', '.work_edit_link', function(e) {
                     }
                     $work_elem.css('background-color', 'white');
                     $('#work_panel').remove();
+                    refresh_anchor('#work_sortable');
+                    in_progress = 0;
+                },
+                error: function (msg) {
+                    in_progress = 0;
+                    alert("We apologize, but it seems there is a problem in communication with the server!");
+                    $work_elem.css('background-color', 'white');
+                    $('#work_panel').remove();
+                }
+            });
+        });
+
+        $rm_btn.on('click', function(e) {
+
+
+            w_id = $work_elem.attr('name');
+
+
+            $.ajax({
+                type: 'DELETE',
+                url: 'workexperience?w_id='+$work_elem.attr('name'),
+                success: function (msg) {
+                    if (msg.successful) {
+                        $info_msg.css('color', 'green');
+                        $info_msg.html('<i class="fa fa-check"></i> Item deleted').fadeIn().delay(1500).fadeOut();
+                        $work_elem.remove();
+                    }
+                    else {
+                        $info_msg.css('color', 'darkred');
+                        $info_msg.html('<i class="fa fa-close"></i> Something went wrong :|').fadeIn().delay(1500).fadeOut();
+                    }
+                    $work_elem.css('background-color', 'white');
+                    $('#work_panel').remove();
+                    refresh_anchor('#work_sortable');
                     in_progress = 0;
                 },
                 error: function (msg) {

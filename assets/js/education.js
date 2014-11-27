@@ -62,7 +62,7 @@ $(document.body).on('click', '#edu_add_link', function(e) {
                             $(this).find('.edit').css('visibility', 'hidden');
 
                         });
-                        refresh_anchor();
+                        refresh_anchor("#edu_sortable");
                     }
                     else {
                         alert("Unsuccess");
@@ -144,8 +144,9 @@ $(document.body).on('click', '.edu_edit_link', function(e) {
                     if (msg.successful) {
                         $info_msg.css('color', 'green');
                         $info_msg.html('<i class="fa fa-check"></i> Update Successful').fadeIn().delay(1500).fadeOut();
-                        $edu_elem.find('.home-content').html(edu.school + ' &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a>');
+                        $edu_elem.find('.home-content').html(edu.school + ' &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a>');
                         $edu_elem.find('.home-content-small').text(edu.degree + ' - ' + edu.major + ' | ' + edu.gpa);
+                        refresh_anchor("#edu_sortable");
                     }
                     else {
                         alert("Unsuccess");
@@ -212,13 +213,10 @@ function is_gpa(gpa) {
     if (value == undefined || bound == undefined)
         return false;
 
-    console.log("value is: " + value);
-    console.log("bound is: " + bound);
-    console.log("Here");
     if (value.match(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/) == null ||
         bound.match(/^(?:[1-9]\d*|0)?(?:\.\d+)?$/) == null)
         return false;
-    console.log("There");
+
     value = parseFloat(value);
     bound = parseFloat(bound);
     return value <= bound;
