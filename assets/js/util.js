@@ -32,3 +32,58 @@ function refresh_anchor(sortable_elem) {
     $(sortable_elem).sortable("refresh");
     $('.handle').css('cursor', 'move');
 }
+
+function skills_tags(id, readOnly, items) {
+    return $(id).tags({
+        promptText: 'Enter skills…',
+        readOnly: readOnly,
+        tagData: items,
+        caseInsensitive: true,
+        maxNumTags: 30,
+        suggestions: [
+            'Alloy',
+            'Android',
+            'Antlr',
+            'C',
+            'C#',
+            'C++',
+            'CSS',
+            'DirectX',
+            'FLTK',
+            'git',
+            'Grinder',
+            'Hibernate',
+            'HTML',
+            'iOS',
+            'J2EE',
+            'Java',
+            'Javascript',
+            'jQuery',
+            'Latex',
+            'Linux',
+            'Lisp',
+            'Matlab',
+            'ML',
+            'ModelSim',
+            'NodeJS',
+            'OpenGL',
+            'Pascal',
+            'Photoshop',
+            'Python',
+            'Quartus',
+            'Ruby',
+            'Scala',
+            'SDL',
+            'Selenium',
+            'SimpleScalar',
+            'Software Testing',
+            'Traceroute',
+            'Visual Basic',
+            'Web Programming',
+            'Weka',
+            'Wicket',
+            'Wicket',
+            'Wireshark'
+        ]
+    });
+}

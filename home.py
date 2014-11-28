@@ -23,10 +23,17 @@ class HomeHandler(webapp2.RequestHandler):
         cover_upload_url = blobstore.create_upload_url('/upload')
         resume_upload_url = blobstore.create_upload_url('/upload')
 
+        skills = []
+        for skill in usr.skills:
+            skills.append(skill)
+
+        skills = ",".join(skills)
+
         user_prop = {
             'user': usr,
             'cover_upload_url': cover_upload_url,
-            'resume_upload_url': resume_upload_url
+            'resume_upload_url': resume_upload_url,
+            'skills': skills
         }
         template = JINJA_ENVIRONMENT.get_template('templates/home.html')
         self.response.write(template.render(user_prop))

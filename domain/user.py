@@ -12,6 +12,7 @@ class User(ndb.Model):
     eds = ndb.StructuredProperty(Education, repeated=True)
     works = ndb.StructuredProperty(Work, repeated=True)
     followers = ndb.StringProperty(repeated=True)  # emails
+    skills = ndb.StringProperty(repeated=True)
     test = ndb.StringProperty()
     cover_pic = ndb.StructuredProperty(Image)
     profile_pic = ndb.StructuredProperty(Image)
@@ -19,8 +20,8 @@ class User(ndb.Model):
     reference = ndb.StructuredProperty(Reference)
     views = ndb.IntegerProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
-
     # notif + msg
+
     def append_edu(self, edu):
         self.eds.insert(0, edu)
 

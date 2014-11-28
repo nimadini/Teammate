@@ -1,6 +1,128 @@
 /**
  * Created by stanley on 11/23/14.
  */
+var school_tags = [
+    'Arizona State University',
+    'Boston University',
+    'Brown University',
+    'California Institute of Technology (Caltech)',
+    'Carnegie Mellon University (CMU)',
+    'Case Western Reserve University',
+    'College of William and Mary',
+    'Colorado State University',
+    'Columbia University',
+    'Cornell University',
+    'Dartmouth College',
+    'Duke University',
+    'Ecole Polytechnique Federale de Lausanne (EPFL)',
+    'George Mason University',
+    'Georgia Institute of Technology',
+    'Harvard University',
+    'Imperial College London',
+    'Indiana University at Bloomington',
+    'Iowa State University',
+    'Johns Hopkins University',
+    'Massachusetts Institute of Technology (MIT)',
+    'Michigan State University',
+    'National University of Singapore (NUS)',
+    'Naval Postgraduate School',
+    'New York University',
+    'New York University',
+    'North Carolina State University',
+    'Northeastern University',
+    'Northwestern University',
+    'Ohio State University',
+    'Oregon State University',
+    'Pennsylvania State University at University Park',
+    'Politecnico di Milano',
+    'Polytechnique Montreal',
+    'Princeton University',
+    'Princeton University',
+    'Purdue University at West Lafayette',
+    'Rensselaer Polytechnic Institute',
+    'Rice University',
+    'Sharif University of Technology',
+    'Stanford University',
+    'Swiss Federal Institute of Technology (ETH)',
+    'Syracuse University',
+    'Texas A&M University at College Station',
+    'The University of Hong Kong',
+    'The University of Melbourne',
+    'The University of Queensland',
+    'The University of Tokyo',
+    'Tufts University',
+    'University at Buffalo—​SUNY',
+    'University of Arizona',
+    'University of British Columbia (UBC)',
+    'University of California at Davis (UCD)',
+    'University of California at ​Los Angeles (UCLA)',
+    'University of California at Riverside',
+    'University of California at ​San Diego (UCSD)',
+    'University of California at Santa Barbara (UCSB)',
+    'University of California at Santa Cruz',
+    'University of California at ​Berkeley (UCB)',
+    'University of California Irvine (UCI)',
+    'University of Cambridge',
+    'University of Chicago',
+    'University of Colorado at ​Boulder',
+    'University of Florida',
+    'University of Illinois at Chicago',
+    'University of Illinois—​Urbana-​Champaign (UIUC)',
+    'University of Iowa',
+    'University of Maryland at ​College Park',
+    'University of Massachusetts at Amherst',
+    'University of Michigan at ​Ann Arbor (UMich)',
+    'University of Minnesota at ​Twin Cities',
+    'University of North Carolina at Chapel Hill',
+    'University of Notre Dame',
+    'University of Oregon',
+    'University of Oxford',
+    'University of Pennsylvania (UPenn)',
+    'University of Pittsburgh',
+    'University of Rochester',
+    'University of Southern California (USC)',
+    'University of Tehran',
+    'University of Texas at Austin (UT Austin)',
+    'University of Toronto',
+    'University of Utah',
+    'University of Virginia',
+    'University of Washington',
+    'University of Waterloo',
+    'University of Wisconsin at Madison',
+    'Vanderbilt University',
+    'Virginia Tech',
+    'Washington University in St. Louis',
+    'Yale University'
+];
+
+var field_tags = [
+    'Algorithms',
+    'Artificial Intelligence',
+    'Bioinformatics',
+    'Biomedical Engineering',
+    'Computational Biology',
+    'Computer Architecture',
+    'Computer Architecture',
+    'Data Mining',
+    'Distributed systems',
+    'Electromagnetics and Acoustics',
+    'Embedded Systems',
+    'Energy Systems',
+    'Formal Methods',
+    'Graphics and Visualization',
+    'Integrated Circuits',
+    'Machine Learning',
+    'Model Driven Engineering',
+    'Natural Computation',
+    'Networking',
+    'Operating systems',
+    'Programming Languages',
+    'Scientific Computing',
+    'Security',
+    'Software Engineering',
+    'Theoretical Computer Science',
+];
+
 $(document.body).on('click', '#edu_add_link', function(e) {
     e.preventDefault();
     if (in_progress == 1)
@@ -12,6 +134,14 @@ $(document.body).on('click', '#edu_add_link', function(e) {
             e.preventDefault();
             deg = $(this).text();
             $('#degree').html(deg + ' <span class="caret"></span>');
+        });
+
+        $( "#school" ).autocomplete({
+            source: school_tags
+        });
+
+        $( "#major" ).autocomplete({
+            source: field_tags
         });
 
         var edu_template = '<div><div name="{{ id }}" class="home-content-wrapper"><div class="home-content"> {{ school }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ degree }} - {{ major }} | {{ gpa }}</div><div class="home-content-tiny">2014 – 2016 (expected)</div></div><div></div></div>';
@@ -89,6 +219,14 @@ $(document.body).on('click', '.edu_edit_link', function(e) {
     var $edu_elem = $(this).parent().parent();
 
     $(this).parent().parent().next().load('education', function(data) {
+        $( "#school" ).autocomplete({
+            source: school_tags
+        });
+
+        $( "#major" ).autocomplete({
+            source: field_tags
+        });
+
         var $delete_btn = $('#remove_edu_btn');
         $delete_btn.css('display', 'inline');
         var degree_major_gpa = $edu_elem.find('.home-content-small').text().split('-');

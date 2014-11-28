@@ -296,3 +296,19 @@ hr {
     font-size: 14px;
     float: right;
 }
+
+#info-msg-skills {
+    font-size: 14px;
+    float: right;
+}
+
+.tag {
+    margin: 1px !important;
+    height: 23px !important;
+}
+
+.tags-suggestion-list {
+    overflow-y:hidden !important;
+    overflow-x:hidden !important;
+    cursor: pointer;
+}
