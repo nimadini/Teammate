@@ -26,6 +26,7 @@ class HomeHandler(webapp2.RequestHandler):
             #delete()
 
         cover_upload_url = blobstore.create_upload_url('/upload')
+        profile_img_upload_url = blobstore.create_upload_url('/upload')
         resume_upload_url = blobstore.create_upload_url('/upload')
 
         skills = []
@@ -37,6 +38,7 @@ class HomeHandler(webapp2.RequestHandler):
         user_prop = {
             'user': usr,
             'cover_upload_url': cover_upload_url,
+            'profile_img_upload_url': profile_img_upload_url,
             'resume_upload_url': resume_upload_url,
             'skills': skills
         }

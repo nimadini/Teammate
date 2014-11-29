@@ -13,6 +13,7 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
         if req is '':
             return  # TODO
 
+        # cover
         if req == '0':
             upload_files = self.get_uploads('img')
             if len(upload_files) == 0:
@@ -28,6 +29,7 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
             usr.cover_pic = Image(name=img_name, img=blob_info.key())
             usr.put()
 
+        # resume
         elif req == '1':
             upload_files = self.get_uploads('file')
             if len(upload_files) == 0:
@@ -39,6 +41,22 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
             if usr is None:
                 return  # TODO
             usr.reference.resume = Doc(name=pdf_name, document=blob_info.key())
+            usr.put()
+
+        # profile
+        elif req == '2':
+            upload_files = self.get_uploads('img')
+            if len(upload_files) == 0:
+                raise Exception("No file selected!")    # TODO! :D
+
+            blob_info = upload_files[0]
+            img_name = blob_info.filename
+
+            usr = user_key(users.get_current_user().email()).get()
+            if usr is None:
+                return  # TODO
+
+            usr.profile_pic = Image(name=img_name, img=blob_info.key())
             usr.put()
 
         else:

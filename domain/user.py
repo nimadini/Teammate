@@ -33,6 +33,11 @@ class User(ndb.Model):
             return "assets/images/default_cover.jpg"
         return images.get_serving_url(self.cover_pic.img) + '=s0'
 
+    def get_profile_url(self):
+        if self.profile_pic is None:
+            return "assets/images/default_cover.jpg"
+        return images.get_serving_url(self.profile_pic.img) + '=s0'
+
     def get_views_num_for_print(self):
         if self.views == 0:
             return 'No'

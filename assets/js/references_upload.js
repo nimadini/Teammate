@@ -2,10 +2,43 @@
  * Created by stanley on 11/24/14.
  */
 $("#selected_file").change(function () {
-    readURL(this);
+    updateCoverGUI(this);
     $('#upload_link').css('display', 'none');
     $('#cover_rej').css('display', 'inline');
     $('#cover_acc').css('display', 'inline');
+});
+
+$("#selected_file_profile").change(function () {
+    updateProfileGUI(this);
+    var data = new FormData();
+    var url = $('#upload_profile_form').attr('action');
+    var file = $('#selected_file_profile')[0].files[0];
+    data.append('img', file);
+    data.append('type', '2');
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            $.ajax({
+                type: 'POST',
+                url: 'upload_url',
+                success: function (msg) {
+                    if (msg.successful) {
+                        $('#upload_profile_form').attr('action', msg.cover_upload_url);
+                    }
+                    else {
+                        alert("There is problem in communication with the server!"); // TODO
+                    }
+                },
+                error: function (msg) {
+                    alert("We apologize, but it seems there is problem in communication with the server! Please reload the page and continue.");
+                }
+            });
+        } else {
+            alert('An error occurred!');
+        }
+    };
+    xhr.send(data);
 });
 
 $("#selected_resume").change(function () {
@@ -324,7 +357,7 @@ $(document.body).on('click', '.references_panel', function (e) {
     });
 });
 
-function readURL(input) {
+function updateCoverGUI(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -333,6 +366,18 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function updateProfileGUI(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#profile_wrapper').attr('href', e.target.result);
+            $('#profile_picture').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 function remove_refs_add_panel() {
     in_progress = 0;
     $('#references_panel').remove();
