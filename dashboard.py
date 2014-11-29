@@ -4,11 +4,15 @@ import webapp2
 from init import *
 from google.appengine.api import users, search
 from google.appengine.api.search import QueryError
-from domain.user import User
+from domain.user import *
 
 
 class DashboardHandler(webapp2.RequestHandler):
     def get(self):
+        usr = user_key(users.get_current_user().email()).get()
+        if usr is None:
+            self.redirect('/registration')
+            return
 
         degree = self.request.get('degree')
         if not degree:
