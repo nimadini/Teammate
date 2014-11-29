@@ -35,7 +35,7 @@ class User(ndb.Model):
 
     def get_profile_url(self):
         if self.profile_pic is None:
-            return "assets/images/default_cover.jpg"
+            return "assets/images/female.png"
         return images.get_serving_url(self.profile_pic.img) + '=s0'
 
     def get_views_num_for_print(self):

@@ -13,7 +13,7 @@ $("#selected_file_profile").change(function () {
     var data = new FormData();
     var url = $('#upload_profile_form').attr('action');
     var file = $('#selected_file_profile')[0].files[0];
-    data.append('img', file);
+    data.append('file', file);
     data.append('type', '2');
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
@@ -60,12 +60,13 @@ $('#cover_acc').on('click', function (e) {
 
     $('#cover_rej').css('display', 'none');
     $('#cover_acc').css('display', 'none');
+    $('#spinner_cover').css('display', 'inline');
     $('#cover_image').css('opacity', '0.8');
 
     var data = new FormData();
     var url = $('#upload_cover_form').attr('action');
     var file = $('#selected_file')[0].files[0];
-    data.append('img', file);
+    data.append('file', file);
     data.append('type', '0');
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
@@ -90,6 +91,7 @@ $('#cover_acc').on('click', function (e) {
         } else {
             alert('An error occurred!');
         }
+        $('#spinner_cover').css('display', 'none');
         $('#upload_link').css('display', 'inline');
         $('#cover_image').css('opacity', '1');
     };
