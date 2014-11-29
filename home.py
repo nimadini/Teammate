@@ -3,10 +3,12 @@ __author__ = 'stanley'
 import webapp2
 import json
 from init import *
-from google.appengine.api import users
+from google.appengine.api import users, search
 from domain.user import *
 from google.appengine.ext import blobstore
 from util.sanity_check import*
+from google.appengine.api.search import QueryError
+from datetime import datetime
 
 
 class HomeHandler(webapp2.RequestHandler):
@@ -14,11 +16,14 @@ class HomeHandler(webapp2.RequestHandler):
         usr = user_key(users.get_current_user().email()).get()
         if usr is None:
             usr = User(key=user_key(users.get_current_user().email()))  # TODO: Is parent required? :O
-            usr.id = users.get_current_user()
+            usr.id = users.get_current_user().email()
             usr.total_num_of_elems = 0
             usr.reference = Reference()
             usr.views = 0
             usr.put()
+            doc = create_doc(users.get_current_user().email(), 'None')
+            store_idx(doc, INDEX_NAME)
+            #delete()
 
         cover_upload_url = blobstore.create_upload_url('/upload')
         resume_upload_url = blobstore.create_upload_url('/upload')
@@ -35,6 +40,9 @@ class HomeHandler(webapp2.RequestHandler):
             'resume_upload_url': resume_upload_url,
             'skills': skills
         }
+
+        # usr.get_highest_degree()
+
         template = JINJA_ENVIRONMENT.get_template('templates/home.html')
         self.response.write(template.render(user_prop))
 
@@ -76,6 +84,8 @@ class HomeHandler(webapp2.RequestHandler):
         usr.append_edu(edu)
         usr.total_num_of_elems += 1
         usr.put()
+
+        update_index(usr, users.get_current_user().email(), INDEX_NAME)
         return True, edu.id
 
     def modify_edu(self, req, usr):
@@ -103,6 +113,8 @@ class HomeHandler(webapp2.RequestHandler):
         desired.major = req.get('major')
         desired.degree = req.get('degree')
         usr.put()
+        update_index(usr, users.get_current_user().email(), INDEX_NAME)
+
         return True, desired.id
 
     def remove_edu(self, req, usr):
@@ -124,4 +136,44 @@ class HomeHandler(webapp2.RequestHandler):
 
         usr.eds.remove(desired)
         usr.put()
+        update_index(usr, users.get_current_user().email(), INDEX_NAME)
+
         return True, desired.id
+
+
+def create_doc(email, degree):
+    return search.Document(
+        doc_id=email,
+        fields=[
+            search.TextField(name='email', value=email),
+            search.TextField(name='degree', value=degree),
+            search.DateField(name='date', value=datetime.now().date())
+        ])
+
+
+def store_idx(doc, name):
+    try:
+        index = search.Index(name=name)
+        index.put(doc)
+
+    except (search.Error, QueryError) as e:
+        print 'Shit!'   # TODO
+
+
+# updates index in case of higher degree
+def update_index(usr, email, name):
+    index = search.Index(name=name)
+    doc = index.get(email)
+    deg = usr.get_highest_degree()
+    if deg == doc.field('degree').value:
+        return
+
+    doc.fields.remove(doc.field('degree'))
+    doc.fields.append(search.TextField(name='degree', value=deg))
+    index.put(doc)
+
+
+#def delete():
+#    index = search.Index(name=INDEX_NAME)
+#    index.delete('nima.dini@gmail.com')
+#    index.delete('kambiz.hosseini@gmail.com')

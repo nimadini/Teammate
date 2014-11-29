@@ -40,7 +40,7 @@ $(document.body).on('click', '#skills_add_link', function(e) {
                     if (msg.successful) {
                         $info_msg.css('color', 'green');
                         $info_msg.html('<i class="fa fa-check"></i> Update Successful').fadeIn().delay(1500).fadeOut();
-                        $('#skills_add_link').fadeOut(0).delay(2200).fadeIn();
+                        $('#skills_add_link').fadeOut(0).delay(2300).fadeIn();
 
                         $tags.remove(); // remove current tags (editable version)
                         $('#tag_anchor').after(function() {

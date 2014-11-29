@@ -8,7 +8,7 @@ from google.appengine.api import images
 
 
 class User(ndb.Model):
-    id = ndb.UserProperty()
+    id = ndb.StringProperty()
     eds = ndb.StructuredProperty(Education, repeated=True)
     works = ndb.StructuredProperty(Work, repeated=True)
     followers = ndb.StringProperty(repeated=True)  # emails
@@ -42,6 +42,17 @@ class User(ndb.Model):
             return str(int(self.views) / 1000) + ',' + str(int(self.views) % 1000)
         else:
             return '+1,000,000'
+
+    def get_highest_degree(self):
+        if len(self.eds) == 0:
+            return 'None'
+        highest_edu = self.eds[0]
+        i = 1
+        while i < len(self.eds):
+            if self.eds[i] > highest_edu:
+                highest_edu = self.eds[i]
+            i += 1
+        return highest_edu.degree
 
 
 def user_key(_id):

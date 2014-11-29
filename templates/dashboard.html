@@ -13,6 +13,9 @@
     <script src="../assets/js/bootstrap.min.js"></script>
     <script language="javascript" type="text/javascript">
         $(document).ready(function() {
+            var degree = $('#degree').attr('name');
+            if (degree != 'NONE')
+                $('#degree_label').text(degree);
             $('#about').load('about');
         });
     </script>
@@ -56,6 +59,7 @@
     </nav>
     <div class="container">
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            {% for user in results %}
             <div class="panel panel-default shine">
                 <div class="panel-body nopadding">
                     <div class="row no-gutter">
@@ -67,7 +71,7 @@
                         <div class="col-lg-9 col-md-8">
                             <div class="user_box">
                                 <div class="box_title">
-                                    <a href="#">Nima Dini</a>
+                                    <a href="#">{{ user.id }}</a>
                                 </div>
                                 <div class="box_sub_title">
                                     Works at University of Tehran
@@ -94,6 +98,7 @@
                     </div>
                 </div>
             </div>
+            {% endfor %}
             <div class="panel panel-default shine">
                 <div class="panel-body nopadding">
                     <div class="row no-gutter">
@@ -160,16 +165,16 @@
                         <tr>
                             <td >Degree</td>
                             <td>
-                                <div class="dropdown">
+                                <div class="dropdown" id="degree" name="{{ current_deg }}">
                                     <button class="btn btn-info button-small dropdown-toggle" type="button" id="degree" data-toggle="dropdown">
-                                        Add...
+                                        <label id="degree_label" style="font-weight: normal; width: 36px;">Add...</label>
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu"  aria-labelledby="degree">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">None</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Diploma</a></li>
                                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">BS</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">BA</a></li>
                                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MS</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MA</a></li>
                                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">PhD</a></li>
                                     </ul>
                                 </div>
@@ -194,4 +199,5 @@
     </div>
 </footer>
 </body>
+<script src="../assets/js/filters.js"></script>
 </html>
