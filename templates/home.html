@@ -137,7 +137,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="#"><i class="fa fa-bell"></i></a></li>
                 <li><a href="#"><i class="fa fa-comment"></i></a></li>
-                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> Nima </a></li>
+                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ user.given_name }} </a></li>
                 <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -191,7 +191,7 @@
                     <a id ="profile_wrapper" href="{{user.get_profile_url()}}" data-lightbox="image-1" data-title="Profile Picture">
                         <img id ="profile_picture" src="{{user.get_profile_url()}}" class="img-circle col-centered profile-img" alt="Pic" />
                     </a>
-                    <div class="profile_name"><a href="#">Nima Dini</a></div>
+                    <div class="profile_name"><a href="#">{{ user.given_name }} {{ user.surname }}</a></div>
                     <div class="profile_sub_info">101 Followers | {{ user.get_views_num_for_print() }} Views</div>
                     <div class="profile_sub_info_small">AUSTIN, TX, USA</div>
                 </div>

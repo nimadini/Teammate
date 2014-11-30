@@ -38,13 +38,14 @@ class DashboardHandler(webapp2.RequestHandler):
             if user is not None:
                 results.append(user)
 
-        generate_search_result(results, self.response, degree)
+        generate_search_result(results, self.response, degree, usr)
 
 
-def generate_search_result(results, response, current_deg):
+def generate_search_result(results, response, current_deg, usr):
     search_results = {
         'results': results,
-        'current_deg': current_deg
+        'current_deg': current_deg,
+        'user': usr
     }
 
     template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')

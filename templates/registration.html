@@ -59,11 +59,11 @@
 <div class="panel-body" style="overflow: visible;">
 <form role="form" method="post">
 <div class="row">
-    <!--<div class="row">
-        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-left: 10px; font-size: 14px;">
+    <div class="row" style="margin-bottom: 20px;">
+        <div style="margin-left: 25px; float: left; font-size: 14px;">
             Please enter your given name, surname, and gender:
         </div>
-    </div>-->
+    </div>
     <div class="form-group col-lg-5 col-md-4 col-sm-5">
         <input id="given_name" type="text" name="name" class="form-control" placeholder="Given name">
     </div>
@@ -72,13 +72,13 @@
     </div>
     <div class="form-group col-lg-2 col-md-4 col-sm-2">
         <div class="dropdown">
-            <button class="btn btn-info button-small dropdown-toggle" style="height: 36px; vertical-align: middle;" type="button" data-toggle="dropdown">
-                <div id="degree" style="font-weight: bold;">
-                    Gender
+            <button class="btn btn-info button-small dropdown-toggle" style="height: 36px; width: 80px; vertical-align: middle;" type="button" data-toggle="dropdown">
+                <div style="font-weight: bold;">
+                    <div id="gender">Gender</div>
                     <span class="caret" style="float: right;"></span>
                 </div>
             </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="gender">
+            <ul id="gender_dropdown" class="dropdown-menu" role="menu" aria-labelledby="gender">
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Male</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Female</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Other</a></li>
@@ -303,14 +303,16 @@ limitations under the License.
     <div class="form-group col-lg-12 col-md-12 col-sm-12">
         <div class="checkbox">
             <label>
-                <input type="checkbox"> I contest that I completely read and understood the above terms and conditions
+                <input type="checkbox" id="contest"> I contest that I completely read and understood the above terms and conditions
             </label>
         </div>
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <button type="button" id="update_ref_btn" class="btn btn-success"><i class="fa fa-check"></i> Accept and Enter </button>
-        <button onclick="remove_refs_add_panel();" type="button" class="btn btn-default"><i class="fa fa-times"></i> Decline and Exit </button>
+        <button type="button" id="accept_btn" class="btn btn-success"><i class="fa fa-check"></i> Accept and Enter </button>
+        <button type="button" id="decline_btn" class="btn btn-default"><i class="fa fa-times"></i> Decline and Exit </button>
+        <div class="msg" style="float: right; margin-right: 25px;">
+        </div>
     </div>
 </div>
 </form>
@@ -332,4 +334,5 @@ limitations under the License.
     </div>
 </footer>
 </body>
+<script src="../assets/js/registration.js"></script>
 </html>

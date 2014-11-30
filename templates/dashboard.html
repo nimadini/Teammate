@@ -40,7 +40,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#"><i class="fa fa-bell"></i></a></li>
                     <li><a href="#"><i class="fa fa-comment"></i></a></li>
-                    <li><a href="/home"><i class="glyphicon glyphicon-user"></i> Nima </a></li>
+                    <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ user.given_name }}  </a></li>
                     <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -60,44 +60,44 @@
     <div class="container">
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
             {% for user in results %}
-            <div class="panel panel-default shine">
-                <div class="panel-body nopadding">
-                    <div class="row no-gutter">
-                        <div class="col-lg-3 col-md-4">
-                            <a href="#">
-                                <img src="../assets/images/no_cover.png" class="img-responsive img-rounded nopadding displayed" alt="Cover Photo">
-                            </a>
-                        </div>
-                        <div class="col-lg-9 col-md-8">
-                            <div class="user_box">
-                                <div class="box_title">
-                                    <a href="#">{{ user.id }}</a>
-                                </div>
-                                <div class="box_sub_title">
-                                    Works at University of Tehran
-                                </div>
-                                <div class="box_sub_content">
-                                    Studied Computer Hardware Engineering at University of Tehran '09
-                                    Read Animal Farm, 1984 - George Orwell and Thus Spoke Zarathustra
-                                    Listens to Camel, Gary Moore and HAGGARD
-                                    98 mutual friends including Peyman Mahdian and Atiyeh Bayat
-                                </div>
-                                <div class="box_sub_title">
-                                    Projects:
-                                    <a href="http://connexus-beta.appspot.com/" target="_blank">Teammate</a> |
-                                    <a href="http://connexus-beta.appspot.com/" target="_blank">Connexus</a>
-                                </div>
-                                <div class="user_box_btn">
-                                    <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a>
-                                </div>
-                                <div class="user_box_navigation">
+                <div class="panel panel-default shine">
+                    <div class="panel-body nopadding">
+                        <div class="row no-gutter">
+                            <div class="col-lg-3 col-md-4">
+                                <a href="#">
+                                    <img src="../assets/images/no_cover.png" class="img-responsive img-rounded nopadding displayed" alt="Cover Photo">
+                                </a>
+                            </div>
+                            <div class="col-lg-9 col-md-8">
+                                <div class="user_box">
+                                    <div class="box_title">
+                                        <a href="#">{{ user.id }}</a>
+                                    </div>
+                                    <div class="box_sub_title">
+                                        Works at University of Tehran
+                                    </div>
+                                    <div class="box_sub_content">
+                                        Studied Computer Hardware Engineering at University of Tehran '09
+                                        Read Animal Farm, 1984 - George Orwell and Thus Spoke Zarathustra
+                                        Listens to Camel, Gary Moore and HAGGARD
+                                        98 mutual friends including Peyman Mahdian and Atiyeh Bayat
+                                    </div>
+                                    <div class="box_sub_title">
+                                        Projects:
+                                        <a href="http://connexus-beta.appspot.com/" target="_blank">Teammate</a> |
+                                        <a href="http://connexus-beta.appspot.com/" target="_blank">Connexus</a>
+                                    </div>
+                                    <div class="user_box_btn">
+                                        <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a>
+                                    </div>
+                                    <div class="user_box_navigation">
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
             <div class="panel panel-default shine">
                 <div class="panel-body nopadding">
@@ -140,7 +140,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <div class="panel panel-default panel-primary filter">
+            <div class="panel panel-default filter">
                 <div class="panel-heading">
                     <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-filter"></i> Filters</div>
                 </div>
@@ -183,6 +183,26 @@
                     </table>
                 </div>
             </div>
+            <div class="panel panel-default filter">
+                <div class="panel-heading">
+                    <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-pie-chart"></i> Distribution </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-lg-3 col-md-2" id="degree_guide" style="padding-top: 15px; margin-left: -20px;"></div>
+                    <div class="col-lg-9 col-md-10 pull-right" style="margin-top: 5px;" id="chart" ></div>
+                </div>
+            </div>
+
+            <div class="panel panel-default filter">
+                <div class="panel-heading">
+                    <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-bar-chart"></i> Prices (USD/hr) </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-lg-12 col-md-12" id="price"></div>
+                </div>
+            </div>
         </div>
         <div id="about"></div>
     </div>
@@ -200,4 +220,140 @@
 </footer>
 </body>
 <script src="../assets/js/filters.js"></script>
+<script src="../assets/js/d3.min.js"></script>
+<script src="../assets/js/Donut3D.js"></script>
+<script src="../assets/js/d3.tip.v0.6.3.js"></script>
+<script>
+
+    var salesData=[
+        {label:"BS", color:"#3366CC"},
+        {label:"BA", color:"#DC3912"},
+        {label:"MS", color:"#FF9900"},
+        {label:"MA", color:"#109618"},
+        {label:"PhD", color:"#990099"}
+    ];
+
+    labels = ["BS", "BA", "MS", "MA", "PhD"];
+
+    var svg = d3.select("#chart").append("svg").attr("width", 150).attr("height", 130).attr('class', 'ichart');
+
+    svg.append("g").attr("id","quotesDonut");
+
+    Donut3D.draw("quotesDonut", randomData(), 75, 60, 64, 56, 8, 0);
+
+    function randomData(){
+        return salesData.map(function(d){
+            return {label:d.label, value:20, color:d.color};});
+    }
+
+    var color = d3.scale.ordinal()
+            .range(["#3366CC", "#DC3912", "#FF9900", "#109618", "#990099"]);
+
+    var legend = d3.select("#degree_guide").append("svg")
+            .attr("class", "legend")
+            .attr("width", 60)
+            .attr("height", 100)
+            .selectAll("g")
+            .data(labels)
+            .enter().append("g")
+            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+            .attr("width", 18)
+            .attr("height", 18)
+            .style("fill", color);
+
+    legend.append("text")
+            .attr("x", 24)
+            .attr("y", 9)
+            .attr("dy", ".35em")
+            .text(function(d) { return d; });
+
+
+
+
+    var margin = {top: 40, right: 20, bottom: 30, left: 20},
+            width = 200 - margin.left - margin.right,
+            height = 380 - margin.top - margin.bottom;
+
+    //var formatPercent = d3.format(".0%");
+
+    var x = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .1);
+
+    var y = d3.scale.linear()
+            .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+    //        .tickFormat(formatPercent);
+
+    var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                return "<strong>Price:</strong> <span style='color:lightblue'>" + d.frequency + " $/hr</span>";
+            })
+
+    var svg2 = d3.select("#price").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg2.call(tip);
+
+    var _data = {};
+
+    d3.tsv("statistics", type, function(error, data) {
+        x.domain(data.map(function (d) {
+            return d.letter;
+        }));
+        y.domain([0, d3.max(data, function (d) {
+            return d.frequency;
+        })]);
+
+        svg2.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+        svg2.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".61em")
+                .style("text-anchor", "end")
+                .text("$ Price");
+
+        svg2.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", function (d) {
+                    return x(d.letter);
+                })
+                .attr("width", x.rangeBand())
+                .attr("y", function (d) {
+                    return y(d.frequency);
+                })
+                .attr("height", function (d) {
+                    return height - y(d.frequency);
+                })
+                .on('mouseover', tip.show)
+                .on('mouseout', tip.hide);
+    });
+
+        function type(d) {
+            d.frequency = +d.frequency;
+            return d;
+        }
+</script>
 </html>

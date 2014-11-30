@@ -9,6 +9,9 @@ from google.appengine.api import images
 
 class User(ndb.Model):
     id = ndb.StringProperty()
+    given_name = ndb.StringProperty()
+    surname = ndb.StringProperty()
+    gender = ndb.StringProperty()
     eds = ndb.StructuredProperty(Education, repeated=True)
     works = ndb.StructuredProperty(Work, repeated=True)
     followers = ndb.StringProperty(repeated=True)  # emails
@@ -35,7 +38,13 @@ class User(ndb.Model):
 
     def get_profile_url(self):
         if self.profile_pic is None:
-            return "assets/images/female.png"
+            if self.gender == 'Male':
+                return "assets/images/male.png"
+            elif self.gender == 'Female':
+                return "assets/images/female.png"
+            else:
+                return "assets/images/no_cover.png"
+
         return images.get_serving_url(self.profile_pic.img) + '=s0'
 
     def get_views_num_for_print(self):

@@ -36,7 +36,7 @@ def update_index(usr, email, name):
     index.put(doc)
 
 
-#def delete():
-#    index = search.Index(name=INDEX_NAME)
-#    index.delete('nima.dini@gmail.com')
-#    index.delete('kambiz.hosseini@gmail.com')
+def delete():
+    index = search.Index(name='user_basic')
+    index.delete('navidd@gmail.com')
+    index.delete('kambiz.hosseini@gmail.com')
