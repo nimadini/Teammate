@@ -21,6 +21,7 @@ class HomeHandler(webapp2.RequestHandler):
         profile_img_upload_url = blobstore.create_upload_url('/upload')
         resume_upload_url = blobstore.create_upload_url('/upload')
 
+        #   in jash inja nist! (tooye user bayad bashe!)
         skills = []
         for skill in usr.skills:
             skills.append(skill)

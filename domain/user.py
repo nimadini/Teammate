@@ -47,6 +47,17 @@ class User(ndb.Model):
 
         return images.get_serving_url(self.profile_pic.img) + '=s0'
 
+    def get_profile_url_mirrored(self):
+        if self.profile_pic is None:
+            if self.gender == 'Male':
+                return "assets/images/male_mir.png"
+            elif self.gender == 'Female':
+                return "assets/images/female_mir.png"
+            else:
+                return "assets/images/no_cover.png"
+
+        return images.get_serving_url(self.profile_pic.img) + '=s0'
+
     def get_views_num_for_print(self):
         if self.views == 0:
             return 'No'
