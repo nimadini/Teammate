@@ -3,6 +3,7 @@ from google.appengine.ext import ndb
 from education import Education
 from work import Work
 from reference import Reference
+from project import Project
 from image import Image
 from google.appengine.api import images
 
@@ -16,11 +17,11 @@ class User(ndb.Model):
     works = ndb.StructuredProperty(Work, repeated=True)
     followers = ndb.StringProperty(repeated=True)  # emails
     skills = ndb.StringProperty(repeated=True)
-    test = ndb.StringProperty()
     cover_pic = ndb.StructuredProperty(Image)
     profile_pic = ndb.StructuredProperty(Image)
     total_num_of_elems = ndb.IntegerProperty()
     reference = ndb.StructuredProperty(Reference)
+    projects = ndb.StructuredProperty(Project, repeated=True)
     views = ndb.IntegerProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
     # notif + msg
@@ -30,6 +31,9 @@ class User(ndb.Model):
 
     def append_work(self, work):
         self.works.insert(0, work)
+
+    def append_project(self, project):
+        self.projects.insert(0, project)
 
     def get_cover_url(self):
         if self.cover_pic is None:
@@ -82,4 +86,3 @@ class User(ndb.Model):
 
 def user_key(_id):
     return ndb.Key('User', _id)
-

@@ -18,5 +18,3 @@ class Reference(ndb.Model):
 
     def get_resume_url(self):
         return images.get_serving_url(self.resume.document)
-
-

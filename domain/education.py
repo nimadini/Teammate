@@ -44,4 +44,3 @@ class Education(ndb.Model):
 
     def __lt__(self, other):
         return not self.__ge__(other)
-

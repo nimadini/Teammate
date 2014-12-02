@@ -56,7 +56,6 @@ $(document.body).on('click', '#work_link', function(e) {
                     else {
                         $info_msg.css('color', 'darkred');
                         $info_msg.html('<i class="fa fa-close"></i> Something went wrong :|').fadeIn().delay(1500).fadeOut();
-
                     }
                     $('#work_panel').remove();
                     in_progress = 0;

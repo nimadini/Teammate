@@ -28,7 +28,7 @@ class WorkExperience(webapp2.RequestHandler):
         if work.title is '':  # TODO exception E chizi bedam age khali bood. :-?
             return
 
-        work.desc = self.request.get('desc')
+        work.desc = str(self.request.get('desc')).strip()
 
         usr.append_work(work)
         usr.total_num_of_elems += 1

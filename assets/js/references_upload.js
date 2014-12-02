@@ -199,6 +199,11 @@ $(document.body).on('click', '.references_panel', function (e) {
                 $info_msg_ref.html('<i class="fa fa-close"></i> Invalid email').fadeIn().delay(1500).fadeOut();
                 return false;
             }
+            if (feature == 5 && !valid_url($ref_in.val().trim())) {
+                $info_msg_ref.css('color', 'darkred');
+                $info_msg_ref.html('<i class="fa fa-close"></i> Invalid URL').fadeIn().delay(1500).fadeOut();
+                return false;
+            }
             var _ref = {
                 feature: feature,
                 ref: $ref_in.val()

@@ -312,17 +312,25 @@
     <div class="home-element">
         <div class="home-sub-title">
             <i class="fa fa-file-text"></i> Sample Projects
-            <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            <div id="info-msg-projects"></div>
+            <div id="projects_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
         </div>
-        <div class="home-content">
-            The University of Texas at Austin
-
-        </div>
-        <div class="home-content-small">
-            MS, Software Engineering
-        </div>
-        <div class="home-content-tiny">
-            2014 – 2016 (expected)
+        <div id="projects_sortable">
+            <div id="sample-projects"></div>
+            {% for project in user.projects %}
+                <div>
+                    <div name="{{ project.id }}" class="home-content-wrapper">
+                        <div class="home-content"><a href="{{ project.link }}" target="_blank">{{ project.title }}</a></div>
+                        <div class="home-content-tiny">
+                            {{ project.year }}
+                        </div>
+                        <div class="home-content-small">
+                            {{ project.desc }}
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            {% endfor %}
         </div>
         <hr>
     </div>
@@ -493,4 +501,5 @@
 <script src="../assets/js/references_upload.js"></script>
 <script src="../assets/js/workexperience.js"></script>
 <script src="../assets/js/skills.js"></script>
+<script src="../assets/js/projects.js"></script>
 </html>
