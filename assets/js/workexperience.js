@@ -148,11 +148,7 @@ $(document.body).on('click', '.work_edit_link', function(e) {
         });
 
         $rm_btn.on('click', function(e) {
-
-
             w_id = $work_elem.attr('name');
-
-
             $.ajax({
                 type: 'DELETE',
                 url: 'workexperience?w_id='+$work_elem.attr('name'),

@@ -18,7 +18,7 @@ $(document.body).on('click', '#projects_link', function(e) {
     in_progress = 1;
     $('#sample-projects').load('project', function () {
         var $year_picker = $('.year-picker');
-        for (var i = 2018; i > 1959; i--)
+        for (var i = 2018; i > 1919; i--)
             $year_picker.append($('<option />').val(i).html(i))
 
         $('#update_project_btn').on('click', function() {

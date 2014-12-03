@@ -4,6 +4,7 @@ from education import Education
 from work import Work
 from reference import Reference
 from project import Project
+from honor import Honor
 from image import Image
 from google.appengine.api import images
 
@@ -22,6 +23,7 @@ class User(ndb.Model):
     total_num_of_elems = ndb.IntegerProperty()
     reference = ndb.StructuredProperty(Reference)
     projects = ndb.StructuredProperty(Project, repeated=True)
+    honors = ndb.StructuredProperty(Honor, repeated=True)
     views = ndb.IntegerProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
     # notif + msg
@@ -34,6 +36,9 @@ class User(ndb.Model):
 
     def append_project(self, project):
         self.projects.insert(0, project)
+
+    def append_honor(self, honor):
+        self.honors.insert(0, honor)
 
     def get_cover_url(self):
         if self.cover_pic is None:

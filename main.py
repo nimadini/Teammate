@@ -13,6 +13,7 @@ from work_experience import WorkExperience
 from skills import Skills
 from registration import Registration
 from statistics import Statistics
+from honors_and_awards import HonorsAndAwards
 from sample_project import SampleProject
 
 
@@ -28,5 +29,6 @@ app = webapp2.WSGIApplication([('/home', HomeHandler),
                                ('/skills', Skills),
                                ('/statistics', Statistics),
                                ('/project', SampleProject),
+                               ('/honor', HonorsAndAwards),
                                ('/registration', Registration),
                                ('/about', AboutHandler)], debug=True)
