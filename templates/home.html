@@ -27,6 +27,7 @@
             $(document).ready(function() {
                 anchor('#edu_sortable', 'education', '');
                 anchor('#work_sortable', 'workexperience', 'extra');
+                anchor('#projects_sortable', 'project', 'extra');
                 anchor('#honor_sortable', 'honor', 'extra');
                 anchor('#languages_sortable', 'languages', 'extra');
 
@@ -334,12 +335,24 @@
             {% for project in user.projects %}
                 <div>
                     <div name="{{ project.id }}" class="home-content-wrapper">
-                        <div class="home-content"><a href="{{ project.link }}" target="_blank">{{ project.title }}</a></div>
-                        <div class="home-content-tiny">
-                            {{ project.year }}
-                        </div>
+                        {% if project.link %}
+                            <div class="home-content">
+                                <a href="{{ project.link }}" target="_blank">{{ project.title }}</a> | {{ project.role }} &nbsp;
+                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            </div>
+                        {% else %}
+                            <div class="home-content">
+                                {{ project.title }} | {{ project.role }} &nbsp;
+                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            </div>
+                        {% endif %}
                         <div class="home-content-small">
                             {{ project.desc }}
+                        </div>
+                        <div class="home-content-tiny">
+                            {{ project.year }}
                         </div>
                     </div>
                     <div></div>

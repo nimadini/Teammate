@@ -3,7 +3,7 @@
  */
 
 var lang_template = '<div><div name="{{ l_id }}" class="home-content-wrapper"><div class="home-content">{{ name }}: {{ proficiency }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit lang_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div></div><div></div></div>';
-var home_content_template = '{{ name }}: {{ proficiency }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit lang_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
+var lang_home_content_template = '{{ name }}: {{ proficiency }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit lang_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
 
 $(document.body).on('click', '#languages_link', function(e) {
     e.preventDefault();
@@ -36,8 +36,8 @@ $(document.body).on('click', '#languages_link', function(e) {
             }
 
             var data = {
-                'name': lang_name,
-                'proficiency': selected
+                name: lang_name,
+                proficiency: selected
             };
 
             $.ajax({
@@ -127,7 +127,7 @@ $(document.body).on('click', '.lang_edit_link', function(e) {
                     if (msg.successful) {
                         $info_msg.css('color', 'green');
                         $info_msg.html('<i class="fa fa-check"></i> Item edited').fadeIn().delay(1500).fadeOut();
-                        $lang_elem.find('.home-content').html(Mustache.render(home_content_template, data));
+                        $lang_elem.find('.home-content').html(Mustache.render(lang_home_content_template, data));
                         $('.home-content-wrapper').hover(function () {
                             if (in_progress == 0)
                                 $(this).find('.edit').css('visibility', 'visible');
@@ -143,6 +143,35 @@ $(document.body).on('click', '.lang_edit_link', function(e) {
                     $('#languages_panel').remove();
                     refresh_anchor('#languages_sortable');
                     in_progress = 0;
+                }
+            });
+        });
+        $remove_language_btn.on('click', function() {
+            l_id = $lang_elem.attr('name');
+            $.ajax({
+                type: 'DELETE',
+                url: 'languages?l_id=' + $lang_elem.attr('name'),
+                success: function (msg) {
+                    if (msg.successful) {
+                        $info_msg.css('color', 'green');
+                        $info_msg.html('<i class="fa fa-check"></i> Item deleted').fadeIn().delay(1500).fadeOut();
+                        $lang_elem.remove();
+                    }
+                    else {
+                        $info_msg.css('color', 'darkred');
+                        $info_msg.html('<i class="fa fa-close"></i> Something went wrong :|').fadeIn().delay(1500).fadeOut();
+                    }
+                    $lang_elem.css('background-color', 'white');
+                    $('#languages_panel').remove();
+                    refresh_anchor('#languages_sortable');
+                    in_progress = 0;
+                },
+                error: function (msg) {
+                    in_progress = 0;
+                    $info_msg.css('color', 'darkred');
+                    $info_msg.html('<i class="fa fa-close"></i> Network problem').fadeIn().delay(1500).fadeOut();
+                    $lang_elem.css('background-color', 'white');
+                    $('#languages_panel').remove();
                 }
             });
         });

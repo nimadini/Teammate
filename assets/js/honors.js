@@ -21,7 +21,7 @@ function validate(title, issuer, $info_msg) {
     return true;
 }
 
-var honor_template = '<div><div name="{{ h_id }}" class="home-content-wrapper"><div class="home-content">{{ title }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div> <div class="home-content-small"> {{ issuer }}</div> <div class="home-content-tiny"> {{ year }} </div></div><div></div></div>';
+var honor_template = '<div><div name="{{ h_id }}" class="home-content-wrapper"><div class="home-content">{{ title }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit honor_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div> <div class="home-content-small"> {{ issuer }}</div> <div class="home-content-tiny"> {{ year }} </div></div><div></div></div>';
 var home_content_template = '{{ title }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit honor_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
 
 $(document.body).on('click', '#honor_link', function(e) {
@@ -66,7 +66,7 @@ $(document.body).on('click', '#honor_link', function(e) {
                         }, function () {
                             $(this).find('.edit').css('visibility', 'hidden');
                         });
-                        refresh_anchor('#work_sortable');
+                        refresh_anchor('#honor_sortable');
                     }
                     else {
                         error_msg($info_msg, 'Something went wrong :|');

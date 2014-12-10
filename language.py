@@ -37,6 +37,37 @@ class LanguageHandler(webapp2.RequestHandler):
 
         self.response.write(result)
 
+    def delete(self):
+        usr = user_key(users.get_current_user().email()).get()
+        if not user_is_logged_in(usr):
+            return
+
+        if attr_is_not_in_request(self.request, 'l_id'):
+            return
+
+        lang_id = self.request.get('l_id').strip()
+
+        try:
+            lang_id = int(lang_id)
+        except ValueError:
+            return
+
+        desired = None
+        for l in usr.languages:
+            if l.id == lang_id:
+                desired = l
+                break
+
+        if desired is None:
+            return
+
+        usr.languages.remove(desired)
+        usr.put()
+
+        self.response.headers['Content-Type'] = 'application/json'
+        result = json.dumps({'successful': True})
+        self.response.write(result)
+
     def post(self):
         usr = user_key(users.get_current_user().email()).get()
         if not user_is_logged_in(usr):

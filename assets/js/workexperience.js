@@ -156,12 +156,12 @@ $(document.body).on('click', '.work_edit_link', function(e) {
                     if (msg.successful) {
                         $info_msg.css('color', 'green');
                         $info_msg.html('<i class="fa fa-check"></i> Item deleted').fadeIn().delay(1500).fadeOut();
-                        $work_elem.remove();
                     }
                     else {
                         $info_msg.css('color', 'darkred');
                         $info_msg.html('<i class="fa fa-close"></i> Something went wrong :|').fadeIn().delay(1500).fadeOut();
                     }
+                    $work_elem.remove();
                     $work_elem.css('background-color', 'white');
                     $('#work_panel').remove();
                     refresh_anchor('#work_sortable');
