@@ -1,5 +1,5 @@
 .home-element {
-    padding: 10px 10px 5px 10px;
+    padding: 10px 10px 10px 10px;
 }
 
 .home-title {
@@ -303,6 +303,11 @@ hr {
 }
 
 #info-msg-projects {
+    font-size: 14px;
+    float: right;
+}
+
+#info-msg-languages {
     font-size: 14px;
     float: right;
 }

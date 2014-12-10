@@ -15,6 +15,7 @@ from registration import Registration
 from statistics import Statistics
 from honors_and_awards import HonorsAndAwards
 from sample_project import SampleProject
+from language import LanguageHandler
 
 
 app = webapp2.WSGIApplication([('/home', HomeHandler),
@@ -31,4 +32,5 @@ app = webapp2.WSGIApplication([('/home', HomeHandler),
                                ('/project', SampleProject),
                                ('/honor', HonorsAndAwards),
                                ('/registration', Registration),
+                               ('/languages', LanguageHandler),
                                ('/about', AboutHandler)], debug=True)

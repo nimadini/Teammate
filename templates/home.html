@@ -28,6 +28,7 @@
                 anchor('#edu_sortable', 'education', '');
                 anchor('#work_sortable', 'workexperience', 'extra');
                 anchor('#honor_sortable', 'honor', 'extra');
+                anchor('#languages_sortable', 'languages', 'extra');
 
                 var $tags = $('#current-tag-list');
                 var skills = $tags.attr('name');
@@ -349,6 +350,30 @@
     </div>
     <div class="home-element">
         <div class="home-sub-title">
+            <i class="fa fa-language"></i> Languages
+            <div id="info-msg-languages"></div>
+            <div id="languages_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+        </div>
+        <div id="languages_sortable">
+            <div id="language"></div>
+            {% for lang in user.languages %}
+                <div>
+                    <div name="{{ lang.id }}" class="home-content-wrapper">
+                        <div class="home-content">
+                            {{ lang.name }}: {{ lang.proficiency }} &nbsp;
+                            <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                            <a href="#" class="edit lang_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+    </div>
+
+    <div class="home-element">
+        <div class="home-sub-title">
             <i class="fa fa-magic"></i> Skills
             <div id="info-msg-skills"></div>
             <div id="skills_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add or Modify</a></div>
@@ -362,22 +387,6 @@
             </div>
         </div>
         <hr>
-    </div>
-    <div class="home-element">
-        <div class="home-sub-title">
-            <i class="fa fa-language"></i> Languages
-            <div class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
-        </div>
-        <div class="home-content">
-            The University of Texas at Austin
-
-        </div>
-        <div class="home-content-small">
-            MS, Software Engineering
-        </div>
-        <div class="home-content-tiny">
-            2014 – 2016 (expected)
-        </div>
     </div>
 
 </div>
@@ -516,4 +525,5 @@
 <script src="../assets/js/skills.js"></script>
 <script src="../assets/js/honors.js"></script>
 <script src="../assets/js/projects.js"></script>
+<script src="../assets/js/languages.js"></script>
 </html>
