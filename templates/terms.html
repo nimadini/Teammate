@@ -1,0 +1,45 @@
+<div id="terms_panel" class="col-lg-12 col-md-12 col-sm-12">
+    <form role="form" method="post">
+        <div class="row">
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <div class="dropdown">
+                    <button class="btn btn-info button-small dropdown-toggle" style="width:79px; height: 36px; vertical-align: middle;" type="button" data-toggle="dropdown">
+                        <div id="degree">
+                            <div id="icon_holder" style="font-size: 16px;"><i class="fa fa-users"></i></div>
+                            <span class="caret" style="float: right;"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="gender">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">You should know</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Availability</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Price</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-left: -25px;" class="form-group col-lg-9 col-md-9 col-sm-9">
+                <textarea id="should_know" rows="4" name="name" class="form-control" placeholder="You should know..."></textarea>
+                <div class="input-group time" style="display: none;">
+                    <input type="email" class="form-control" id="free_time" maxlength="3" placeholder="Free time amount in a week">
+                    <div class="input-group-addon">hrs / w</div>
+                </div>
+                <div class="input-group price" style="display: none;">
+                    <input type="email" class="form-control" id="price_hr" maxlength="6" placeholder="Price per an hour">
+                    <div class="input-group-addon">$ / hr</div>
+                </div>
+            </div>
+            <div class="form-group col-lg-12 col-md-12 col-sm-12 price" style="display: none;">
+                <div class="checkbox">
+                    <label><input id="nego" type="checkbox" value="">Negotiable (No precise amount)</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 12px;">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <button type="button" id="update_term_btn" class="btn btn-primary"><i class="fa fa-check"></i> Save </button>
+                <button style="display: none;" type="button" id="remove_term_btn" class="btn btn-danger"><i class="fa fa-trash"></i> Delete </button>
+                <button onclick="remove_terms_panel();" type="button" class="btn btn-default"><i class="fa fa-times"></i> Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

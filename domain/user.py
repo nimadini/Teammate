@@ -3,6 +3,7 @@ from google.appengine.ext import ndb
 from education import Education
 from work import Work
 from reference import Reference
+from term import Term
 from project import Project
 from honor import Honor
 from image import Image
@@ -23,6 +24,7 @@ class User(ndb.Model):
     profile_pic = ndb.StructuredProperty(Image)
     total_num_of_elems = ndb.IntegerProperty()
     reference = ndb.StructuredProperty(Reference)
+    term = ndb.StructuredProperty(Term)
     projects = ndb.StructuredProperty(Project, repeated=True)
     honors = ndb.StructuredProperty(Honor, repeated=True)
     languages = ndb.StructuredProperty(Language, repeated=True)

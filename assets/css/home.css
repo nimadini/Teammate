@@ -317,6 +317,11 @@ hr {
     float: right;
 }
 
+#info-msg-terms {
+    font-size: 14px;
+    float: right;
+}
+
 .tag {
     margin: 1px !important;
     height: 23px !important;

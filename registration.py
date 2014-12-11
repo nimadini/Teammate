@@ -40,6 +40,7 @@ class Registration(webapp2.RequestHandler):
         usr.gender = self.request.get('gender')
         usr.total_num_of_elems = 0
         usr.reference = Reference()
+        usr.term = Term()
         usr.views = 0
         usr.put()
         doc = create_doc(users.get_current_user().email(), 'None')

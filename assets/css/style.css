@@ -10,6 +10,8 @@ body {
     font-family: Tahoma, Geneva, sans-serif;
     padding-top: 70px;
     background-color: #FFFFDC;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .wrapper {
@@ -537,64 +539,64 @@ img {
 }
 
 path.slice{
-	stroke-width:2px;
+    stroke-width:2px;
 }
 polyline{
-	opacity: .3;
-	stroke: black;
-	stroke-width: 2px;
-	fill: none;
+    opacity: .3;
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
 }
 svg text.percent{
-	fill:white;
-	text-anchor:middle;
-	font-size:12px;
+    fill:white;
+    text-anchor:middle;
+    font-size:12px;
 }
 
 .axis path,
 .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
 }
 
 .bar {
-  fill: #3366CC ;
+    fill: #3366CC ;
 }
 
 .bar:hover {
-  fill: orange ;
+    fill: orange ;
 }
 
 .x.axis path {
-  display: none;
+    display: none;
 }
 
 .d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
 }
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
 }
 
 /* Style northward tooltips differently */
 .d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
 }

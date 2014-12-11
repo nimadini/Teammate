@@ -66,10 +66,12 @@ $(document.body).on('click', '#languages_link', function(e) {
                     in_progress = 0;
                 },
                 error: function(msg) {
-
+                    $info_msg.css('color', 'darkred');
+                    $info_msg.html('<i class="fa fa-close"></i> Network problem :|').fadeIn().delay(1500).fadeOut();
+                    $('#languages_panel').remove();
+                    in_progress = 0;
                 }
             });
-
         });
     });
 });

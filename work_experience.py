@@ -7,7 +7,6 @@ from google.appengine.api import users
 from domain.user import *
 from util.sanity_check import*
 
-
 class WorkExperience(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('templates/workexperience.html')
