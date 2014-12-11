@@ -500,21 +500,27 @@
                 <div id="terms"></div>
             </div>
             <div style="padding-right: 10px;">
-                {% if user.term.should_know %}
-                    <p>
-                        <i class="fa fa-users"></i> <strong>You should know:</strong> {{ user.term.should_know }}
-                    </p>
-                {% endif %}
-                {% if user.term.availability %}
-                    <p>
-                        <i class="fa fa-clock-o"></i> <strong>Availability:</strong> {{ user.term.availability }} hrs / w
-                    </p>
-                {% endif %}
-                {% if user.term.price %}
-                    <p>
-                        <i class="fa fa-usd"></i> <strong>Price:</strong> {{ user.term.price }}
-                    </p>
-                {% endif %}
+                <div id="shoud_know_content">
+                    {% if user.term.should_know %}
+                        <p>
+                            <i class="fa fa-users"></i> <strong>You should know:</strong> {{ user.term.should_know }}
+                        </p>
+                    {% endif %}
+                </div>
+                <div id="availability_content">
+                    {% if user.term.availability %}
+                        <p>
+                            <i class="fa fa-clock-o"></i> <strong>Availability:</strong> {{ user.term.availability }} hrs / w
+                        </p>
+                    {% endif %}
+                </div>
+                <div id="price_content">
+                    {% if user.term.price %}
+                        <p>
+                            <i class="fa fa-usd"></i> <strong>Price:</strong> {{ user.term.price }}
+                        </p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
