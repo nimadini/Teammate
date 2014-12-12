@@ -2,8 +2,8 @@
  * Created by stanley on 12/1/14.
  */
 
-var project_template_with_link = '<div><div name="{{ id }}" class="home-content-wrapper"><div class="home-content"><a href="{{ url }}" target="_blank">{{ title }}</a> | {{ role }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ desc }} </div> <div class="home-content-tiny"> {{ year }} </div> </div> <div></div> </div>';
-var project_template_without_link = '<div><div name="{{ id }}" class="home-content-wrapper"> <div class="home-content"> {{ title }} | {{ role }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ desc }} </div> <div class="home-content-tiny"> {{ project.year }} </div> </div> <div></div> </div>';
+var project_template_with_link = '<div><div name="{{ p_id }}" class="home-content-wrapper"><div class="home-content"><a href="{{ url }}" target="_blank">{{ title }}</a> | {{ role }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ desc }} </div> <div class="home-content-tiny"> {{ year }} </div> </div> <div></div> </div>';
+var project_template_without_link = '<div><div name="{{ p_id }}" class="home-content-wrapper"> <div class="home-content"> {{ title }} | {{ role }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ desc }} </div> <div class="home-content-tiny"> {{ year }} </div> </div> <div></div> </div>';
 
 var project_home_content_template_with_link = '<a href="{{ url }}" target="_blank">{{ title }}</a> | {{ role }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
 var project_home_content_template_without_link = '{{ title }} | {{ role }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
@@ -64,7 +64,7 @@ $(document.body).on('click', '#projects_link', function(e) {
                     if (msg.successful) {
                         $info_msg.css('color', 'green');
                         $info_msg.html('<i class="fa fa-check"></i> Item added').fadeIn().delay(1500).fadeOut();
-                        data.w_id = msg.id;
+                        data.p_id = msg.id;
                         if (url.length != 0)
                             $('#sample-projects').after(Mustache.render(project_template_with_link, data));
                         else

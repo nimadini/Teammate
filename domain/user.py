@@ -3,6 +3,7 @@ from google.appengine.ext import ndb
 from education import Education
 from work import Work
 from reference import Reference
+from location import Location
 from term import Term
 from project import Project
 from honor import Honor
@@ -29,6 +30,7 @@ class User(ndb.Model):
     honors = ndb.StructuredProperty(Honor, repeated=True)
     languages = ndb.StructuredProperty(Language, repeated=True)
     views = ndb.IntegerProperty()
+    location = ndb.StructuredProperty(Location)
     date = ndb.DateTimeProperty(auto_now_add=True)
     # notif + msg
 
@@ -94,6 +96,11 @@ class User(ndb.Model):
                 highest_edu = self.eds[i]
             i += 1
         return highest_edu.degree
+
+    def get_location(self):
+        if self.location is None:
+            return "Unknown Location"
+        return self.location.city + ', ' + self.location.region + ', ' + self.location.country
 
 
 def user_key(_id):

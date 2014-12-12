@@ -1,6 +1,0 @@
-indexes:
-
-- kind: Education
-  properties:
-  - name: id
-    direction: asc

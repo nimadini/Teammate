@@ -3,19 +3,51 @@ __author__ = 'stanley'
 import webapp2
 import json
 from init import *
-from google.appengine.api import users, search
+from google.appengine.api import users
 from domain.user import *
 from google.appengine.ext import blobstore
 from util.sanity_check import*
 from domain.doc_index import *
+import re
 
 
 class HomeHandler(webapp2.RequestHandler):
     def get(self):
         usr = user_key(users.get_current_user().email()).get()
+        # user is not registered
         if usr is None:
             self.redirect('/registration')
             return
+
+        # we assume the user is not the owner
+        owner = False
+
+        # no specific user is mentioned. Desired must be the logged in person him/herself...
+        if attr_is_not_in_request(self.request, 'user'):
+            owner = True
+            desired_user = usr
+
+        # a user is mentioned. Can be either the owner or another one.
+        else:
+            user_email = str(self.request.get('user')).strip()
+
+            pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+            prog = re.compile(pattern)
+            # the email is not even a valid email!
+            if prog.match(user_email) is None:
+                self.response.set_status(400)
+                return
+
+            qry = User.query(User.id == user_email)
+            # the desired user does not exist
+            if qry.get() is None:
+                self.response.set_status(400)
+                return
+
+            desired_user = qry.get()
+
+            if users.get_current_user().email() == user_email:
+                owner = True
 
         cover_upload_url = blobstore.create_upload_url('/upload')
         profile_img_upload_url = blobstore.create_upload_url('/upload')
@@ -23,23 +55,29 @@ class HomeHandler(webapp2.RequestHandler):
 
         #   in jash inja nist! (tooye user bayad bashe!)
         skills = []
-        for skill in usr.skills:
+        for skill in desired_user.skills:
             skills.append(skill)
 
         skills = ",".join(skills)
 
         user_prop = {
-            'user': usr,
+            'user': desired_user,
             'cover_upload_url': cover_upload_url,
             'profile_img_upload_url': profile_img_upload_url,
             'resume_upload_url': resume_upload_url,
-            'skills': skills
+            'skills': skills,
+            'owner': owner
         }
 
         # usr.get_highest_degree()
 
         template = JINJA_ENVIRONMENT.get_template('templates/home.html')
         self.response.write(template.render(user_prop))
+
+        # for the sake of efficiency (do this after rendering the response)
+        if not owner:
+            desired_user.views += 1
+            desired_user.put()
 
     def post(self):
         req_type = self.request.get('type')

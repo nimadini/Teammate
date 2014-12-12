@@ -2,7 +2,7 @@
  * Created by stanley on 11/24/14.
  */
 
-var work_template = '<div><div name="{{ w_id }}" class="home-content-wrapper"><div class="home-content">{{title}} at {{company}} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{desc}} </div><div class="home-content-tiny"> 2014 – 2016 (expected)</div></div><div></div></div>';
+var work_template = '<div><div name="{{ w_id }}" class="home-content-wrapper"><div class="home-content">{{title}} at {{company}} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{desc}} </div></div><div></div></div>';
 var home_content_template = '{{title}} at {{company}} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>';
 
 $(document.body).on('click', '#work_link', function(e) {

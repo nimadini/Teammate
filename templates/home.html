@@ -138,7 +138,6 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#"><i class="fa fa-bell"></i></a></li>
                 <li><a href="#"><i class="fa fa-comment"></i></a></li>
                 <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ user.given_name }} </a></li>
                 <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
@@ -158,7 +157,7 @@
 </nav>
 
 <div class="container">
-<div class="col-md-12">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 <div class="panel panel-default">
     <div class="panel-body nopadding">
         <div class="row no-gutter row-eq-height profile_background">
@@ -167,25 +166,29 @@
                      style="background-image:url({{user.get_cover_url()}})"
                         >
                     <div style="margin: 15px;">
-                        <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
-                        <a href="#" id="message_btn" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
-                        <div id="cover_upload_btn" style="float: right;">
-                            <a id="upload_link" class="my_tooltip" style="cursor: pointer;"
-                               title="Change Cover Picture">
-                                <i class="fa fa-camera fa-2x"></i>
-                            </a>
-                            <a id="spinner_cover" style="cursor: pointer; text-decoration: none; display: none;" class="text-danger">
-                                <i class="fa fa-spinner fa-2x fa-spin"></i>
-                            </a>
-                            <a id="cover_rej" class="my_tooltip" style="cursor: pointer; text-decoration: none; display: none;"
-                               title="Cancel">
-                                <i class="fa fa-times-circle fa-3x text-danger"></i>
-                            </a>
-                            <a id="cover_acc" class="my_tooltip" style="cursor: pointer; display: none;"
-                               title="Confirm">
-                                <i class="fa fa-check-circle fa-3x text-success"></i>
-                            </a>
-                        </div>
+                        {% if not owner %}
+                            <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
+                            <a href="#" id="message_btn" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
+                        {% endif %}
+                        {% if owner %}
+                            <div id="cover_upload_btn" style="float: right; margin-bottom: 10px;">
+                                <a id="upload_link" class="my_tooltip" style="cursor: pointer;"
+                                   title="Change Cover Picture">
+                                    <i class="fa fa-camera fa-2x"></i>
+                                </a>
+                                <a id="spinner_cover" style="cursor: pointer; text-decoration: none; display: none;" class="text-danger">
+                                    <i class="fa fa-spinner fa-2x fa-spin"></i>
+                                </a>
+                                <a id="cover_rej" class="my_tooltip" style="cursor: pointer; text-decoration: none; display: none;"
+                                   title="Cancel">
+                                    <i class="fa fa-times-circle fa-3x text-danger"></i>
+                                </a>
+                                <a id="cover_acc" class="my_tooltip" style="cursor: pointer; display: none;"
+                                   title="Confirm">
+                                    <i class="fa fa-check-circle fa-3x text-success"></i>
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -195,17 +198,19 @@
                         <img id ="profile_picture" src="{{user.get_profile_url()}}" class="img-circle col-centered profile-img" alt="Pic" />
                     </a>
                     <div class="profile_name"><a href="#">{{ user.given_name }} {{ user.surname }}</a></div>
-                    <div class="profile_sub_info">101 Followers | {{ user.get_views_num_for_print() }} Views</div>
-                    <div class="profile_sub_info_small">AUSTIN, TX, USA</div>
+                    <div class="profile_sub_info">No Followers | {{ user.get_views_num_for_print() }} Views</div>
+                    <div class="profile_sub_info_small" id="loc">{{ user.get_location() }}</div>
                 </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div style="text-align: center; cursor: pointer;">
-                        <a class="my_tooltip" style="cursor: pointer;" title="Change Profile Picture"
-                           id="upload_profile_link">
-                            <i class="fa fa-user"></i>
-                        </a>
+                {% if owner %}
+                    <div class="row" style="margin-top: 20px;">
+                        <div style="text-align: center; cursor: pointer;">
+                            <a class="my_tooltip" style="cursor: pointer;" title="Change Profile Picture"
+                               id="upload_profile_link">
+                                <i class="fa fa-user"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -232,12 +237,14 @@
 <div class="panel panel-default">
 <div class="panel-body nopadding">
 <div class="row">
-<div class="col-lg-7 col-md-7 col-sm-12">
+<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
     <div class="home-element">
         <div class="home-sub-title">
             <i class="fa fa-graduation-cap"></i> Education
-            <div class="info-msg"></div>
-            <div id ="edu_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% if owner %}
+                <div class="info-msg"></div>
+                <div id ="edu_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% endif %}
         </div>
         <div id="edu_sortable">
             <div id="edu"></div>
@@ -246,15 +253,15 @@
                     <div name="{{ edu.id }}" class="home-content-wrapper">
                         <div class="home-content">
                             {{edu.school}} &nbsp;
-                            <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
-                            <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% if owner %}
+                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% endif %}
                         </div>
                         <div class="home-content-small">
                             {{edu.degree}} - {{edu.major}} | {{edu.gpa}}
                         </div>
-                        <div class="home-content-tiny">
-                            2014 – 2016 (expected)
-                        </div>
+
                     </div>
                     <div></div>
                 </div>
@@ -265,8 +272,10 @@
     <div class="home-element">
         <div class="home-sub-title">
             <i class="fa fa-suitcase"></i> Work Experience
-            <div id="info-msg-work"></div>
-            <div id ="work_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% if owner %}
+                <div id="info-msg-work"></div>
+                <div id ="work_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% endif %}
         </div>
         <div id="work_sortable">
             <div id="work"></div>
@@ -275,14 +284,13 @@
                     <div name="{{ work.id }}" class="home-content-wrapper">
                         <div class="home-content">
                             {{ work.title }} at {{ work.company }} &nbsp;
-                            <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
-                            <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% if owner %}
+                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                <a href="#" class="edit work_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% endif %}
                         </div>
                         <div class="home-content-small">
                             {{ work.desc }}
-                        </div>
-                        <div class="home-content-tiny">
-                            2014 – 2016 (expected)
                         </div>
                     </div>
                     <div></div>
@@ -294,8 +302,10 @@
     <div class="home-element">
         <div class="home-sub-title">
             <i class="fa fa-trophy"></i> Honors and Awards
-            <div id="info-msg-honor"></div>
-            <div id ="honor_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% if owner %}
+                <div id="info-msg-honor"></div>
+                <div id ="honor_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% endif %}
         </div>
         <div id="honor_sortable">
             <div id="honor"></div>
@@ -304,8 +314,10 @@
                     <div name="{{ honor.id }}" class="home-content-wrapper">
                         <div class="home-content">
                             {{ honor.title }} &nbsp;
-                            <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
-                            <a href="#" class="edit honor_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% if owner %}
+                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                <a href="#" class="edit honor_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% endif %}
                         </div>
                         <div class="home-content-small">
                             {{ honor.issued_by }}
@@ -323,8 +335,10 @@
     <div class="home-element">
         <div class="home-sub-title">
             <i class="fa fa-file-text"></i> Sample Projects
-            <div id="info-msg-projects"></div>
-            <div id="projects_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% if owner %}
+                <div id="info-msg-projects"></div>
+                <div id="projects_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% endif %}
         </div>
         <div id="projects_sortable">
             <div id="sample-projects"></div>
@@ -334,14 +348,18 @@
                         {% if project.link %}
                             <div class="home-content">
                                 <a href="{{ project.link }}" target="_blank">{{ project.title }}</a> | {{ project.role }} &nbsp;
-                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
-                                <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                                {% if owner %}
+                                    <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                    <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                                {% endif %}
                             </div>
                         {% else %}
                             <div class="home-content">
                                 {{ project.title }} | {{ project.role }} &nbsp;
-                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
-                                <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                                {% if owner %}
+                                    <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                    <a href="#" class="edit projects_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                                {% endif %}
                             </div>
                         {% endif %}
                         <div class="home-content-small">
@@ -360,8 +378,10 @@
     <div class="home-element">
         <div class="home-sub-title">
             <i class="fa fa-language"></i> Languages
-            <div id="info-msg-languages"></div>
-            <div id="languages_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% if owner %}
+                <div id="info-msg-languages"></div>
+                <div id="languages_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
+            {% endif %}
         </div>
         <div id="languages_sortable">
             <div id="language"></div>
@@ -370,8 +390,10 @@
                     <div name="{{ lang.id }}" class="home-content-wrapper">
                         <div class="home-content">
                             {{ lang.name }}: {{ lang.proficiency }} &nbsp;
-                            <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
-                            <a href="#" class="edit lang_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% if owner %}
+                                <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp;
+                                <a href="#" class="edit lang_edit_link"><i class="fa fa-pencil"></i> Edit </a>
+                            {% endif %}
                         </div>
                     </div>
                     <div></div>
@@ -383,9 +405,11 @@
 
     <div class="home-element">
         <div class="home-sub-title">
-            <i class="fa fa-magic"></i> Skills
-            <div id="info-msg-skills"></div>
-            <div id="skills_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add or Modify</a></div>
+            <i class="fa fa-code"></i> Skills
+            {% if owner %}
+                <div id="info-msg-skills"></div>
+                <div id="skills_add_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add or Modify</a></div>
+            {% endif %}
         </div>
         <div class="home-content-wrapper">
             <div class="home-content">
@@ -398,12 +422,14 @@
     </div>
     <div style="height: 30px;"></div>
 </div>
-<div class="col-lg-5 col-md-5 col-sm-12">
+<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
     <div class="home-element">
         <div class="home-sub-title">
             <i class="fa fa-paperclip"></i> References
-            <div class="info-msg-ref"></div>
-            <a class="add references_panel" href="#"><i class="fa fa-pencil"></i> Add or Modify </a>
+            {% if owner %}
+                <div class="info-msg-ref"></div>
+                <a class="add references_panel" href="#"><i class="fa fa-pencil"></i> Add or Modify </a>
+            {% endif %}
         </div>
         <div class="home-content">
             <div class="row">
@@ -491,8 +517,10 @@
     <div class="home-element" style="margin-top: -15px;">
         <div class="home-sub-title">
             <i class="fa fa-thumbs-o-up"></i> Terms
-            <div id="info-msg-terms"></div>
-            <a class="add terms_panel" href="#"><i class="fa fa-pencil"></i> Add or Modify </a>
+            {% if owner %}
+                <div id="info-msg-terms"></div>
+                <a class="add terms_panel" href="#"><i class="fa fa-pencil"></i> Add or Modify </a>
+            {% endif %}
         </div>
 
         <div class="home-content">
@@ -547,12 +575,14 @@
     </div>
 </footer>
 </body>
-<script src="../assets/js/education.js"></script>
-<script src="../assets/js/references_upload.js"></script>
-<script src="../assets/js/workexperience.js"></script>
-<script src="../assets/js/skills.js"></script>
-<script src="../assets/js/honors.js"></script>
-<script src="../assets/js/projects.js"></script>
-<script src="../assets/js/languages.js"></script>
-<script src="../assets/js/terms.js"></script>
+{% if owner %}
+    <script src="../assets/js/education.js"></script>
+    <script src="../assets/js/references_upload.js"></script>
+    <script src="../assets/js/workexperience.js"></script>
+    <script src="../assets/js/skills.js"></script>
+    <script src="../assets/js/honors.js"></script>
+    <script src="../assets/js/projects.js"></script>
+    <script src="../assets/js/languages.js"></script>
+    <script src="../assets/js/terms.js"></script>
+{% endif %}
 </html>

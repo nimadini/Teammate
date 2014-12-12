@@ -600,3 +600,7 @@ svg text.percent{
     top: 100%;
     left: 0;
 }
+
+@media (max-width: 768px) {
+    body { min-width: 700px; }
+}

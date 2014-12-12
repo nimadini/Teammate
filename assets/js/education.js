@@ -144,7 +144,7 @@ $(document.body).on('click', '#edu_add_link', function(e) {
             source: field_tags
         });
 
-        var edu_template = '<div><div name="{{ id }}" class="home-content-wrapper"><div class="home-content"> {{ school }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ degree }} - {{ major }} | {{ gpa }}</div><div class="home-content-tiny">2014 – 2016 (expected)</div></div><div></div></div>';
+        var edu_template = '<div><div name="{{ id }}" class="home-content-wrapper"><div class="home-content"> {{ school }} &nbsp; <i class="fa fa-anchor handle edit" style="visibility: hidden;"></i> &nbsp; <a href="#" class="edit edu_edit_link"><i class="fa fa-pencil"></i> Edit </a> </div><div class="home-content-small"> {{ degree }} - {{ major }} | {{ gpa }}</div></div><div></div></div>';
 
         $('#update_edu_btn').on('click', function(e) {
             e.preventDefault();

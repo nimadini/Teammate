@@ -35,11 +35,22 @@ $('#accept_btn').on('click', function() {
         return;
     }
 
+    var city = geoplugin_city();
+    var region = geoplugin_region();
+    var country = geoplugin_countryName();
+    var lat = geoplugin_latitude();
+    var long = geoplugin_longitude();
+
     var data = {
-        'given_name': given_name,
-        'surname': surname,
-        'gender': gender,
-        'contest': checked
+        given_name: given_name,
+        surname: surname,
+        gender: gender,
+        contest: checked,
+        city: city,
+        region: region,
+        country: country,
+        lat: lat,
+        long: long
     };
 
     $.ajax({
@@ -48,7 +59,7 @@ $('#accept_btn').on('click', function() {
         data: data,
         success: function(msg) {
             if (msg.successful) {
-                window.location.replace("/home");
+                window.location.replace("/home?user=" + msg.user);
             }
             else {
                 notify('Something went wrong');

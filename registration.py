@@ -13,7 +13,7 @@ class Registration(webapp2.RequestHandler):
     def get(self):
         usr = user_key(users.get_current_user().email()).get()
         if usr is not None:
-            self.redirect('/home')
+            self.redirect('/home?user=' + users.get_current_user().email())
             return
 
         template = JINJA_ENVIRONMENT.get_template('templates/registration.html')
@@ -33,6 +33,13 @@ class Registration(webapp2.RequestHandler):
                 self.redirect('/registration')
                 return
 
+        city = self.request.get('city')
+        region = self.request.get('region')
+        country = self.request.get('country')
+        lat = self.request.get('lat')
+        _long = self.request.get('long')
+        loc = Location(city=city, region=region, country=country, lat=lat, long=_long)
+
         usr = User(key=user_key(users.get_current_user().email()))  # TODO: Is parent required? :O
         usr.id = users.get_current_user().email()
         usr.given_name = self.request.get('given_name')
@@ -41,11 +48,12 @@ class Registration(webapp2.RequestHandler):
         usr.total_num_of_elems = 0
         usr.reference = Reference()
         usr.term = Term()
+        usr.location = loc
         usr.views = 0
         usr.put()
         doc = create_doc(users.get_current_user().email(), 'None')
         store_idx(doc, INDEX_NAME)
 
         self.response.headers['Content-Type'] = 'application/json'
-        result = json.dumps({'successful': True})
+        result = json.dumps({'successful': True, 'user': usr.id})
         self.response.write(result)

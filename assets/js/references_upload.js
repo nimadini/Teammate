@@ -115,7 +115,7 @@ $(document.body).on('click', '.references_panel', function (e) {
         return false;
     in_progress = 1;
     $('#references').load('references', function (data) {
-
+        var feature = 0;
         var $icon_holder = $(this).find('#icon_holder');
         var $ref_in = $('#ref_in');
         $ref_in.val($('#phone_elem').text());
