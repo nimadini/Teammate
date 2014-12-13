@@ -43,8 +43,11 @@ var msg_dialog = $("#msg-dialog").dialog({
     }
 });
 
+var form = msg_dialog.find( "form" );
+
 $(".message_btn").click(function (e) {
     e.preventDefault();
+    form[0].reset();
     target = $(this).attr('href');
     $('#msg-note').text('This message will be sent to ' + $(this).attr('name').trim() + '\'s email address.');
     $("#msg-dialog").dialog("open");
