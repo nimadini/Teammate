@@ -90,6 +90,12 @@ $('.terms_panel').on('click', function (e) {
             else
                 return false;
 
+            if (content.length == 0) {
+                $info_msg.css('color', 'darkred');
+                $info_msg.html('<i class="fa fa-close"></i> No term provided').fadeIn().delay(1500).fadeOut();
+                return;
+            }
+
             var data = {
                 type: type,
                 content: content
@@ -115,7 +121,7 @@ $('.terms_panel').on('click', function (e) {
                     }
                     else {
                         $info_msg.css('color', 'darkred');
-                        $info_msg.html('<i class="fa fa-check"></i> Something went wrong :|').fadeIn().delay(1500).fadeOut();
+                        $info_msg.html('<i class="fa fa-close"></i> Something went wrong :|').fadeIn().delay(1500).fadeOut();
                     }
                 },
                 error: function() {

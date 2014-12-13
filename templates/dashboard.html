@@ -23,112 +23,106 @@
 </head>
 <body>
 <div class="wrapper">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/dashboard">Teammate</a>
-            </div>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/dashboard">Teammate</a>
+        </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#"><i class="fa fa-comment"></i></a></li>
-                    <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ user.given_name }}  </a></li>
-                    <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group has-feedback">
-                                <input type="text" id="search-bar" class="form-control" placeholder="Search for people, projects and skills"/>
-                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                            </div>
-
-                        </form>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container">
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            {% for user in results %}
-                <div class="panel panel-default shine">
-                    <div class="panel-body nopadding">
-                        <div class="row no-gutter">
-                            <div class="col-lg-3 col-md-4">
-                                <a href="#">
-                                    <img src="{{ user.get_profile_url_mirrored() }}" class="img-responsive img-rounded nopadding displayed" alt="Cover Photo">
-                                </a>
-                            </div>
-                            <div class="col-lg-9 col-md-8">
-                                <div class="user_box">
-                                    <div class="box_title">
-                                        <a href="#">{{ user.given_name }} {{ user.surname }}</a>
-                                    </div>
-                                    <div class="box_sub_title">
-                                        Works at University of Tehran
-                                    </div>
-                                    <div class="box_sub_content">
-                                        Studied Computer Hardware Engineering at University of Tehran '09
-                                        Read Animal Farm, 1984 - George Orwell and Thus Spoke Zarathustra
-                                        Listens to Camel, Gary Moore and HAGGARD
-                                        98 mutual friends including Peyman Mahdian and Atiyeh Bayat
-                                    </div>
-                                    <div class="box_sub_title">
-                                        Projects:
-                                        <a href="http://connexus-beta.appspot.com/" target="_blank">Teammate</a> |
-                                        <a href="http://connexus-beta.appspot.com/" target="_blank">Connexus</a>
-                                    </div>
-                                    <div class="user_box_btn">
-                                        <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a>
-                                    </div>
-                                    <div class="user_box_navigation">
-
-                                    </div>
-                                </div>
-                            </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#"><i class="fa fa-comment"></i></a></li>
+                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ user.given_name }}  </a></li>
+                <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group has-feedback">
+                            <input type="text" id="search-bar" class="form-control" placeholder="Search for people, projects and skills"/>
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
-                    </div>
-                </div>
-            {% endfor %}
+
+                    </form>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        {% for user in results %}
             <div class="panel panel-default shine">
                 <div class="panel-body nopadding">
                     <div class="row no-gutter">
                         <div class="col-lg-3 col-md-4">
-                            <a href="#">
-                                <img src="../assets/images/profile.jpg" class="img-responsive img-rounded nopadding displayed" alt="Cover Photo">
+                            <a href="/home?user={{ user.id }}">
+                                <img src="{{ user.get_profile_url_mirrored() }}" class="img-responsive img-rounded nopadding displayed" alt="Cover Photo">
                             </a>
                         </div>
                         <div class="col-lg-9 col-md-8">
-                            <div class="user_box">
+                            <div class="user_box"  style="overflow: hidden;">
                                 <div class="box_title">
-                                    <a href="#">Nima Dini</a>
+                                    <div class="row" style="padding-left: 10px; padding-right: 14px;">
+                                        <div class="pull-left"><a href="/home?user={{ user.id }}">{{ user.given_name }} {{ user.surname }}</a></div>
+                                        {% if user.location %}
+                                            <div class="pull-right" style="font-size: 12px; font-weight: normal; color: #606060;">{{ user.get_location() }}</div>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="box_sub_title">
-                                    Works at University of Tehran
-                                </div>
-                                <div class="box_sub_content">
-                                    Studied Computer Hardware Engineering at University of Tehran '09
-                                    Read Animal Farm, 1984 - George Orwell and Thus Spoke Zarathustra
-                                    Listens to Camel, Gary Moore and HAGGARD
-                                    98 mutual friends including Peyman Mahdian and Atiyeh Bayat
-                                </div>
-                                <div class="box_sub_title">
-                                    Projects:
-                                    <a href="http://connexus-beta.appspot.com/" target="_blank">Teammate</a> |
-                                    <a href="http://connexus-beta.appspot.com/" target="_blank">Connexus</a>
-                                </div>
+                                {% if user.get_highest_edu() %}
+                                    <div class="box_sub_title">
+                                        <i class="fa fa-graduation-cap"></i> {{ user.get_highest_edu().school }} | {{ user.get_highest_edu().degree }}
+                                    </div>
+                                {% endif %}
+                                {% if user.term %}
+                                    {% if user.term.should_know %}
+                                        <div class="box_sub_title">
+                                            <i class="fa fa-users"></i> You should know:<span class="box_sub_content">{{ user.term.should_know }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if user.term.availability or user.term.price %}
+                                        <div class="row" style="padding-left: 15px; margin-bottom: 2px;">
+                                            {% if user.term.availability %}
+                                                <span class="box_sub_title">
+                                                    <i class="fa fa-clock-o"></i> Availability:<span class="box_sub_content">{{ user.term.availability }} hours a week</span> |
+                                                </span>
+                                            {% endif %}
+                                            {% if user.term.price %}
+                                                <span class="box_sub_title">
+                                                    {% if user.term.price == 'negotiable'%}
+                                                        <i class="fa fa-money"></i> Price:<span class="box_sub_content">negotiable</span>
+                                                    {% else %}
+                                                        <i class="fa fa-money"></i> Price:<span class="box_sub_content">${{ user.term.price }} per hour</span>
+                                                    {% endif %}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+
+                                {% endif %}
+                                {% if user.has_project() %}
+                                    <div class="box_sub_title">
+                                        <i class="fa fa-calculator"></i> Projects: |
+                                        {% for proj in user.projects %}
+                                            {% if proj.link %}
+                                                <a href="{{ proj.link }}" target="_blank">{{ proj.title }}</a> |
+                                            {% else %}
+                                                {{ proj.title }} |
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                                 <div class="user_box_btn">
                                     <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a>
-                                    <img src="../assets/images/navigation.png" alt="nav">
                                 </div>
                                 <div class="user_box_navigation">
 
@@ -138,74 +132,75 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <div class="panel panel-default filter">
-                <div class="panel-heading">
-                    <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-filter"></i> Filters</div>
-                </div>
-                <div class="panel-body nopadding" style="overflow: visible;">
-                    <table>
-                        <tr>
-                            <td>Gender</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-info button-small dropdown-toggle" type="button" id="gender" data-toggle="dropdown">
-                                        Add...
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu"  aria-labelledby="gender">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Male</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Female</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Other</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td >Degree</td>
-                            <td>
-                                <div class="dropdown" id="degree" name="{{ current_deg }}">
-                                    <button class="btn btn-info button-small dropdown-toggle" type="button" id="degree" data-toggle="dropdown">
-                                        <label id="degree_label" style="font-weight: normal; width: 36px;">Add...</label>
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu"  aria-labelledby="degree">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">BS</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">BA</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MS</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MA</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">PhD</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="panel panel-info filter">
-                <div class="panel-heading">
-                    <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-pie-chart"></i> Distribution </div>
-                </div>
-
-                <div class="panel-body">
-                    <div class="col-lg-3 col-md-2" id="degree_guide" style="padding-top: 15px; margin-left: -20px;"></div>
-                    <div class="col-lg-9 col-md-10 pull-right" style="margin-top: 5px;" id="chart" ></div>
-                </div>
-            </div>
-
-            <div class="panel panel-info filter">
-                <div class="panel-heading">
-                    <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-bar-chart"></i> Average Prices </div>
-                </div>
-                <div class="panel-body">
-                    <div class="col-lg-12 col-md-12" id="price"></div>
-                </div>
-            </div>
-        </div>
-        <div id="about"></div>
+        {% endfor %}
     </div>
-    <div class="push"></div>
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <div class="panel panel-default filter">
+            <div class="panel-heading">
+                <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-filter"></i> Filters</div>
+            </div>
+            <div class="panel-body nopadding" style="overflow: visible;">
+                <table>
+                    <tr>
+                        <td>Gender</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-info button-small dropdown-toggle" type="button" id="gender" data-toggle="dropdown">
+                                    Add...
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu"  aria-labelledby="gender">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Male</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Female</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Other</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >Degree</td>
+                        <td>
+                            <div class="dropdown" id="degree" name="{{ current_deg }}">
+                                <button class="btn btn-info button-small dropdown-toggle" type="button" id="degree" data-toggle="dropdown">
+                                    <label id="degree_label" style="font-weight: normal; width: 36px;">Add...</label>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu"  aria-labelledby="degree">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">BS</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">BA</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MS</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MA</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">PhD</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-info filter">
+            <div class="panel-heading">
+                <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-pie-chart"></i> Distribution </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="col-lg-3 col-md-2" id="degree_guide" style="padding-top: 15px; margin-left: -20px;"></div>
+                <div class="col-lg-9 col-md-10 pull-right" style="margin-top: 5px;" id="chart" ></div>
+            </div>
+        </div>
+
+        <div class="panel panel-info filter">
+            <div class="panel-heading">
+                <div style="font-size: 14px; font-weight: bold;"><i class="fa fa-bar-chart"></i> Average Prices </div>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12 col-md-12" id="price"></div>
+            </div>
+        </div>
+    </div>
+    <div id="about"></div>
+</div>
+<div class="push"></div>
 </div>
 <footer class="footer">
     <div class="container">

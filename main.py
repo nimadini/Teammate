@@ -18,6 +18,8 @@ from handlers.home.honors_and_awards import HonorsAndAwards
 from handlers.home.sample_project import SampleProject
 from handlers.home.language import LanguageHandler
 from handlers.home.terms import TermsHandler
+from handlers.follow import FollowHandler
+from handlers.unfollow import UnfollowHandler
 
 
 app = webapp2.WSGIApplication([('/home', HomeHandler),
@@ -36,4 +38,6 @@ app = webapp2.WSGIApplication([('/home', HomeHandler),
                                ('/terms', TermsHandler),
                                ('/registration', Registration),
                                ('/languages', LanguageHandler),
+                               ('/follow', FollowHandler),
+                               ('/unfollow', UnfollowHandler),
                                ('/about', AboutHandler)], debug=True)

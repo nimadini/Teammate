@@ -49,6 +49,14 @@ class User(ndb.Model):
     def append_language(self, lang):
         self.languages.insert(0, lang)
 
+    def append_follower(self, followees_email):
+        self.followers.append(followees_email)
+
+    def remove_follower(self, followees_email):
+        if followees_email not in self.followers:
+            raise Exception
+        self.followers.remove(followees_email)
+
     def get_cover_url(self):
         if self.cover_pic is None:
             return "assets/images/home/default_cover.jpg"
@@ -86,21 +94,42 @@ class User(ndb.Model):
         else:
             return '+1,000,000'
 
-    def get_highest_degree(self):
+    def get_followers_num_for_print(self):
+        if len(self.followers) == 0:
+            return 'No Followers'
+        elif len(self.followers) == 1:
+            return '1 Follower'
+        elif 1 < len(self.followers) < 1000:
+            return str(len(self.followers)) + ' Followers'
+        elif 999 < len(self.followers) < 1000000:
+            return str(len(self.followers) / 1000) + ',' + str(len(self.followers) % 1000) + ' Followers'
+        else:
+            return '+1,000,000 Followers'
+
+    def get_highest_edu(self):
         if len(self.eds) == 0:
-            return 'None'
+            return None
         highest_edu = self.eds[0]
         i = 1
         while i < len(self.eds):
             if self.eds[i] > highest_edu:
                 highest_edu = self.eds[i]
             i += 1
-        return highest_edu.degree
+        return highest_edu
+
+    def get_highest_degree(self):
+        ed = self.get_highest_edu()
+        if ed is None:
+            return None
+        return ed.degree
 
     def get_location(self):
         if self.location is None:
             return "Unknown Location"
         return self.location.city + ', ' + self.location.region + ', ' + self.location.country
+
+    def has_project(self):
+        return len(self.projects) > 0
 
 
 def user_key(_id):

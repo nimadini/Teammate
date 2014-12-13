@@ -119,6 +119,24 @@
                     e.preventDefault();
                     $('#selected_file_profile').click();
                 });
+
+                $(document.body).on('click', '#follow_link', function(e) {
+                    e.preventDefault();
+                    follow($(this).attr('name'), function() {
+                        $('#follow_link').html('<i class="fa fa-check"></i> Followed').
+                                removeClass('button-flat-highlight').addClass('button-flat-primary').
+                                attr('id', 'unfollow_link');
+                    });
+                });
+
+                $(document.body).on('click', '#unfollow_link', function(e) {
+                    e.preventDefault();
+                    unfollow($(this).attr('name'), function() {
+                        $('#unfollow_link').html('<i class="glyphicon glyphicon-road"></i> Follow').
+                                removeClass('button-flat-primary').addClass('button-flat-highlight').
+                                attr('id', 'follow_link');
+                    });
+                });
             });
         </script>
     {% endraw %}
@@ -140,7 +158,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="#"><i class="fa fa-comment"></i></a></li>
-                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ user.given_name }} </a></li>
+                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ given_name }} </a></li>
                 <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -168,7 +186,11 @@
                         >
                     <div style="margin: 15px;">
                         {% if not owner %}
-                            <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
+                            {% if not target_followed %}
+                                <a href="#" id="follow_link" name="{{ user.id }}" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a> &nbsp;
+                            {% else %}
+                                <a href="#" id="unfollow_link" name="{{ user.id }}" class="button button-rounded button-flat-primary"><i class="fa fa-check"></i> Followed</a> &nbsp;
+                            {% endif %}
                             <a href="#" id="message_btn" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
                         {% endif %}
                         {% if owner %}
@@ -199,7 +221,7 @@
                         <img id ="profile_picture" src="{{user.get_profile_url()}}" class="img-circle col-centered profile-img" alt="Pic" />
                     </a>
                     <div class="profile_name"><a href="#">{{ user.given_name }} {{ user.surname }}</a></div>
-                    <div class="profile_sub_info">No Followers | {{ user.get_views_num_for_print() }} Views</div>
+                    <div class="profile_sub_info">{{ user.get_followers_num_for_print() }} | {{ user.get_views_num_for_print() }} Views</div>
                     <div class="profile_sub_info_small" id="loc">{{ user.get_location() }}</div>
                 </div>
                 {% if owner %}
@@ -335,7 +357,7 @@
     </div>
     <div class="home-element">
         <div class="home-sub-title">
-            <i class="fa fa-file-text"></i> Sample Projects
+            <i class="fa fa-calculator"></i> Sample Projects
             {% if owner %}
                 <div id="info-msg-projects"></div>
                 <div id="projects_link" class="add"><a href="#"><i class="fa fa-plus"></i> Add</a></div>
@@ -585,5 +607,7 @@
     <script src="../assets/js/home/projects.js"></script>
     <script src="../assets/js/home/languages.js"></script>
     <script src="../assets/js/home/terms.js"></script>
+{% else %}
+    <script src="../assets/js/follow.js"></script>
 {% endif %}
 </html>

@@ -2,16 +2,13 @@ __author__ = 'stanley'
 
 import json
 import re
-
 import webapp2
 from google.appengine.api import users
 from google.appengine.ext import blobstore
-
 from init import *
 from domain.user import *
 from util.sanity_check import*
 from domain.doc_index import *
-
 
 class HomeHandler(webapp2.RequestHandler):
     def get(self):
@@ -51,6 +48,12 @@ class HomeHandler(webapp2.RequestHandler):
             if users.get_current_user().email() == user_email:
                 owner = True
 
+        target_followed = False
+
+        # if the source user has already followed the target user...
+        if not owner and users.get_current_user().email() in desired_user.followers:
+            target_followed = True
+
         cover_upload_url = blobstore.create_upload_url('/upload')
         profile_img_upload_url = blobstore.create_upload_url('/upload')
         resume_upload_url = blobstore.create_upload_url('/upload')
@@ -68,7 +71,9 @@ class HomeHandler(webapp2.RequestHandler):
             'profile_img_upload_url': profile_img_upload_url,
             'resume_upload_url': resume_upload_url,
             'skills': skills,
-            'owner': owner
+            'owner': owner,
+            'target_followed': target_followed,
+            'given_name': usr.given_name
         }
 
         # usr.get_highest_degree()
@@ -76,7 +81,7 @@ class HomeHandler(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('templates/home.html')
         self.response.write(template.render(user_prop))
 
-        # for the sake of efficiency (do this after rendering the response)
+        # for the sake of higher user experience -> persist after rendering the response
         if not owner:
             desired_user.views += 1
             desired_user.put()
