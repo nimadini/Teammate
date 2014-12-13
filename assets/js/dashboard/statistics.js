@@ -50,7 +50,7 @@ legend.append("text")
 
 var margin = {top: 40, right: 20, bottom: 30, left: 25},
     width = 200 - margin.left - margin.right,
-    height = 320 - margin.top - margin.bottom;
+    height = 270 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
