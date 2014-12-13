@@ -10,7 +10,7 @@ from util.sanity_check import*
 
 class LanguageHandler(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/languages.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/languages.html')
         self.response.write(template.render())
 
     def put(self):

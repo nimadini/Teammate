@@ -9,7 +9,7 @@ from util.sanity_check import*
 
 class WorkExperience(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/workexperience.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/workexperience.html')
         self.response.write(template.render())
 
     def put(self):

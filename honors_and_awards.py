@@ -10,7 +10,7 @@ from util.sanity_check import*
 
 class HonorsAndAwards(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/honor.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/honor.html')
         self.response.write(template.render())
 
     def put(self):

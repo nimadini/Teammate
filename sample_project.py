@@ -11,7 +11,7 @@ from util.sanity_check import*
 
 class SampleProject(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/project.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/project.html')
         self.response.write(template.render())
 
     def put(self):

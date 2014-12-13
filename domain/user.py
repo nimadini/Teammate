@@ -51,7 +51,7 @@ class User(ndb.Model):
 
     def get_cover_url(self):
         if self.cover_pic is None:
-            return "assets/images/default_cover.jpg"
+            return "assets/images/home/default_cover.jpg"
         return images.get_serving_url(self.cover_pic.img) + '=s0'
 
     def get_profile_url(self):

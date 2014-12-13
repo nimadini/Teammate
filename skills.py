@@ -10,7 +10,7 @@ from util.sanity_check import*
 
 class Skills(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/skills.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/skills.html')
         self.response.write(template.render())
 
     def post(self):

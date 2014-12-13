@@ -38,98 +38,98 @@
 }
 
 .phone {
-    background: url('../images/phone.png') no-repeat;
+    background: url('../images/home/phone.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 15px;
 }
 
 .phone_tiny {
-    background: url('../images/phone_tiny.png') no-repeat;
+    background: url('../images/home/phone_tiny.png') no-repeat;
     margin: auto;
     height: 23px;
     width: 11px;
 }
 
 .email {
-    background: url('../images/email.png') no-repeat;
+    background: url('../images/home/email.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
 }
 
 .email_tiny {
-    background: url('../images/email_tiny.png') no-repeat;
+    background: url('../images/home/email_tiny.png') no-repeat;
     margin: auto;
     height: 24px;
     width: 24px;
 }
 
 .skype {
-    background: url('../images/skype.png') no-repeat;
+    background: url('../images/home/skype.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
 }
 
 .skype_tiny {
-    background: url('../images/skype_tiny.png') no-repeat;
+    background: url('../images/home/skype_tiny.png') no-repeat;
     margin: auto;
     height: 24px;
     width: 24px;
 }
 
 .website {
-    background: url('../images/website.png') no-repeat;
+    background: url('../images/home/website.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
 }
 
 .website_tiny {
-    background: url('../images/website_tiny.png') no-repeat;
+    background: url('../images/home/website_tiny.png') no-repeat;
     margin: auto;
     height: 24px;
     width: 24px;
 }
 
 .resume {
-    background: url('../images/resume.png') no-repeat;
+    background: url('../images/home/resume.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
 }
 
 .resume_tiny {
-    background: url('../images/resume_tiny.png') no-repeat;
+    background: url('../images/home/resume_tiny.png') no-repeat;
     margin: auto;
     height: 24px;
     width: 24px;
 }
 
 .github {
-    background: url('../images/github.png') no-repeat;
+    background: url('../images/home/github.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
 }
 
 .github_tiny {
-    background: url('../images/github_tiny.png') no-repeat;
+    background: url('../images/home/github_tiny.png') no-repeat;
     margin: auto;
     height: 24px;
     width: 24px;
 }
 
 .linked_in {
-    background: url('../images/linkedin.png') no-repeat;
+    background: url('../images/home/linkedin.png') no-repeat;
     margin: auto;
     height: 32px;
     width: 32px;
 }
 
 .linked_in_tiny {
-    background: url('../images/linkedin_tiny.png') no-repeat;
+    background: url('../images/home/linkedin_tiny.png') no-repeat;
     margin: auto;
     height: 24px;
     width: 24px;

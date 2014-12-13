@@ -9,7 +9,7 @@ from util.sanity_check import*
 
 class TermsHandler(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/terms.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/terms.html')
         self.response.write(template.render())
 
     def post(self):

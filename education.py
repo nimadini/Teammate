@@ -9,7 +9,7 @@ from util.sanity_check import *
 
 class EducationHandler(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/education.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/education.html')
         self.response.write(template.render())
 
     def post(self):
