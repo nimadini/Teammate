@@ -24,6 +24,7 @@
     {% raw %}
         <script language="javascript" type="text/javascript">
             var in_progress = 0;
+            var msg_success_template = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong><i class="fa fa-check"></i> Success!</strong></div>';
 
             $(document).ready(function() {
                 anchor('#edu_sortable', 'education', '');
@@ -54,20 +55,39 @@
                     resizable: true,
                     title: $show_resume.text()
                 });
-                function addUser() {
+
+                function send_msg() {
+                    var msg = $('#msg-content').val().trim();
+                    if (msg.length == 0)
+                        return;
+
+                    var data = {
+                        msg: msg,
+                        target: $('#target_email_container').text().trim()
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'message',
+                        data: data,
+                        success: function(message) {
+                            msg_dialog.dialog('close');
+                            $('#msg-send-result').html($(Mustache.render(msg_success_template)));
+                        },
+                        error: function() {
+                            msg_dialog.dialog('close');
+                        }
+                    });
+
                 }
 
-                var form, name = $("#name"),
-                        email = $("#email"),
-                        password = $("#password"),
-                        allFields = $([]).add(name).add(email).add(password);
                 var msg_dialog = $("#msg-dialog").dialog({
                     autoOpen: false,
-                    height: 405,
+                    height: 380,
                     width: 720,
                     modal: true,
                     buttons: {
-                        "Send": addUser,
+                        "Send": send_msg,
                         "Cancel": function () {
                             msg_dialog.dialog("close");
                         }
@@ -177,6 +197,7 @@
 
 <div class="container">
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div id="msg-send-result"></div>
 <div class="panel panel-default">
     <div class="panel-body nopadding">
         <div class="row no-gutter row-eq-height profile_background">
@@ -238,8 +259,12 @@
         </div>
     </div>
 </div>
+<div id="target_email_container" style="display: none;">{{ user.id }}</div>
 <div id="dialog"></div>
-<div id="msg-dialog" title="Message"></div>
+<div id="msg-dialog" title="New message">
+    <textarea id="msg-content" class="form-control" rows="8" placeholder="Enter your message here..." style="margin-top: 20px;"></textarea>
+    <p style="margin-top: 10px;"><strong>Note:</strong> This message will be sent to {{ user.given_name }} {{ user.surname }}'s email address.</p>
+</div>
 <form id="upload_cover_form" role="form" action="{{cover_upload_url}}">
     <div style="display: none;">
         <div><input id="selected_file" type="file" data-filename-placement="inside" title="Choose a file..." name="img"></div>

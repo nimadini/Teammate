@@ -20,7 +20,7 @@ from handlers.home.language import LanguageHandler
 from handlers.home.terms import TermsHandler
 from handlers.follow import FollowHandler
 from handlers.unfollow import UnfollowHandler
-
+from handlers.home.message import MessageHandler
 
 app = webapp2.WSGIApplication([('/home', HomeHandler),
                                ('/dashboard', DashboardHandler),
@@ -40,4 +40,5 @@ app = webapp2.WSGIApplication([('/home', HomeHandler),
                                ('/languages', LanguageHandler),
                                ('/follow', FollowHandler),
                                ('/unfollow', UnfollowHandler),
+                               ('/message', MessageHandler),
                                ('/about', AboutHandler)], debug=True)
