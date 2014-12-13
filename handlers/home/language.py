@@ -1,15 +1,18 @@
 __author__ = 'stanley'
 
-import webapp2
 import json
-from init import *
+
+import webapp2
 from google.appengine.api import users
+
+from init import *
 from domain.user import *
 from util.sanity_check import*
 
-class WorkExperience(webapp2.RequestHandler):
+
+class LanguageHandler(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/snippets/workexperience.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/languages.html')
         self.response.write(template.render())
 
     def put(self):
@@ -17,24 +20,22 @@ class WorkExperience(webapp2.RequestHandler):
         if not user_is_logged_in(usr):
             return
 
-        work = Work()
-        work.id = usr.total_num_of_elems
-        work.company = str(self.request.get('company')).strip()
-        if work.company is '':  # TODO exception E chizi bedam age khali bood. :-?
+        language = Language()
+        language.id = usr.total_num_of_elems
+        language.name = str(self.request.get('name')).strip()
+        if language.name is '':  # TODO exception E chizi bedam age khali bood. :-?
             return
 
-        work.title = str(self.request.get('title')).strip()
-        if work.title is '':  # TODO exception E chizi bedam age khali bood. :-?
+        language.proficiency = str(self.request.get('proficiency')).strip()
+        if language.proficiency is '':  # TODO exception E chizi bedam age khali bood. :-?
             return
 
-        work.desc = str(self.request.get('desc')).strip()
-
-        usr.append_work(work)
+        usr.append_language(language)
         usr.total_num_of_elems += 1
         usr.put()
 
         self.response.headers['Content-Type'] = 'application/json'
-        result = json.dumps({'successful': True, 'id': work.id})
+        result = json.dumps({'successful': True, 'id': language.id})
 
         self.response.write(result)
 
@@ -43,26 +44,26 @@ class WorkExperience(webapp2.RequestHandler):
         if not user_is_logged_in(usr):
             return
 
-        if attr_is_not_in_request(self.request, 'w_id'):
+        if attr_is_not_in_request(self.request, 'l_id'):
             return
 
-        work_id = self.request.get('w_id').strip()
+        lang_id = self.request.get('l_id').strip()
 
         try:
-            work_id = int(work_id)
+            lang_id = int(lang_id)
         except ValueError:
             return
 
         desired = None
-        for w in usr.works:
-            if w.id == work_id:
-                desired = w
+        for l in usr.languages:
+            if l.id == lang_id:
+                desired = l
                 break
 
         if desired is None:
             return
 
-        usr.works.remove(desired)
+        usr.languages.remove(desired)
         usr.put()
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -91,38 +92,37 @@ class WorkExperience(webapp2.RequestHandler):
             return 1
 
         sorted_ids = str(self.request.get('sorted_ids')).strip().split(',')
-        mapping = dict((str(x.id), x) for x in usr.works)
-        usr.works[:] = [mapping[x] for x in sorted_ids]
+        mapping = dict((str(x.id), x) for x in usr.languages)
+        usr.languages[:] = [mapping[x] for x in sorted_ids]
         usr.put()
         return 0
 
     def edit(self, usr):
-        if attr_is_not_in_request(self.request, 'w_id'):
+        if attr_is_not_in_request(self.request, 'l_id'):
             return 1
 
-        w_id = str(self.request.get('w_id')).strip()
+        l_id = str(self.request.get('l_id')).strip()
 
         try:
-            w_id = int(w_id)
+            l_id = int(l_id)
         except ValueError:
             return 1
 
         desired = None
-        for w in usr.works:
-            if w.id == w_id:
-                desired = w
+        for l in usr.languages:
+            if l.id == l_id:
+                desired = l
                 break
         if desired is None:
             return 1
 
-        desired.company = str(self.request.get('company')).strip()
-        if desired.company is '':
+        desired.name = str(self.request.get('name')).strip()
+        if desired.name is '':
             return 1
 
-        desired.title = str(self.request.get('title')).strip()
-        if desired.title is '':
+        desired.proficiency = str(self.request.get('proficiency')).strip()
+        if desired.proficiency is '':
             return 1
 
-        desired.desc = str(self.request.get('desc')).strip()
         usr.put()
         return 0

@@ -1,8 +1,9 @@
 __author__ = 'stanley'
 
 import webapp2
-from init import *
 from google.appengine.api import users
+
+from init import *
 from domain.user import *
 from util.sanity_check import *
 

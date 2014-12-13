@@ -1,14 +1,16 @@
 __author__ = 'stanley'
 
-import webapp2
 import json
-from init import *
+import re
+
+import webapp2
 from google.appengine.api import users
-from domain.user import *
 from google.appengine.ext import blobstore
+
+from init import *
+from domain.user import *
 from util.sanity_check import*
 from domain.doc_index import *
-import re
 
 
 class HomeHandler(webapp2.RequestHandler):

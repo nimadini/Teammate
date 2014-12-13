@@ -1,22 +1,23 @@
 __author__ = 'stanley'
 import webapp2
-from dashboard import DashboardHandler
-from home import HomeHandler
-from about import AboutHandler
-from upload import UploadHandler
-from upload_url import UploadURLHandler
-from education import EducationHandler
-from reference import ReferenceHandler
-from references import ReferencesHandler
-from resume_current_url import ResumeCurrentURLHandler
-from work_experience import WorkExperience
-from skills import Skills
-from registration import Registration
-from statistics import Statistics
-from honors_and_awards import HonorsAndAwards
-from sample_project import SampleProject
-from language import LanguageHandler
-from terms import TermsHandler
+
+from handlers.dashboard.dashboard import DashboardHandler
+from handlers.home.home import HomeHandler
+from handlers.about import AboutHandler
+from handlers.home.upload import UploadHandler
+from handlers.home.upload_url import UploadURLHandler
+from handlers.home.education import EducationHandler
+from handlers.home.reference import ReferenceHandler
+from handlers.home.references import ReferencesHandler
+from handlers.home.resume_current_url import ResumeCurrentURLHandler
+from handlers.home.work_experience import WorkExperience
+from handlers.home.skills import Skills
+from handlers.registration.registration import Registration
+from handlers.dashboard.statistics import Statistics
+from handlers.home.honors_and_awards import HonorsAndAwards
+from handlers.home.sample_project import SampleProject
+from handlers.home.language import LanguageHandler
+from handlers.home.terms import TermsHandler
 
 
 app = webapp2.WSGIApplication([('/home', HomeHandler),

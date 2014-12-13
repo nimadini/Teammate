@@ -1,16 +1,19 @@
 __author__ = 'stanley'
 
-import webapp2
 import json
-from init import *
+
+import webapp2
 from google.appengine.api import users
+
+from init import *
 from domain.user import *
+from domain.project import Project
 from util.sanity_check import*
 
 
-class LanguageHandler(webapp2.RequestHandler):
+class SampleProject(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/snippets/languages.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/project.html')
         self.response.write(template.render())
 
     def put(self):
@@ -18,22 +21,33 @@ class LanguageHandler(webapp2.RequestHandler):
         if not user_is_logged_in(usr):
             return
 
-        language = Language()
-        language.id = usr.total_num_of_elems
-        language.name = str(self.request.get('name')).strip()
-        if language.name is '':  # TODO exception E chizi bedam age khali bood. :-?
+        project = Project()
+        project.id = usr.total_num_of_elems
+
+        project.title = str(self.request.get('title')).strip()
+        if project.title is '':
             return
 
-        language.proficiency = str(self.request.get('proficiency')).strip()
-        if language.proficiency is '':  # TODO exception E chizi bedam age khali bood. :-?
+        project.role = str(self.request.get('role')).strip()
+        if project.role is '':
             return
 
-        usr.append_language(language)
+        year = str(self.request.get('year')).strip()
+
+        try:
+            project.year = int(year)
+        except ValueError:
+            return
+
+        project.link = str(self.request.get('url')).strip()
+        project.desc = str(self.request.get('desc')).strip()
+
+        usr.append_project(project)
         usr.total_num_of_elems += 1
         usr.put()
 
         self.response.headers['Content-Type'] = 'application/json'
-        result = json.dumps({'successful': True, 'id': language.id})
+        result = json.dumps({'successful': True, 'id': project.id})
 
         self.response.write(result)
 
@@ -42,26 +56,26 @@ class LanguageHandler(webapp2.RequestHandler):
         if not user_is_logged_in(usr):
             return
 
-        if attr_is_not_in_request(self.request, 'l_id'):
+        if attr_is_not_in_request(self.request, 'p_id'):
             return
 
-        lang_id = self.request.get('l_id').strip()
+        project_id = self.request.get('p_id').strip()
 
         try:
-            lang_id = int(lang_id)
+            project_id = int(project_id)
         except ValueError:
             return
 
         desired = None
-        for l in usr.languages:
-            if l.id == lang_id:
-                desired = l
+        for p in usr.projects:
+            if p.id == project_id:
+                desired = p
                 break
 
         if desired is None:
             return
 
-        usr.languages.remove(desired)
+        usr.projects.remove(desired)
         usr.put()
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -90,37 +104,46 @@ class LanguageHandler(webapp2.RequestHandler):
             return 1
 
         sorted_ids = str(self.request.get('sorted_ids')).strip().split(',')
-        mapping = dict((str(x.id), x) for x in usr.languages)
-        usr.languages[:] = [mapping[x] for x in sorted_ids]
+        mapping = dict((str(x.id), x) for x in usr.projects)
+        usr.projects[:] = [mapping[x] for x in sorted_ids]
         usr.put()
         return 0
 
     def edit(self, usr):
-        if attr_is_not_in_request(self.request, 'l_id'):
+        if attr_is_not_in_request(self.request, 'p_id'):
             return 1
 
-        l_id = str(self.request.get('l_id')).strip()
+        p_id = str(self.request.get('p_id')).strip()
 
         try:
-            l_id = int(l_id)
+            p_id = int(p_id)
         except ValueError:
             return 1
 
         desired = None
-        for l in usr.languages:
-            if l.id == l_id:
-                desired = l
+        for p in usr.projects:
+            if p.id == p_id:
+                desired = p
                 break
         if desired is None:
             return 1
 
-        desired.name = str(self.request.get('name')).strip()
-        if desired.name is '':
-            return 1
+        desired.title = str(self.request.get('title')).strip()
+        if desired.title is '':
+            return
 
-        desired.proficiency = str(self.request.get('proficiency')).strip()
-        if desired.proficiency is '':
-            return 1
+        desired.role = str(self.request.get('role')).strip()
+        if desired.role is '':
+            return
 
+        year = str(self.request.get('year')).strip()
+
+        try:
+            desired.year = int(year)
+        except ValueError:
+            return
+
+        desired.link = str(self.request.get('url')).strip()
+        desired.desc = str(self.request.get('desc')).strip()
         usr.put()
         return 0

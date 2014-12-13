@@ -1,12 +1,8 @@
 __author__ = 'stanley'
-from google.appengine.api import users, mail, search
-from google.appengine.api.search import QueryError
 from datetime import datetime
-import webapp2
-import json
-import re
-from init import *
-import hashlib
+
+from google.appengine.api import search
+from google.appengine.api.search import QueryError
 
 
 def create_doc(degree, email, id):

@@ -1,7 +1,6 @@
 __author__ = 'stanley'
 from google.appengine.ext import ndb
 
-
 class Language(ndb.Model):
     id = ndb.IntegerProperty()
     name = ndb.StringProperty()

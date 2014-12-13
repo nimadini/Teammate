@@ -1,17 +1,18 @@
 __author__ = 'stanley'
 
-import webapp2
 import json
-from init import *
+
+import webapp2
 from google.appengine.api import users
+
+from init import *
 from domain.user import *
-from domain.project import Project
 from util.sanity_check import*
 
 
-class SampleProject(webapp2.RequestHandler):
+class WorkExperience(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('templates/snippets/project.html')
+        template = JINJA_ENVIRONMENT.get_template('templates/snippets/workexperience.html')
         self.response.write(template.render())
 
     def put(self):
@@ -19,33 +20,24 @@ class SampleProject(webapp2.RequestHandler):
         if not user_is_logged_in(usr):
             return
 
-        project = Project()
-        project.id = usr.total_num_of_elems
-
-        project.title = str(self.request.get('title')).strip()
-        if project.title is '':
+        work = Work()
+        work.id = usr.total_num_of_elems
+        work.company = str(self.request.get('company')).strip()
+        if work.company is '':  # TODO exception E chizi bedam age khali bood. :-?
             return
 
-        project.role = str(self.request.get('role')).strip()
-        if project.role is '':
+        work.title = str(self.request.get('title')).strip()
+        if work.title is '':  # TODO exception E chizi bedam age khali bood. :-?
             return
 
-        year = str(self.request.get('year')).strip()
+        work.desc = str(self.request.get('desc')).strip()
 
-        try:
-            project.year = int(year)
-        except ValueError:
-            return
-
-        project.link = str(self.request.get('url')).strip()
-        project.desc = str(self.request.get('desc')).strip()
-
-        usr.append_project(project)
+        usr.append_work(work)
         usr.total_num_of_elems += 1
         usr.put()
 
         self.response.headers['Content-Type'] = 'application/json'
-        result = json.dumps({'successful': True, 'id': project.id})
+        result = json.dumps({'successful': True, 'id': work.id})
 
         self.response.write(result)
 
@@ -54,26 +46,26 @@ class SampleProject(webapp2.RequestHandler):
         if not user_is_logged_in(usr):
             return
 
-        if attr_is_not_in_request(self.request, 'p_id'):
+        if attr_is_not_in_request(self.request, 'w_id'):
             return
 
-        project_id = self.request.get('p_id').strip()
+        work_id = self.request.get('w_id').strip()
 
         try:
-            project_id = int(project_id)
+            work_id = int(work_id)
         except ValueError:
             return
 
         desired = None
-        for p in usr.projects:
-            if p.id == project_id:
-                desired = p
+        for w in usr.works:
+            if w.id == work_id:
+                desired = w
                 break
 
         if desired is None:
             return
 
-        usr.projects.remove(desired)
+        usr.works.remove(desired)
         usr.put()
 
         self.response.headers['Content-Type'] = 'application/json'
@@ -102,46 +94,38 @@ class SampleProject(webapp2.RequestHandler):
             return 1
 
         sorted_ids = str(self.request.get('sorted_ids')).strip().split(',')
-        mapping = dict((str(x.id), x) for x in usr.projects)
-        usr.projects[:] = [mapping[x] for x in sorted_ids]
+        mapping = dict((str(x.id), x) for x in usr.works)
+        usr.works[:] = [mapping[x] for x in sorted_ids]
         usr.put()
         return 0
 
     def edit(self, usr):
-        if attr_is_not_in_request(self.request, 'p_id'):
+        if attr_is_not_in_request(self.request, 'w_id'):
             return 1
 
-        p_id = str(self.request.get('p_id')).strip()
+        w_id = str(self.request.get('w_id')).strip()
 
         try:
-            p_id = int(p_id)
+            w_id = int(w_id)
         except ValueError:
             return 1
 
         desired = None
-        for p in usr.projects:
-            if p.id == p_id:
-                desired = p
+        for w in usr.works:
+            if w.id == w_id:
+                desired = w
                 break
         if desired is None:
             return 1
 
+        desired.company = str(self.request.get('company')).strip()
+        if desired.company is '':
+            return 1
+
         desired.title = str(self.request.get('title')).strip()
         if desired.title is '':
-            return
+            return 1
 
-        desired.role = str(self.request.get('role')).strip()
-        if desired.role is '':
-            return
-
-        year = str(self.request.get('year')).strip()
-
-        try:
-            desired.year = int(year)
-        except ValueError:
-            return
-
-        desired.link = str(self.request.get('url')).strip()
         desired.desc = str(self.request.get('desc')).strip()
         usr.put()
         return 0

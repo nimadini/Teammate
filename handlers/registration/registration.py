@@ -1,12 +1,14 @@
 __author__ = 'stanley'
 
+import json
+
 import webapp2
+from google.appengine.api import users
+
 from init import *
-from google.appengine.api import users, search
 from domain.user import *
 from domain.doc_index import *
 from util.sanity_check import *
-import json
 
 
 class Registration(webapp2.RequestHandler):
