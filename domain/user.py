@@ -131,6 +131,13 @@ class User(ndb.Model):
     def has_project(self):
         return len(self.projects) > 0
 
+    def get_prop(self):
+        if self.gender == 'Male':
+            return 'his'
+        elif self.gender == 'Female':
+            return 'her'
+        else:
+            return 'the user\'s'
 
 def user_key(_id):
     return ndb.Key('User', _id)

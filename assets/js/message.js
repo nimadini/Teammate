@@ -30,7 +30,7 @@ function send_msg() {
 
 var msg_dialog = $("#msg-dialog").dialog({
     autoOpen: false,
-    height: 380,
+    height: 400,
     width: 720,
     modal: true,
     buttons: {

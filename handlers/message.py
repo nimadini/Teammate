@@ -31,17 +31,23 @@ class MessageHandler(webapp2.RequestHandler):
 
         msg = self.request.get('msg')
 
+        prop = usr.get_prop()
+        url = 'http://teammate-theta.appspot.com/home?user=' + usr.id
+
         mail.send_mail(sender="Teammate <info@teammate-theta.appspotmail.com>",
                        to=target_email,
                        subject="New message from " + usr.given_name + ' ' + usr.surname,
                        body="""
-Dear {0},
+{0},
 
 {1} has a new message for you:
+
 {2}
 
+Follow this link to view {3} profile: {4}
+
 The Teammate Team
-""".format(target.given_name, usr.given_name + ' ' + usr.surname, msg))
+""".format(target.given_name, usr.given_name + ' ' + usr.surname, msg, prop, url))
 
         self.response.headers['Content-Type'] = 'application/json'
         result = json.dumps({'successful': True})

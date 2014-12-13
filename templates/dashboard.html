@@ -125,7 +125,6 @@
                                 {% endif %}
                                 <div class="user_box_btn">
                                     {% if current_user.id != user.id %}
-                                        <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a>
                                         <a href="{{ user.id }}" name="{{ user.given_name }} {{ user.surname }}" class="button button-rounded button-flat-royal message_btn"><i class="glyphicon glyphicon-envelope"></i> Message</a>
                                     {% endif %}
                                 </div>
