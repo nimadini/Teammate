@@ -24,7 +24,6 @@
     {% raw %}
         <script language="javascript" type="text/javascript">
             var in_progress = 0;
-            var msg_success_template = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong><i class="fa fa-check"></i> Success!</strong></div>';
 
             $(document).ready(function() {
                 anchor('#edu_sortable', 'education', '');
@@ -56,54 +55,9 @@
                     title: $show_resume.text()
                 });
 
-                function send_msg() {
-                    var msg = $('#msg-content').val().trim();
-                    if (msg.length == 0)
-                        return;
-
-                    var data = {
-                        msg: msg,
-                        target: $('#target_email_container').text().trim()
-                    };
-
-                    $.ajax({
-                        type: 'POST',
-                        url: 'message',
-                        data: data,
-                        success: function(message) {
-                            msg_dialog.dialog('close');
-                            $('#msg-send-result').html($(Mustache.render(msg_success_template)));
-                        },
-                        error: function() {
-                            msg_dialog.dialog('close');
-                        }
-                    });
-
-                }
-
-                var msg_dialog = $("#msg-dialog").dialog({
-                    autoOpen: false,
-                    height: 380,
-                    width: 720,
-                    modal: true,
-                    buttons: {
-                        "Send": send_msg,
-                        "Cancel": function () {
-                            msg_dialog.dialog("close");
-                        }
-                    },
-                    close: function () {
-                    }
-                });
-
                 $("#show_resume").click(function (e) {
                     e.preventDefault();
                     $("#dialog").dialog("open");
-                });
-
-                $("#message_btn").click(function (e) {
-                    e.preventDefault();
-                    $("#msg-dialog").dialog("open");
                 });
 
                 $('.my_tooltip').tooltip({
@@ -212,7 +166,7 @@
                             {% else %}
                                 <a href="#" id="unfollow_link" name="{{ user.id }}" class="button button-rounded button-flat-primary"><i class="fa fa-check"></i> Followed</a> &nbsp;
                             {% endif %}
-                            <a href="#" id="message_btn" class="button button-rounded button-flat-royal"><i class="glyphicon glyphicon-envelope"></i> Message</a>
+                            <a href="{{ user.id }}" name="{{ user.given_name }} {{ user.surname }}" class="button button-rounded button-flat-royal message_btn"><i class="glyphicon glyphicon-envelope"></i> Message</a>
                         {% endif %}
                         {% if owner %}
                             <div id="cover_upload_btn" style="float: right; margin-bottom: 10px;">
@@ -259,11 +213,10 @@
         </div>
     </div>
 </div>
-<div id="target_email_container" style="display: none;">{{ user.id }}</div>
 <div id="dialog"></div>
 <div id="msg-dialog" title="New message">
-    <textarea id="msg-content" class="form-control" rows="8" placeholder="Enter your message here..." style="margin-top: 20px;"></textarea>
-    <p style="margin-top: 10px;"><strong>Note:</strong> This message will be sent to {{ user.given_name }} {{ user.surname }}'s email address.</p>
+    <textarea id="msg-content" class="form-control" rows="7" placeholder="Enter your message here..." style="margin-top: 20px;"></textarea>
+    <p style="margin-top: 10px;"><strong>Note:</strong> <span id="msg-note"></span></p>
 </div>
 <form id="upload_cover_form" role="form" action="{{cover_upload_url}}">
     <div style="display: none;">
@@ -610,7 +563,7 @@
 </div>
 </div>
 <div id="about"></div>
-</div>
+
 <div class="push"></div>
 <footer class="footer">
     <div class="container">
@@ -635,4 +588,5 @@
 {% else %}
     <script src="../assets/js/follow.js"></script>
 {% endif %}
+<script src="../assets/js/message.js"></script>
 </html>

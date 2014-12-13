@@ -46,7 +46,7 @@ def generate_search_result(results, response, current_deg, usr):
     search_results = {
         'results': results,
         'current_deg': current_deg,
-        'user': usr
+        'current_user': usr
     }
 
     template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')

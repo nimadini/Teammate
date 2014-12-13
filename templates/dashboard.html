@@ -7,11 +7,13 @@
     <title>Dashboard</title>
     <link rel="icon" href="../assets/images/logo.ico" type="image/ico">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/jquery-ui.min.css" rel="stylesheet">
     <link href="../assets/css/style.css" rel="stylesheet">
     <link href="../assets/css/buttons.css" rel="stylesheet">
     <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
     <script src="../assets/js/jquery-2.1.1.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/jquery-ui.min.js"></script>
     <script language="javascript" type="text/javascript">
         $(document).ready(function() {
             var degree = $('#degree').attr('name');
@@ -40,7 +42,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="#"><i class="fa fa-comment"></i></a></li>
-                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ user.given_name }}  </a></li>
+                <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ current_user.given_name }}  </a></li>
                 <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -122,7 +124,10 @@
                                     </div>
                                 {% endif %}
                                 <div class="user_box_btn">
-                                    <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a>
+                                    {% if current_user.id != user.id %}
+                                        <a href="#" class="button button-rounded button-flat-highlight"><i class="glyphicon glyphicon-road"></i> Follow</a>
+                                        <a href="{{ user.id }}" name="{{ user.given_name }} {{ user.surname }}" class="button button-rounded button-flat-royal message_btn"><i class="glyphicon glyphicon-envelope"></i> Message</a>
+                                    {% endif %}
                                 </div>
                                 <div class="user_box_navigation">
 
@@ -158,7 +163,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td >Degree</td>
+                        <td >Highest Degree</td>
                         <td>
                             <div class="dropdown" id="degree" name="{{ current_deg }}">
                                 <button class="btn btn-info button-small dropdown-toggle" type="button" id="degree" data-toggle="dropdown">
@@ -171,6 +176,42 @@
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MS</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">MA</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">PhD</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >Availability <small>(hrs/w)</small></td>
+                        <td>
+                            <div class="dropdown" id="degree" name="{{ current_deg }}">
+                                <button class="btn btn-info button-small dropdown-toggle" type="button" id="degree" data-toggle="dropdown">
+                                    <label id="degree_label" style="font-weight: normal; width: 36px;">Add...</label>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu"  aria-labelledby="degree">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">< 5</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">5 - 10</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">10 - 15</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">15 - 20</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">20+</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >Price <small>($/hr)</small></td>
+                        <td>
+                            <div class="dropdown" id="degree" name="{{ current_deg }}">
+                                <button class="btn btn-info button-small dropdown-toggle" type="button" id="degree" data-toggle="dropdown">
+                                    <label id="degree_label" style="font-weight: normal; width: 36px;">Add...</label>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu"  aria-labelledby="degree">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">< 5</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">5 - 15</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">15 - 30</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">30 - 60</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">60+</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -198,6 +239,10 @@
             </div>
         </div>
     </div>
+    <div id="msg-dialog" title="New message">
+        <textarea id="msg-content" class="form-control" rows="8" placeholder="Enter your message here..." style="margin-top: 20px;"></textarea>
+        <p style="margin-top: 10px;"><strong>Note:</strong> <span id="msg-note"></span></p>
+    </div>
     <div id="about"></div>
 </div>
 <div class="push"></div>
@@ -218,4 +263,5 @@
 <script src="../assets/js/dashboard/Donut3D.js"></script>
 <script src="../assets/js/dashboard/d3.tip.v0.6.3.js"></script>
 <script src="../assets/js/dashboard/statistics.js"></script>
+<script src="../assets/js/message.js"></script>
 </html>
