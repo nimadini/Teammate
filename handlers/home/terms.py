@@ -3,11 +3,10 @@ import json
 
 import webapp2
 from google.appengine.api import users
-
 from init import *
 from domain.user import *
 from util.sanity_check import*
-
+from domain.doc_index import *
 
 class TermsHandler(webapp2.RequestHandler):
     def get(self):
@@ -33,8 +32,14 @@ class TermsHandler(webapp2.RequestHandler):
             usr.term.should_know = _content
         elif _type == '1':
             usr.term.availability = _content
+            x = int(_content)
+            # TODO: unsafe int conversion... (in case of malicious user who bypasses the Web GUI)
+            update_index_availability(int(_content), users.get_current_user().email(), INDEX_NAME)
         elif _type == '2':
             usr.term.price = _content
+            x = int(_content)
+            # TODO: unsafe int conversion... (in case of malicious user who bypasses the Web GUI)
+            update_index_price(int(_content), users.get_current_user().email(), INDEX_NAME)
         else:
             return
 

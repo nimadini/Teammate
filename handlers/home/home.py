@@ -125,7 +125,7 @@ class HomeHandler(webapp2.RequestHandler):
         usr.total_num_of_elems += 1
         usr.put()
 
-        update_index(usr, users.get_current_user().email(), INDEX_NAME)
+        update_index_degree(usr.get_highest_degree(), users.get_current_user().email(), INDEX_NAME)
         return True, edu.id
 
     def modify_edu(self, req, usr):
@@ -153,7 +153,7 @@ class HomeHandler(webapp2.RequestHandler):
         desired.major = req.get('major')
         desired.degree = req.get('degree')
         usr.put()
-        update_index(usr, users.get_current_user().email(), INDEX_NAME)
+        update_index_degree(usr.get_highest_degree(), users.get_current_user().email(), INDEX_NAME)
 
         return True, desired.id
 
@@ -176,7 +176,7 @@ class HomeHandler(webapp2.RequestHandler):
 
         usr.eds.remove(desired)
         usr.put()
-        update_index(usr, users.get_current_user().email(), INDEX_NAME)
+        update_index_degree(usr.get_highest_degree(), users.get_current_user().email(), INDEX_NAME)
 
         return True, desired.id
 

@@ -53,7 +53,7 @@ class Registration(webapp2.RequestHandler):
         usr.location = loc
         usr.views = 0
         usr.put()
-        doc = create_doc(users.get_current_user().email(), 'None')
+        doc = create_doc(users.get_current_user().email(), usr.gender, 'NONE', -1, -1)
         store_idx(doc, INDEX_NAME)
 
         self.response.headers['Content-Type'] = 'application/json'
