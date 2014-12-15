@@ -93,13 +93,13 @@ def gen_availability(availability):
     if availability == '<5':
         availability = 'availability > 0 AND availability < 5'
     elif availability == '5-10':
-        availability = 'availability > 5 AND availability < 10'
+        availability = 'availability >= 5 AND availability < 10'
     elif availability == '10-15':
-        availability = 'availability > 10 AND availability < 15'
+        availability = 'availability >= 10 AND availability < 15'
     elif availability == '15-20':
-        availability = 'availability > 15 AND availability < 20'
+        availability = 'availability >= 15 AND availability < 20'
     elif availability == '>20':
-        availability = 'availability > 20'
+        availability = 'availability >= 20'
     else:
         availability = ''
 
@@ -110,13 +110,13 @@ def gen_price(price):
     if price == '<5':
         price = 'price > 0 AND price < 5'
     elif price == '5-15':
-        price = 'price > 5 AND price < 15'
+        price = 'price >= 5 AND price < 15'
     elif price == '15-30':
-        price = 'price > 15 AND price < 30'
+        price = 'price >= 15 AND price < 30'
     elif price == '30-60':
-        price = 'price > 30 AND price < 60'
+        price = 'price >= 30 AND price < 60'
     elif price == '>60':
-        price = 'price > 60'
+        price = 'price >= 60'
     else:
         price = ''
 
