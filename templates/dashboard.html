@@ -17,8 +17,17 @@
     <script language="javascript" type="text/javascript">
         $(document).ready(function() {
             var degree = $('#degree').attr('name');
+            var gender = $('#gender').attr('name');
+            var availability = $('#availability').attr('name');
+            var price = $('#_price_').attr('name');
             if (degree != '')
                 $('#degree_label').text(degree);
+            if (gender != '')
+                $('#gender_label').text(gender);
+            if (availability != '')
+                $('#availability_label').text(availability);
+            if (price != '')
+                $('#price_label').text(price);
             $('#about').load('about');
         });
     </script>
@@ -148,7 +157,7 @@
                     <tr>
                         <td>Gender</td>
                         <td>
-                            <div class="dropdown" id="gender">
+                            <div class="dropdown" id="gender" name="{{ selected_gender }}">
                                 <button class="btn btn-info button-small dropdown-toggle" type="button" id="gender" data-toggle="dropdown">
                                     <label id="gender_label" style="font-weight: normal; width: 36px;">Add...</label>
                                     <span class="caret"></span>
@@ -164,7 +173,7 @@
                     <tr>
                         <td>Highest Degree</td>
                         <td>
-                            <div class="dropdown" id="degree" name="{{ current_deg }}">
+                            <div class="dropdown" id="degree" name="{{ selected_deg }}">
                                 <button class="btn btn-info button-small dropdown-toggle" type="button" data-toggle="dropdown">
                                     <label id="degree_label" style="font-weight: normal; width: 36px;">Add...</label>
                                     <span class="caret"></span>
@@ -182,7 +191,7 @@
                     <tr>
                         <td >Availability <small>(hrs/w)</small></td>
                         <td>
-                            <div class="dropdown" id="availability" name="{{ current_deg }}">
+                            <div class="dropdown" id="availability" name="{{ selected_availability }}">
                                 <button class="btn btn-info button-small dropdown-toggle" type="button" data-toggle="dropdown">
                                     <label id="availability_label" style="font-weight: normal; width: 36px;">Add...</label>
                                     <span class="caret"></span>
@@ -192,7 +201,7 @@
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">5 - 10</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">10 - 15</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">15 - 20</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">20+</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">> 20</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -200,7 +209,7 @@
                     <tr>
                         <td >Price <small>($/hr)</small></td>
                         <td>
-                            <div class="dropdown" id="_price_" name="{{ current_deg }}">
+                            <div class="dropdown" id="_price_" name="{{ selected_price }}">
                                 <button class="btn btn-info button-small dropdown-toggle" type="button" data-toggle="dropdown">
                                     <label id="price_label" style="font-weight: normal; width: 36px;">Add...</label>
                                     <span class="caret"></span>
@@ -210,7 +219,7 @@
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">5 - 15</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">15 - 30</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">30 - 60</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">60+</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">> 60</a></li>
                                 </ul>
                             </div>
                         </td>

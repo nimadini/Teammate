@@ -32,7 +32,7 @@ def update_index_price(price, email, name):
         return
 
     doc.fields.remove(doc.field('price'))
-    doc.fields.append(search.TextField(name='price', value=price))
+    doc.fields.append(search.NumberField(name='price', value=price))
     index.put(doc)
 
 # updates index in case of availability
@@ -43,7 +43,7 @@ def update_index_availability(availability, email, name):
         return
 
     doc.fields.remove(doc.field('availability'))
-    doc.fields.append(search.TextField(name='availability', value=availability))
+    doc.fields.append(search.NumberField(name='availability', value=availability))
     index.put(doc)
 
 # updates index in case of higher degree

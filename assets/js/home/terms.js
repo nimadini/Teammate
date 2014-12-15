@@ -9,6 +9,8 @@ $('.terms_panel').on('click', function (e) {
         return false;
     in_progress = 1;
     $('#terms').load('terms', function (data) {
+        $("#free_time").numeric();
+        $("#price_hr").numeric();
         var $icon_holder = $('#icon_holder');
         var type = 0;
         var primary_txt = $('#shoud_know_content').text().trim();

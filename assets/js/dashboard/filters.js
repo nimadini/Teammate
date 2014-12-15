@@ -22,7 +22,7 @@ $('#availability').find('ul li').on('click', function (e) {
     e.preventDefault();
     var availability = $(this).text();
     var $availability_label = $('#availability_label');
-    $availability_label.text(availability);
+    $availability_label.text(availability.replace(/\s+/g, ''));
     window.location.replace(query_generator());
 });
 
@@ -30,15 +30,15 @@ $('#_price_').find('ul li').on('click', function (e) {
     e.preventDefault();
     var price = $(this).text();
     var $price_label = $('#price_label');
-    $price_label.text(price);
+    $price_label.text(price.replace(/\s+/g, ''));
     window.location.replace(query_generator());
 });
 
 function query_generator() {
-    var degree_label = $('#degree_label').text().trim();
-    var gender_label = $('#gender_label').text().trim();
-    var availability_label = $('#availability_label').text().trim();
-    var price_label = $('#price_label').text().trim();
+    var degree_label = $('#degree_label').text().replace(/\s+/g, '');
+    var gender_label = $('#gender_label').text().replace(/\s+/g, '');
+    var availability_label = $('#availability_label').text().replace(/\s+/g, '');
+    var price_label = $('#price_label').text().replace(/\s+/g, '');
 
     var base_url = "/dashboard";
 

@@ -32,14 +32,15 @@ class TermsHandler(webapp2.RequestHandler):
             usr.term.should_know = _content
         elif _type == '1':
             usr.term.availability = _content
-            x = int(_content)
             # TODO: unsafe int conversion... (in case of malicious user who bypasses the Web GUI)
-            update_index_availability(int(_content), users.get_current_user().email(), INDEX_NAME)
+            update_index_availability(float(_content), users.get_current_user().email(), INDEX_NAME)
         elif _type == '2':
             usr.term.price = _content
-            x = int(_content)
             # TODO: unsafe int conversion... (in case of malicious user who bypasses the Web GUI)
-            update_index_price(int(_content), users.get_current_user().email(), INDEX_NAME)
+            if _content == 'negotiable':
+                update_index_price(-1, users.get_current_user().email(), INDEX_NAME)
+            else:
+                update_index_price(float(_content), users.get_current_user().email(), INDEX_NAME)
         else:
             return
 
