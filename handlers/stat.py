@@ -4,10 +4,12 @@ import webapp2
 from domain.statistics.statistics import *
 from domain.statistics.entity import Entity
 import json
+from domain.doc_index import *
 
 class StatHandler(webapp2.RequestHandler):
     def get(self):
         qry = Statistics.query(Statistics.id == 'Teammate_Statistics')
+        #delete()
         if qry.get() is not None:
             self.response.headers['Content-Type'] = 'application/json'
             result = json.dumps({'First Access': False})

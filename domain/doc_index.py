@@ -4,7 +4,9 @@ from google.appengine.api.search import QueryError
 from datetime import datetime
 from google.appengine.api import search
 
-def create_doc(email, gender, degree, availability, price):
+def create_doc(email, gender, degree, availability, price, given_name, surname):
+    given_name = ','.join(tokenize_autocomplete(given_name.lower()))
+    surname = ','.join(tokenize_autocomplete(surname.lower()))
     return search.Document(
         doc_id=email,
         fields=[
@@ -13,6 +15,8 @@ def create_doc(email, gender, degree, availability, price):
             search.TextField(name='degree', value=degree),
             search.NumberField(name='availability', value=availability),
             search.NumberField(name='price', value=price),
+            search.TextField(name='given_name', value=given_name),
+            search.TextField(name='surname', value=surname),
             search.DateField(name='date', value=datetime.now().date())
         ])
 
@@ -59,6 +63,19 @@ def update_index_degree(deg, email, name):
 
 
 # in case necessary uncomment
-'''def delete():
+def delete():
     index = search.Index(name='user_basic')
-    index.delete('test@example.com')'''
+    index.delete('nima.dini@example.com')
+    index.delete('gitamostafizi@example.com')
+
+def tokenize_autocomplete(phrase):
+    a = []
+    for word in phrase.split():
+        j = 1
+        while True:
+            for i in range(len(word) - j + 1):
+                a.append(word[i:i + j])
+            if j == len(word):
+                break
+            j += 1
+    return a

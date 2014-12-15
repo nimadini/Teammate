@@ -23,6 +23,7 @@ from handlers.unfollow import UnfollowHandler
 from handlers.message import MessageHandler
 from handlers.main import Main
 from handlers.stat import StatHandler
+from handlers.auto_complete import AutocompleteHandler
 
 app = webapp2.WSGIApplication([('/', Main),
                                ('/home', HomeHandler),
@@ -45,4 +46,5 @@ app = webapp2.WSGIApplication([('/', Main),
                                ('/unfollow', UnfollowHandler),
                                ('/message', MessageHandler),
                                ('/stat', StatHandler),
+                               ('/autocomplete', AutocompleteHandler),
                                ('/about', AboutHandler)], debug=True)

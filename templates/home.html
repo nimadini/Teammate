@@ -113,6 +113,24 @@
                                 attr('id', 'follow_link');
                     });
                 });
+
+                var cache = {};
+                $("#search-bar").autocomplete({
+                    minLength: 1,
+                    source: function(request, response) {
+                        var term = request.term;
+                        if (term.trim() == '')
+                            return;
+                        if (term in cache) {
+                            response(cache[term]);
+                            return;
+                        }
+                        $.getJSON("autocomplete", request, function(data, status, xhr) {
+                            cache[term] = data;
+                            response(data);
+                        });
+                    }
+                });
             });
         </script>
     {% endraw %}
@@ -140,7 +158,7 @@
                 <li class="dropdown">
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group has-feedback">
-                            <input type="text" id="search-bar" class="form-control" placeholder="Search for people, projects and skills"/>
+                            <input type="text" id="search-bar" class="form-control" placeholder="Search for people"/>
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
                     </form>
