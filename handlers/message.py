@@ -32,9 +32,9 @@ class MessageHandler(webapp2.RequestHandler):
         msg = self.request.get('msg')
 
         prop = usr.get_prop()
-        url = 'http://teammate-beta.appspot.com/home?user=' + usr.id
+        url = 'http://teammate-app.appspot.com/home?user=' + usr.id
 
-        mail.send_mail(sender="Teammate <info@teammate-beta.appspotmail.com>",
+        mail.send_mail(sender="Teammate <info@teammate-app.appspotmail.com>",
                        to=target_email,
                        subject="New message from " + usr.given_name + ' ' + usr.surname,
                        body="""
