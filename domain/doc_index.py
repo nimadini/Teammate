@@ -4,7 +4,7 @@ from google.appengine.api.search import QueryError
 from datetime import datetime
 from google.appengine.api import search
 
-def create_doc(email, gender, degree, availability, price, given_name, surname):
+def create_doc(email, gender, degree, availability, price, given_name, surname, rank):
     given_name = ','.join(tokenize_autocomplete(given_name.lower()))
     surname = ','.join(tokenize_autocomplete(surname.lower()))
     return search.Document(
@@ -17,6 +17,7 @@ def create_doc(email, gender, degree, availability, price, given_name, surname):
             search.NumberField(name='price', value=price),
             search.TextField(name='given_name', value=given_name),
             search.TextField(name='surname', value=surname),
+            search.NumberField(name="rank", value=rank),
             search.DateField(name='date', value=datetime.now().date())
         ])
 

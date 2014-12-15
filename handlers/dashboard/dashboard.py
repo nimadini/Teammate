@@ -2,7 +2,7 @@ __author__ = 'stanley'
 
 import webapp2
 from google.appengine.api import users, search
-from google.appengine.api.search import QueryError
+from google.appengine.api.search import QueryError, SortExpression
 from init import *
 from domain.user import *
 from domain.statistics.statistics import *
@@ -21,7 +21,10 @@ class DashboardHandler(webapp2.RequestHandler):
 
         query = query_generator(gender, degree, availability, price)
 
-        query_options = search.QueryOptions(limit=5)
+        sort = search.SortExpression(expression='rank', direction=SortExpression.DESCENDING, default_value=0)
+        sort_opts = search.SortOptions(expressions=[sort])
+
+        query_options = search.QueryOptions(limit=12, sort_options=sort_opts)
         try:
             query_obj = search.Query(query_string=query, options=query_options)
         except QueryError:

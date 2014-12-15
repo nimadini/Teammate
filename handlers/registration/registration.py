@@ -4,7 +4,6 @@ import json
 
 import webapp2
 from google.appengine.api import users
-
 from init import *
 from domain.user import *
 from domain.doc_index import *
@@ -53,7 +52,7 @@ class Registration(webapp2.RequestHandler):
         usr.location = loc
         usr.views = 0
         usr.put()
-        doc = create_doc(users.get_current_user().email(), usr.gender, 'NONE', -1, -1, usr.given_name, usr.surname)
+        doc = create_doc(users.get_current_user().email(), usr.gender, 'NONE', -1, -1, usr.given_name, usr.surname, 0)
         store_idx(doc, INDEX_NAME)
 
         self.response.headers['Content-Type'] = 'application/json'
