@@ -15,6 +15,20 @@
     <script src="../assets/js/bootstrap.min.js"></script>
     <script src="../assets/js/jquery-ui.min.js"></script>
     <script language="javascript" type="text/javascript">
+        var _bs_ = 0;
+        var _ba_ = 0;
+        var _ms_ = 0;
+        var _ma_ = 0;
+        var _phd_ = 0;
+
+        {% if stat %}
+            _bs_ = {{ stat.BS.number }};
+            _ba_ = {{ stat.BA.number }};
+            _ms_ = {{ stat.MS.number }};
+            _ma_ = {{ stat.MA.number }};
+            _phd_ = {{ stat.PhD.number }};
+        {% endif %}
+
         $(document).ready(function() {
             var degree = $('#degree').attr('name');
             var gender = $('#gender').attr('name');
@@ -50,7 +64,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#"><i class="fa fa-comment"></i></a></li>
                 <li><a href="/home"><i class="glyphicon glyphicon-user"></i> {{ current_user.given_name }}  </a></li>
                 <li><a href="/dashboard"><i class="glyphicon glyphicon-th-list"></i> Dashboard</a></li>
             </ul>

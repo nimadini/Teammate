@@ -5,7 +5,7 @@ from google.appengine.api import users, search
 from google.appengine.api.search import QueryError
 from init import *
 from domain.user import *
-
+from domain.statistics.statistics import *
 
 class DashboardHandler(webapp2.RequestHandler):
     def get(self):
@@ -38,17 +38,20 @@ class DashboardHandler(webapp2.RequestHandler):
             if user is not None:
                 results.append(user)
 
-        generate_search_result(results, gender, degree, availability, price, self.response, usr)
+        stat = statistics_key('my_stat').get()
+
+        generate_search_result(results, gender, degree, availability, price, self.response, usr, stat)
 
 
-def generate_search_result(results, selected_gender, selected_deg, selected_avail, selected_price, response, usr):
+def generate_search_result(results, selected_gender, selected_deg, selected_avail, selected_price, response, usr, stat):
     search_results = {
         'results': results,
         'selected_gender': selected_gender,
         'selected_deg': selected_deg,
         'selected_availability': selected_avail,
         'selected_price': selected_price,
-        'current_user': usr
+        'current_user': usr,
+        'stat': stat
     }
 
     template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')

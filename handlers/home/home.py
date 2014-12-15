@@ -121,7 +121,7 @@ class HomeHandler(webapp2.RequestHandler):
             return False, -1
         edu.gpa = req.get('gpa')
         edu.major = req.get('major')
-        edu.degree = req.get('degree')
+        edu.degree = req.get('degree').strip()
 
         prev_highest_deg = usr.get_highest_degree()
 
@@ -130,7 +130,7 @@ class HomeHandler(webapp2.RequestHandler):
         usr.put()
 
         recent_highest_deg = usr.get_highest_degree()
-        update_stat_edu(prev_highest_deg, recent_highest_deg)
+        update_stat_edu(prev_highest_deg, recent_highest_deg, usr.term.price)
 
         update_index_degree(recent_highest_deg, users.get_current_user().email(), INDEX_NAME)
         return True, edu.id
@@ -161,11 +161,11 @@ class HomeHandler(webapp2.RequestHandler):
 
         desired.gpa = req.get('gpa')
         desired.major = req.get('major')
-        desired.degree = req.get('degree')
+        desired.degree = req.get('degree').strip()
         usr.put()
 
         recent_highest_deg = usr.get_highest_degree()
-        update_stat_edu(prev_highest_deg, recent_highest_deg)
+        update_stat_edu(prev_highest_deg, recent_highest_deg, usr.term.price)
 
         update_index_degree(recent_highest_deg, users.get_current_user().email(), INDEX_NAME)
 
@@ -194,7 +194,7 @@ class HomeHandler(webapp2.RequestHandler):
         usr.put()
 
         recent_highest_deg = usr.get_highest_degree()
-        update_stat_edu(prev_highest_deg, recent_highest_deg)
+        update_stat_edu(prev_highest_deg, recent_highest_deg, usr.term.price)
 
         update_index_degree(recent_highest_deg, users.get_current_user().email(), INDEX_NAME)
 

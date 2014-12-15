@@ -2,11 +2,11 @@
  * Created by stanley on 11/30/14.
  */
 var salesData=[
-    {label:"BS", color:"#3366CC"},
-    {label:"BA", color:"#DC3912"},
-    {label:"MS", color:"#FF9900"},
-    {label:"MA", color:"#109618"},
-    {label:"PhD", color:"#990099"}
+    {label:"BS", color:"#3366CC", dist: _bs_},
+    {label:"BA", color:"#DC3912", dist: _ba_},
+    {label:"MS", color:"#FF9900", dist: _ms_},
+    {label:"MA", color:"#109618", dist: _ma_},
+    {label:"PhD", color:"#990099", dist: _phd_}
 ];
 
 labels = ["BS", "BA", "MS", "MA", "PhD"];
@@ -19,7 +19,7 @@ Donut3D.draw("quotesDonut", randomData(), 75, 60, 64, 56, 8, 0);
 
 function randomData(){
     return salesData.map(function(d){
-        return {label:d.label, value:20, color:d.color};});
+        return {label:d.label, value: d.dist, color:d.color};});
 }
 
 var color = d3.scale.ordinal()
@@ -46,8 +46,6 @@ legend.append("text")
     .text(function(d) { return d; });
 
 
-
-
 var margin = {top: 40, right: 20, bottom: 30, left: 25},
     width = 200 - margin.left - margin.right,
     height = 270 - margin.top - margin.bottom;
@@ -64,7 +62,7 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left")
+    .orient("left");
 //        .tickFormat(formatPercent);
 
 var tip = d3.tip()
@@ -72,7 +70,7 @@ var tip = d3.tip()
     .offset([-10, 0])
     .html(function(d) {
         return "<strong>Price:</strong> <span style='color:lightblue'> $" + d.frequency + "/hr</span>";
-    })
+    });
 
 var svg2 = d3.select("#price").append("svg")
     .attr("width", width + margin.left + margin.right)

@@ -16,11 +16,11 @@ class StatHandler(webapp2.RequestHandler):
 
         statistics = Statistics(key=statistics_key('my_stat'))
         statistics.id = 'Teammate_Statistics'
-        statistics.BS = Entity(price=0, number=0)
-        statistics.BA = Entity(price=0, number=0)
-        statistics.MS = Entity(price=0, number=0)
-        statistics.MA = Entity(price=0, number=0)
-        statistics.PhD = Entity(price=0, number=0)
+        statistics.BS = Entity(price=0.0, number=0)
+        statistics.BA = Entity(price=0.0, number=0)
+        statistics.MS = Entity(price=0.0, number=0)
+        statistics.MA = Entity(price=0.0, number=0)
+        statistics.PhD = Entity(price=0.0, number=0)
         statistics.put()
 
         self.response.headers['Content-Type'] = 'application/json'

@@ -7,6 +7,7 @@ from init import *
 from domain.user import *
 from util.sanity_check import*
 from domain.doc_index import *
+from domain.statistics.statistics import *
 
 class TermsHandler(webapp2.RequestHandler):
     def get(self):
@@ -35,11 +36,14 @@ class TermsHandler(webapp2.RequestHandler):
             # TODO: unsafe int conversion... (in case of malicious user who bypasses the Web GUI)
             update_index_availability(float(_content), users.get_current_user().email(), INDEX_NAME)
         elif _type == '2':
+            prev_price = usr.term.price
             usr.term.price = _content
             # TODO: unsafe int conversion... (in case of malicious user who bypasses the Web GUI)
             if _content == 'negotiable':
+                update_stat_price(prev_price, _content, usr.get_highest_degree())
                 update_index_price(-1, users.get_current_user().email(), INDEX_NAME)
             else:
+                update_stat_price(prev_price, _content, usr.get_highest_degree())
                 update_index_price(float(_content), users.get_current_user().email(), INDEX_NAME)
         else:
             return
