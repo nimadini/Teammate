@@ -22,6 +22,7 @@ from handlers.follow import FollowHandler
 from handlers.unfollow import UnfollowHandler
 from handlers.message import MessageHandler
 from handlers.main import Main
+from handlers.stat import StatHandler
 
 app = webapp2.WSGIApplication([('/', Main),
                                ('/home', HomeHandler),
@@ -43,4 +44,5 @@ app = webapp2.WSGIApplication([('/', Main),
                                ('/follow', FollowHandler),
                                ('/unfollow', UnfollowHandler),
                                ('/message', MessageHandler),
+                               ('/stat', StatHandler),
                                ('/about', AboutHandler)], debug=True)

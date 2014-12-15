@@ -9,6 +9,7 @@ from init import *
 from domain.user import *
 from util.sanity_check import*
 from domain.doc_index import *
+from domain.statistics.statistics import *
 
 class HomeHandler(webapp2.RequestHandler):
     def get(self):
@@ -121,11 +122,17 @@ class HomeHandler(webapp2.RequestHandler):
         edu.gpa = req.get('gpa')
         edu.major = req.get('major')
         edu.degree = req.get('degree')
+
+        prev_highest_deg = usr.get_highest_degree()
+
         usr.append_edu(edu)
         usr.total_num_of_elems += 1
         usr.put()
 
-        update_index_degree(usr.get_highest_degree(), users.get_current_user().email(), INDEX_NAME)
+        recent_highest_deg = usr.get_highest_degree()
+        update_stat_edu(prev_highest_deg, recent_highest_deg)
+
+        update_index_degree(recent_highest_deg, users.get_current_user().email(), INDEX_NAME)
         return True, edu.id
 
     def modify_edu(self, req, usr):
@@ -149,11 +156,18 @@ class HomeHandler(webapp2.RequestHandler):
         desired.school = str(req.get('school')).strip()
         if desired.school is '':  # TODO exception E chizi bedam age khali bood. :-?
             return False, -1
+
+        prev_highest_deg = usr.get_highest_degree()
+
         desired.gpa = req.get('gpa')
         desired.major = req.get('major')
         desired.degree = req.get('degree')
         usr.put()
-        update_index_degree(usr.get_highest_degree(), users.get_current_user().email(), INDEX_NAME)
+
+        recent_highest_deg = usr.get_highest_degree()
+        update_stat_edu(prev_highest_deg, recent_highest_deg)
+
+        update_index_degree(recent_highest_deg, users.get_current_user().email(), INDEX_NAME)
 
         return True, desired.id
 
@@ -174,9 +188,15 @@ class HomeHandler(webapp2.RequestHandler):
         if desired is None:
             return False, -1
 
+        prev_highest_deg = usr.get_highest_degree()
+
         usr.eds.remove(desired)
         usr.put()
-        update_index_degree(usr.get_highest_degree(), users.get_current_user().email(), INDEX_NAME)
+
+        recent_highest_deg = usr.get_highest_degree()
+        update_stat_edu(prev_highest_deg, recent_highest_deg)
+
+        update_index_degree(recent_highest_deg, users.get_current_user().email(), INDEX_NAME)
 
         return True, desired.id
 
