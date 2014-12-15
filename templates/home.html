@@ -116,7 +116,8 @@
                 });
 
                 var cache = {};
-                $("#search-bar").autocomplete({
+                var $search_field = $("#search-bar");
+                $search_field.autocomplete({
                     minLength: 1,
                     source: function(request, response) {
                         var term = request.term;
@@ -131,6 +132,9 @@
                             response(data);
                         });
                     }
+                });
+                $('#search_action').on('click', function() {
+                    window.location.replace('/dashboard?name=' + $search_field.val().trim());
                 });
             });
         </script>
@@ -160,7 +164,7 @@
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group has-feedback">
                             <input type="text" id="search-bar" class="form-control" placeholder="Search for people"/>
-                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            <button id="search_action" type="button" class="btn btn-warning"><i class="fa fa-search"></i></button>
                         </div>
                     </form>
                 </li>

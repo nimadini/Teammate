@@ -29,10 +29,7 @@ class AutocompleteHandler(webapp2.RequestHandler):
             if found is None:
                 pass
             else:
-                if found.get_highest_edu() is not None:
-                    top7_names.append(found.given_name + ' ' + found.surname + ' | ' + found.get_highest_edu().school)
-                else:
-                    top7_names.append(found.given_name + ' ' + found.surname)
+                top7_names.append(found.given_name + ' ' + found.surname)
 
         top7_names.sort(key=lambda v: v.lower())
 

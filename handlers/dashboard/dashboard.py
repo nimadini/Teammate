@@ -18,8 +18,9 @@ class DashboardHandler(webapp2.RequestHandler):
         degree = self.request.get('degree')
         availability = self.request.get('availability')
         price = self.request.get('price')
+        name = self.request.get('name')
 
-        query = query_generator(gender, degree, availability, price)
+        query = query_generator(gender, degree, availability, price, name)
 
         sort = search.SortExpression(expression='rank', direction=SortExpression.DESCENDING, default_value=0)
         sort_opts = search.SortOptions(expressions=[sort])
@@ -43,10 +44,13 @@ class DashboardHandler(webapp2.RequestHandler):
 
         stat = statistics_key('my_stat').get()
 
-        generate_search_result(results, gender, degree, availability, price, self.response, usr, stat)
+        if name == '':
+            name = None
+
+        generate_search_result(results, gender, degree, availability, price, self.response, usr, stat, name)
 
 
-def generate_search_result(results, selected_gender, selected_deg, selected_avail, selected_price, response, usr, stat):
+def generate_search_result(results, selected_gender, selected_deg, selected_avail, selected_price, response, usr, stat, name):
     search_results = {
         'results': results,
         'selected_gender': selected_gender,
@@ -54,20 +58,23 @@ def generate_search_result(results, selected_gender, selected_deg, selected_avai
         'selected_availability': selected_avail,
         'selected_price': selected_price,
         'current_user': usr,
-        'stat': stat
+        'stat': stat,
+        'name': name
     }
 
     template = JINJA_ENVIRONMENT.get_template('templates/dashboard.html')
     response.write(template.render(search_results))
 
 
-def query_generator(gender, degree, availability, price):
+def query_generator(gender, degree, availability, price, name):
     params = []
     if gender != '':
         params.append("gender: " + gender)
     if degree != '':
         params.append("degree: " + degree)
-    # dirty code ... can be written with regex much better :|
+
+    if name != '':
+        params.append('(given_name: ' + name.lower() + ' OR surname: ' + name.lower() + ')')
 
     availability = gen_availability(availability)
 
