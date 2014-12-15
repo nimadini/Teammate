@@ -3,6 +3,7 @@ __author__ = 'stanley'
 from google.appengine.api.search import QueryError
 from datetime import datetime
 from google.appengine.api import search
+from init import *
 
 def create_doc(email, gender, degree, availability, price, given_name, surname, rank):
     given_name = ','.join(tokenize_autocomplete(given_name.lower()))
@@ -80,3 +81,22 @@ def tokenize_autocomplete(phrase):
                 break
             j += 1
     return a
+
+def update_rank(user_id, w, action):
+    index = search.Index(name=INDEX_NAME)
+
+    # Fetch a single document by its doc_id
+    doc = index.get(user_id)
+    # TODO: logging is good
+    if doc is None:
+        pass
+    else:
+        if action == 'plus':
+            rank = doc.field('rank').value + 1 * w
+        elif action == 'minus':
+            rank = doc.field('rank').value - 1 * w
+        else:
+            raise Exception
+        doc.fields.remove(doc.field('rank'))
+        doc.fields.append(search.NumberField(name='rank', value=rank))
+        index.put(doc)

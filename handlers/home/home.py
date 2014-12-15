@@ -5,7 +5,6 @@ import re
 import webapp2
 from google.appengine.api import users
 from google.appengine.ext import blobstore
-from init import *
 from domain.user import *
 from util.sanity_check import*
 from domain.doc_index import *
@@ -85,19 +84,7 @@ class HomeHandler(webapp2.RequestHandler):
         # for the sake of higher user experience -> persist after rendering the response
         if not owner:
             desired_user.views += 1
-            index = search.Index(name=INDEX_NAME)
-
-            # Fetch a single document by its doc_id
-            doc = index.get(desired_user.id)
-            # TODO: logging is good
-            if doc is None:
-                pass
-            else:
-                rank = doc.field('rank').value + 1
-                doc.fields.remove(doc.field('rank'))
-                doc.fields.append(search.NumberField(name='rank', value=rank))
-                index.put(doc)
-
+            update_rank(desired_user.id, 1, 'plus')
             desired_user.put()
 
     def post(self):

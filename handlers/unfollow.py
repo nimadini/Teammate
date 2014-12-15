@@ -5,6 +5,7 @@ import webapp2
 from google.appengine.api import users
 from domain.user import *
 from util.sanity_check import*
+from domain.doc_index import *
 
 class UnfollowHandler(webapp2.RequestHandler):
     def post(self):
@@ -34,6 +35,7 @@ class UnfollowHandler(webapp2.RequestHandler):
             return
 
         target.remove_follower(usr.id)
+        update_rank(target.id, 10, 'minus')
         target.put()
 
         self.response.headers['Content-Type'] = 'application/json'
