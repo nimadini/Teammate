@@ -20,7 +20,7 @@ from handlers.home.language import LanguageHandler
 from handlers.home.terms import TermsHandler
 from handlers.follow import FollowHandler
 from handlers.unfollow import UnfollowHandler
-from handlers.message import MessageHandler
+from handlers.message import MessageHandler 
 from handlers.main import Main
 from handlers.stat import StatHandler
 from handlers.auto_complete import AutocompleteHandler
